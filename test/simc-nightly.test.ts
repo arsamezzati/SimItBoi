@@ -70,21 +70,25 @@ test('release notes carry the record through a round trip, with the GPL obligati
   assert.equal(parseReleaseNotes('a release someone edited by hand'), null)
 })
 
-test('the workflow mirrors, waits, promotes, and stops on changed bytes', () => {
-  const base = { archiveSha256: RECORD.archiveSha256, manifest: EMPTY, pullRequestOpen: false, minAgeDays: 7 }
-  const day = (iso: string) => new Date(iso)
+test('the workflow mirrors new versions, publishes stranded mirrors, and skips the rest', () => {
+  const latest = { file: RECORD.sourceFile, version: '1210-01', commit: 'c1935b9' }
+  const base = { latest, manifest: EMPTY, releaseTags: [] as string[], anyNightly: false }
+  const published: UpdateManifest = { schema: 1, builds: [buildFrom(RECORD)] }
 
-  assert.deepEqual(decide({ ...base, record: null, now: day('2026-09-01T06:17:00Z') }), { action: 'mirror' })
-  assert.deepEqual(decide({ ...base, record: RECORD, now: day('2026-09-03T06:17:00Z') }), { action: 'wait', daysLeft: 5 })
-  assert.deepEqual(decide({ ...base, record: RECORD, now: day('2026-09-08T06:17:00Z') }), { action: 'promote' })
+  // Nothing known yet: the very first run mirrors whatever is newest.
+  assert.deepEqual(decide({ ...base, record: null }), { action: 'mirror' })
+  // Mirrored by a run that stopped before publishing: publish, do not re-mirror.
+  assert.deepEqual(decide({ ...base, record: RECORD, releaseTags: ['simc-1210-01-c1935b9'] }), { action: 'publish' })
+  // Already on the channel.
+  assert.equal(decide({ ...base, record: RECORD, manifest: published, releaseTags: ['simc-1210-01-c1935b9'] }).action, 'done')
 
-  // The same file name now holds different bytes: someone needs to look.
-  const tampered = decide({ ...base, archiveSha256: 'd'.repeat(64), record: RECORD, now: day('2026-09-08T06:17:00Z') })
-  assert.equal(tampered.action, 'tampered')
-
-  assert.equal(decide({ ...base, pullRequestOpen: true, record: RECORD, now: day('2026-09-09T00:00:00Z') }).action, 'done')
-  const approved: UpdateManifest = { schema: 1, builds: [buildFrom(RECORD)] }
-  assert.equal(decide({ ...base, manifest: approved, record: RECORD, now: day('2026-09-20T00:00:00Z') }).action, 'done')
+  // Tomorrow's nightly: same version, new commit. Skipped unless asked for.
+  const tomorrow = { ...latest, commit: 'd00d1e5', file: 'simc-1210.01.d00d1e5-win64.7z' }
+  const next = { ...base, latest: tomorrow, record: null, manifest: published, releaseTags: ['simc-1210-01-c1935b9', 'simc-channel'] }
+  assert.equal(decide(next).action, 'done')
+  assert.deepEqual(decide({ ...next, anyNightly: true }), { action: 'mirror' })
+  // A new simc version is taken on its own.
+  assert.deepEqual(decide({ ...next, latest: { ...tomorrow, version: '1210-02' } }), { action: 'mirror' })
 })
 
 function buildFrom(record: MirrorRecord, version = record.version): UpdateBuild {
@@ -150,12 +154,4 @@ test('only a newer simc version is new; another commit under the same version is
   assert.equal(isNewVersion(entry('1215-01', 'fffffff'), '1210-02'), true)
   // Nothing mirrored yet: the first run takes whatever is newest.
   assert.equal(isNewVersion(entry('1210-01', 'c1935b9'), null), true)
-})
-
-test('with no waiting period a mirrored build is proposed at once', () => {
-  const decision = decide({
-    record: RECORD, archiveSha256: RECORD.archiveSha256, manifest: EMPTY,
-    pullRequestOpen: false, minAgeDays: 0, now: new Date(RECORD.firstSeen)
-  })
-  assert.deepEqual(decision, { action: 'promote' })
 })

@@ -2,9 +2,9 @@
  * The public half of the simc update signing key.
  *
  * SimItBoi only installs simulator updates listed in a manifest signed by the
- * matching private key, which stays on the maintainer's own machine. While this
- * is null the updater is switched off: nothing is checked, downloaded or
- * offered.
+ * matching private key, which lives in the maintainer's profile and in the
+ * update workflow's secrets. While this is null the updater is switched off:
+ * nothing is checked, downloaded or offered.
  *
  * Do not edit by hand. `npm run simc-update:keygen` generates the key pair,
  * stores the private key outside the repository, and writes the public key
@@ -13,8 +13,9 @@
 export const SIMC_UPDATE_PUBLIC_KEY: string | null = "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAE3iWsYbGWtqFaSj/Cf+A2K5uFKPp14gnKfTYHr1u/0Q=\n-----END PUBLIC KEY-----\n"
 
 /**
- * Where approved builds are listed. Served over HTTPS from this repository
- * once it is public; `SIMITBOI_SIMC_UPDATE_URL` overrides it in development.
+ * Where published builds are listed: the assets of the simc-channel release,
+ * which the update workflow maintains. `SIMITBOI_SIMC_UPDATE_URL` overrides it
+ * in development.
  */
 export const SIMC_UPDATE_MANIFEST_BASE_URL =
-  'https://raw.githubusercontent.com/arsamezzati/SimItBoi/main/update/'
+  'https://github.com/arsamezzati/SimItBoi/releases/download/simc-channel/'

@@ -4,7 +4,8 @@
  * The private key is the one thing that can approve a simulator for every
  * SimItBoi install, so these functions are deliberately stubborn about where it
  * lives: never inside the repository, never overwritten, and never used to
- * produce a signature the built-in public key would not accept.
+ * produce a signature the built-in public key would not accept. Its only other
+ * copy is the SIMC_UPDATE_SIGNING_KEY secret the update workflow signs with.
  */
 import { generateKeyPairSync, sign, verify } from 'node:crypto'
 import { access, mkdir, readFile, writeFile } from 'node:fs/promises'
@@ -73,39 +74,34 @@ export async function writePublicKey(keyModulePath: string, publicKeyPem: string
 }
 
 /**
- * Signs the manifest in place, and proves the signature before keeping it.
+ * Signs manifest bytes and proves the signature before returning it.
  *
- * The check against the built-in public key catches the mistakes that would
- * otherwise only surface as "no updates, for no visible reason" on users'
- * machines: signing with the wrong key, or a public key that was never built
- * into SimItBoi at all.
+ * The update workflow calls this with the key from its secrets. The check
+ * against the built-in public key catches the mistakes that would otherwise
+ * only surface as "no updates, for no visible reason" on users' machines:
+ * a secret holding the wrong key, or a public key never built into SimItBoi.
+ *
+ * Returns the signature as base64 text, the form SimItBoi downloads.
  */
-export async function signManifest(options: {
-  manifestPath: string
-  privateKeyPath: string
+export function signManifest(options: {
+  bytes: Buffer
+  privateKeyPem: string
   embeddedPublicKeyPem: string | null
-}): Promise<{ signaturePath: string }> {
+}): string {
   if (!options.embeddedPublicKeyPem) {
     throw new Error('SimItBoi has no update public key built in yet. Run `npm run simc-update:keygen` first.')
   }
-  const bytes = await readFile(options.manifestPath)
-  // Signatures cover exact bytes, and SimItBoi downloads the committed file. A
-  // carriage return means a Windows checkout converted line endings, so what
-  // was signed here is not what users will fetch. See .gitattributes.
-  if (bytes.includes(13)) {
-    throw new Error('The manifest contains Windows line endings (CR), so its signature would not match the file users download. Check .gitattributes covers update/ and re-checkout the file.')
-  }
+  const { bytes } = options
   // A manifest that SimItBoi would refuse is not worth signing.
   validateManifest(JSON.parse(bytes.toString('utf8')))
-  const privateKeyPem = await readFile(options.privateKeyPath, 'utf8')
-  const signature = sign(null, bytes, privateKeyPem)
-  if (!verify(null, bytes, options.embeddedPublicKeyPem, signature)) {
-    throw new Error(
-      'The private key at ' + options.privateKeyPath + ' does not match the public key built into SimItBoi. ' +
-      'Nothing was signed; users would reject this signature.'
-    )
+  let signature: Buffer
+  try {
+    signature = sign(null, bytes, options.privateKeyPem)
+  } catch {
+    throw new Error('The signing key is not a readable private key. Nothing was signed.')
   }
-  const signaturePath = options.manifestPath + '.sig'
-  await writeFile(signaturePath, signature.toString('base64') + '\n', 'utf8')
-  return { signaturePath }
+  if (!verify(null, bytes, options.embeddedPublicKeyPem, signature)) {
+    throw new Error('The signing key does not match the public key built into SimItBoi. Nothing was signed; users would reject this signature.')
+  }
+  return signature.toString('base64') + '\n'
 }

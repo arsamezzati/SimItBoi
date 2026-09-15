@@ -17,6 +17,9 @@ import { validateManifest, type UpdateBuild, type UpdateManifest } from '../../s
 
 export const NIGHTLY_INDEX = 'http://downloads.simulationcraft.org/nightly/'
 
+/** The release whose assets are the signed manifest every install reads. */
+export const CHANNEL_TAG = 'simc-channel'
+
 export interface NightlyEntry {
   file: string
   /** simc's banner form, e.g. "1210-01", matching what the binary reports. */
@@ -85,7 +88,7 @@ export interface MirrorRecord {
   commit: string
   sourceFile: string
   firstSeen: string
-  /** SHA-256 of the .7z as downloaded — the tamper tripwire. */
+  /** SHA-256 of the .7z as downloaded, for tracing a mirror back to its source. */
   archiveSha256: string
   exeSha256: string
   exeSize: number
@@ -104,7 +107,8 @@ export function renderReleaseNotes(record: MirrorRecord): string {
     'Source code for this exact build: https://github.com/simulationcraft/simc/tree/' + record.commit,
     'SimulationCraft is licensed under the GNU GPL v3; see the attached COPYING file.',
     '',
-    'This is a pre-release until it is approved by signing the update manifest.',
+    'SimItBoi offers it once the update workflow has tested it and added it to the signed manifest',
+    'on the simc-channel release.',
     '',
     '<!-- ' + RECORD_MARK + ' ' + JSON.stringify(record) + ' -->',
     ''
@@ -124,51 +128,47 @@ export function parseReleaseNotes(body: string): MirrorRecord | null {
 
 export type Decision =
   | { action: 'mirror' }
-  | { action: 'wait'; daysLeft: number }
-  | { action: 'promote' }
+  | { action: 'publish' }
   | { action: 'done'; reason: string }
-  | { action: 'tampered'; recorded: string; now: string }
 
 /**
- * What today's run should do about the newest nightly.
+ * What this run should do about the newest nightly.
  *
- * - Not mirrored yet → mirror it as a pre-release and start the clock.
- * - Its bytes changed under the same file name → stop. simulationcraft.org is
- *   HTTP-only, so this is the one signal that something between it and GitHub
- *   is serving different files; a person needs to look.
- * - Already in the manifest, or a PR is open → nothing to do.
- * - Newer than the waiting period → propose it.
+ * - Mirrored and already in the published manifest → nothing to do.
+ * - Mirrored but not published (an earlier run stopped between the two) →
+ *   publish the existing mirror; it is re-verified before signing.
+ * - Not mirrored, and simc's version has not moved past everything known →
+ *   nothing to do, unless the run asked for any nightly.
+ * - Otherwise → mirror it, then publish.
  */
 export function decide(options: {
+  latest: NightlyEntry
   record: MirrorRecord | null
-  archiveSha256: string
   manifest: UpdateManifest
-  pullRequestOpen: boolean
-  now: Date
-  minAgeDays: number
+  releaseTags: readonly string[]
+  anyNightly: boolean
 }): Decision {
-  const { record } = options
-  if (!record) return { action: 'mirror' }
-  if (record.archiveSha256 !== options.archiveSha256) {
-    return { action: 'tampered', recorded: record.archiveSha256, now: options.archiveSha256 }
+  const { record, manifest } = options
+  if (record) {
+    return manifest.builds.some((b) => b.exeSha256 === record.exeSha256)
+      ? { action: 'done', reason: 'simc ' + record.version + ' (' + record.commit + ') is already published' }
+      : { action: 'publish' }
   }
-  if (options.manifest.builds.some((b) => b.exeSha256 === record.exeSha256)) {
-    return { action: 'done', reason: 'already approved in the manifest' }
+  const known = newestKnownVersion(options.releaseTags, manifest)
+  if (!options.anyNightly && !isNewVersion(options.latest, known)) {
+    return { action: 'done', reason: 'simc ' + options.latest.version + ' is not newer than ' + known }
   }
-  if (options.pullRequestOpen) return { action: 'done', reason: 'a pull request for it is already open' }
-  const ageDays = (options.now.getTime() - Date.parse(record.firstSeen)) / 86_400_000
-  if (ageDays < options.minAgeDays) return { action: 'wait', daysLeft: Math.ceil(options.minAgeDays - ageDays) }
-  return { action: 'promote' }
+  return { action: 'mirror' }
 }
 
 /** Keeps the manifest small: SimItBoi only ever considers the newest entry. */
 const MANIFEST_HISTORY = 5
 
 /**
- * Adds an approved build at the top of the manifest.
+ * Adds a published build at the top of the manifest.
  *
- * Returns text with LF line endings only — the signature covers exact bytes
- * and GitHub serves exactly what is committed.
+ * Returns text with LF line endings only, so the bytes signed are the bytes
+ * uploaded on every platform.
  */
 export function addBuildToManifest(manifest: UpdateManifest, build: UpdateBuild): string {
   const builds = [build, ...manifest.builds.filter((b) => b.exeSha256 !== build.exeSha256)]

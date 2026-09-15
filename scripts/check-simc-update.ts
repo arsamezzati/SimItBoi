@@ -30,7 +30,7 @@ const sha = (data: Buffer): string => createHash('sha256').update(data).digest('
 const realSimc = await readFile('vendor/simc/simc.exe')
 const work = await mkdtemp(join(tmpdir(), 'simitboi-update-e2e-'))
 
-// A throwaway signer standing in for the maintainer's key.
+// A throwaway signer standing in for the real update key.
 const pair = generateKeyPairSync('ed25519')
 const publicKey = pair.publicKey.export({ type: 'spki', format: 'pem' }).toString()
 
@@ -43,7 +43,7 @@ const server = createServer((request, response) => {
 await new Promise<void>((done) => server.listen(0, '127.0.0.1', done))
 const base = 'http://127.0.0.1:' + (server.address() as AddressInfo).port
 
-/** Publishes one build and signs a manifest naming it, as the workflow + maintainer would. */
+/** Publishes one build and signs a manifest naming it, as the update workflow would. */
 function publish(exe: Buffer, version: string, name: string): void {
   const gz = gzipSync(exe, { level: 9 })
   files.set('/builds/' + name, gz)

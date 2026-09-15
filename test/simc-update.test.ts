@@ -173,8 +173,27 @@ test('being offline, unconfigured, or served a bad signature is not an error', a
   const offline = await checkForUpdate({ ...base, manifestBaseUrl: 'http://127.0.0.1:9/update/', publicKeyPem: w.signer.publicKey })
   assert.equal(offline.status, 'unreachable')
 
-  const wrongKey = await checkForUpdate({ ...base, manifestBaseUrl: w.base + '/update/', publicKeyPem: keys().publicKey })
+  const wrongKey = await checkForUpdate({ ...base, manifestBaseUrl: w.base + '/update/', publicKeyPem: keys().publicKey, retryDelayMs: 0 })
   assert.equal(wrongKey.status, 'invalid')
+})
+
+test('a check that lands between the manifest and signature uploads asks again', async (t) => {
+  const w = await world(t)
+  w.publish('simc 1212-01', '1212-01')
+  const stale = w.files.get('/update/simc-manifest.json.sig')!.toString()
+  const build = w.publish('simc 1215-01', '1215-01')
+  // The first answer pairs the new manifest with a signature for the old one.
+  let calls = 0
+  const racing: typeof fetch = async (input, init) => {
+    const url = String(input)
+    if (url.endsWith('.sig') && calls++ === 0) return new Response(stale)
+    return await fetch(input, init)
+  }
+  const check = await checkForUpdate({
+    manifestBaseUrl: w.base + '/update/', publicKeyPem: w.signer.publicKey, root: w.root,
+    allowHttpHosts: LOCAL, fetchImpl: racing, retryDelayMs: 0
+  })
+  assert.equal(check.status === 'available' && check.build.exeSha256, build.exeSha256)
 })
 
 // --- Installing --------------------------------------------------------------

@@ -1,23 +1,20 @@
 /**
- * The weekly simc mirror, run by .github/workflows/simc-update.yml.
+ * The weekly simc update, run by .github/workflows/simc-update.yml.
  *
  * Each run looks at the newest Windows nightly on simulationcraft.org. Nothing
  * is downloaded unless it carries a simc version newer than any already
- * mirrored or approved; a new nightly under the same version is skipped.
+ * mirrored or published; a new nightly under the same version is skipped.
  * `SIMC_UPDATE_ANY_NIGHTLY=1` lifts that, taking the newest nightly as it is.
  *
- * A build not seen before is mirrored (a pre-release carrying simc.exe.gz and
- * its GPL license) and proposed in a pull request adding it to the manifest. A
- * build already mirrored is re-hashed, and the run stops if its bytes changed.
- * The decisions themselves are in scripts/lib/nightly.ts and are unit tested;
- * this file performs them.
+ * A new build is mirrored (a pre-release carrying simc.exe.gz and its GPL
+ * license), proven to run, added to the manifest, signed with the key in
+ * `SIMC_UPDATE_SIGNING_KEY`, and uploaded to the simc-channel release, where
+ * every SimItBoi install finds it. No person needs to act. The decisions are in
+ * scripts/lib/nightly.ts and are unit tested; this file performs them.
  *
- * It never signs anything. A proposed build reaches users only after the
- * maintainer runs `npm run simc-update:sign` on their own machine and merges.
- *
- * `SIMC_UPDATE_MIN_AGE_DAYS` adds a waiting period between mirroring and
- * proposing; it defaults to 0. `DRY_RUN=1` does the download, extraction, test
- * run and packaging, then prints the GitHub commands instead of running them.
+ * `DRY_RUN=1` does the download, extraction, test run, packaging and signing
+ * (when a key is present), then prints the GitHub commands instead of running
+ * them.
  */
 import { createHash } from 'node:crypto'
 import { execFileSync } from 'node:child_process'
@@ -28,18 +25,20 @@ import { join } from 'node:path'
 import { pipeline } from 'node:stream/promises'
 import { createGzip } from 'node:zlib'
 import {
-  NIGHTLY_INDEX, addBuildToManifest, decide, extractFiles, isNewVersion, newestKnownVersion, parseNightlyIndex,
-  parseReleaseNotes, pickLatest, releaseTag, renderReleaseNotes, type MirrorRecord
+  CHANNEL_TAG, NIGHTLY_INDEX, addBuildToManifest, decide, extractFiles, parseNightlyIndex, parseReleaseNotes,
+  pickLatest, releaseTag, renderReleaseNotes, type MirrorRecord
 } from '../lib/nightly.ts'
+import { signManifest } from '../lib/signing.ts'
 import { probeVersion } from '../../src/core/simc/runner.ts'
-import type { UpdateBuild, UpdateManifest } from '../../src/core/simc/update.ts'
+import { readSignedManifest, UPDATE_MANIFEST_SCHEMA, type UpdateBuild, type UpdateManifest } from '../../src/core/simc/update.ts'
+import { SIMC_UPDATE_PUBLIC_KEY } from '../../src/core/simc/updateKey.ts'
 
 const DRY_RUN = process.env['DRY_RUN'] === '1'
-const MIN_AGE_DAYS = Number(process.env['SIMC_UPDATE_MIN_AGE_DAYS'] ?? 0)
 const ANY_NIGHTLY = process.env['SIMC_UPDATE_ANY_NIGHTLY'] === '1'
+const SIGNING_KEY = process.env['SIMC_UPDATE_SIGNING_KEY'] ?? ''
 const REPOSITORY = process.env['GITHUB_REPOSITORY'] ?? 'arsamezzati/SimItBoi'
 const SERVER = process.env['GITHUB_SERVER_URL'] ?? 'https://github.com'
-const MANIFEST_PATH = 'update/simc-manifest.json'
+const CHANNEL_URL = SERVER + '/' + REPOSITORY + '/releases/download/' + CHANNEL_TAG + '/'
 
 async function sha256File(path: string): Promise<string> {
   const hash = createHash('sha256')
@@ -61,11 +60,6 @@ function gh(args: string[], options: { allowFailure?: boolean; mutates?: boolean
   }
 }
 
-function git(args: string[]): void {
-  if (DRY_RUN) { console.log('[dry run] git ' + args.join(' ')); return }
-  execFileSync('git', args, { stdio: 'inherit' })
-}
-
 async function download(url: string, path: string): Promise<void> {
   const response = await fetch(url)
   if (!response.ok || !response.body) throw new Error('GET ' + url + ' answered ' + response.status)
@@ -73,109 +67,119 @@ async function download(url: string, path: string): Promise<void> {
 }
 
 /**
- * Opens the pull request adding a mirrored build to the manifest. SimItBoi still
- * ignores it until the maintainer signs the manifest and merges.
+ * The manifest currently on the channel, or an empty one before the first
+ * publish. An existing manifest must carry a valid signature: re-signing
+ * whatever happens to be there would launder an edit made by anyone else.
  */
-async function propose(mirrored: MirrorRecord, work: string): Promise<void> {
+async function publishedManifest(work: string): Promise<UpdateManifest> {
+  if (gh(['release', 'view', CHANNEL_TAG, '--repo', REPOSITORY, '--json', 'tagName'], { allowFailure: true }) === null) {
+    return { schema: UPDATE_MANIFEST_SCHEMA, builds: [] }
+  }
+  const dir = join(work, 'channel')
+  gh(['release', 'download', CHANNEL_TAG, '--repo', REPOSITORY, '--dir', dir,
+    '--pattern', 'simc-manifest.json', '--pattern', 'simc-manifest.json.sig'])
+  return readSignedManifest(
+    await readFile(join(dir, 'simc-manifest.json')),
+    await readFile(join(dir, 'simc-manifest.json.sig'), 'utf8'),
+    SIMC_UPDATE_PUBLIC_KEY
+  )
+}
+
+/** Adds a mirrored build to the manifest, signs it, and puts it on the channel. */
+async function publish(mirrored: MirrorRecord, manifest: UpdateManifest, work: string): Promise<void> {
   const tag = 'simc-' + mirrored.version + '-' + mirrored.commit
-  const branch = 'simc-update/' + tag
   const url = SERVER + '/' + REPOSITORY + '/releases/download/' + tag + '/simc.exe.gz'
 
-  // Check what users will actually download, not what we remember uploading.
+  // Sign for what users will actually download, not what we remember uploading.
   if (!DRY_RUN) {
     const published = join(work, 'published.gz')
     await download(url, published)
     if (await sha256File(published) !== mirrored.gzSha256) throw new Error('The published simc.exe.gz does not match its record')
   }
 
-  const manifest = JSON.parse(await readFile(MANIFEST_PATH, 'utf8')) as UpdateManifest
   const build: UpdateBuild = {
     version: mirrored.version, commit: mirrored.commit, url,
     gzSha256: mirrored.gzSha256, gzSize: mirrored.gzSize,
     exeSha256: mirrored.exeSha256, exeSize: mirrored.exeSize,
     publishedAt: new Date().toISOString()
   }
-  const next = addBuildToManifest(manifest, build)
-  if (DRY_RUN) { console.log('[dry run] would write ' + MANIFEST_PATH + ':\n' + next); return }
+  const bytes = Buffer.from(addBuildToManifest(manifest, build), 'utf8')
+  if (!SIGNING_KEY.trim()) {
+    if (DRY_RUN) { console.log('[dry run] no signing key; would publish:\n' + bytes.toString('utf8')); return }
+    throw new Error('SIMC_UPDATE_SIGNING_KEY is empty. Add the private key as a repository secret with that name.')
+  }
+  const signature = signManifest({ bytes, privateKeyPem: SIGNING_KEY, embeddedPublicKeyPem: SIMC_UPDATE_PUBLIC_KEY })
 
-  git(['config', 'user.name', 'github-actions[bot]'])
-  git(['config', 'user.email', '41898282+github-actions[bot]@users.noreply.github.com'])
-  git(['checkout', '-b', branch])
-  await writeFile(MANIFEST_PATH, next)
-  git(['add', MANIFEST_PATH])
-  // The old signature covers the old manifest. Removing it makes the unsigned
-  // state obvious instead of leaving a signature that fails.
-  git(['rm', '--quiet', '--ignore-unmatch', MANIFEST_PATH + '.sig'])
-  git(['commit', '-m', 'Propose simc ' + mirrored.version + ' (' + mirrored.commit + ')'])
-  git(['push', '--force', 'origin', branch])
-  gh(['pr', 'create', '--repo', REPOSITORY, '--head', branch,
-    '--title', 'simc update: ' + mirrored.version + ' (' + mirrored.commit + ')',
-    '--body', [
-      'simc ' + mirrored.version + ' (commit ' + mirrored.commit + ') is the newest Windows nightly.',
-      'It ran successfully on a Windows runner before being published.',
-      '',
-      '- Release: ' + SERVER + '/' + REPOSITORY + '/releases/tag/' + tag,
-      '- Source: https://github.com/simulationcraft/simc/tree/' + mirrored.commit,
-      '- simc.exe sha256: `' + mirrored.exeSha256 + '`',
-      '',
-      '**SimItBoi ignores this manifest until it is signed.** To approve:',
-      '',
-      '```',
-      'git fetch origin ' + branch + ' && git checkout ' + branch,
-      'npm run simc-update:sign',
-      'git add update/simc-manifest.json.sig && git commit -m "Sign simc ' + mirrored.version + '" && git push',
-      '```',
-      '',
-      'Then merge. Every SimItBoi install offers the update on its next check.'
-    ].join('\n')], { mutates: true })
+  const out = join(work, 'publish')
+  await mkdir(out, { recursive: true })
+  await writeFile(join(out, 'simc-manifest.json'), bytes)
+  await writeFile(join(out, 'simc-manifest.json.sig'), signature)
+  if (DRY_RUN) { console.log('[dry run] signed manifest:\n' + bytes.toString('utf8')) }
+
+  if (gh(['release', 'view', CHANNEL_TAG, '--repo', REPOSITORY, '--json', 'tagName'], { allowFailure: true }) === null) {
+    gh(['release', 'create', CHANNEL_TAG, '--repo', REPOSITORY, '--prerelease', '--title', 'simc update channel',
+      '--notes', 'The signed list of simc builds SimItBoi offers as updates. Maintained by the simc update workflow; do not edit or delete.'],
+    { mutates: true })
+  }
+  // Signature last: an app that catches the gap sees a signature that does not
+  // match, and simply asks again.
+  gh(['release', 'upload', CHANNEL_TAG, join(out, 'simc-manifest.json'), '--repo', REPOSITORY, '--clobber'], { mutates: true })
+  gh(['release', 'upload', CHANNEL_TAG, join(out, 'simc-manifest.json.sig'), '--repo', REPOSITORY, '--clobber'], { mutates: true })
+  if (DRY_RUN) return
+
+  // Read it back the way SimItBoi will. Downloads can lag an upload briefly.
+  for (let attempt = 1; ; attempt++) {
+    try {
+      const [m, s] = await Promise.all([
+        fetch(CHANNEL_URL + 'simc-manifest.json').then(async (r) => Buffer.from(await r.arrayBuffer())),
+        fetch(CHANNEL_URL + 'simc-manifest.json.sig').then(async (r) => await r.text())
+      ])
+      const live = readSignedManifest(m, s, SIMC_UPDATE_PUBLIC_KEY)
+      if (live.builds[0]?.exeSha256 !== build.exeSha256) throw new Error('the channel does not list the new build first yet')
+      break
+    } catch (error) {
+      if (attempt >= 6) throw new Error('The published channel does not verify: ' + (error as Error).message)
+      await new Promise((resolve) => setTimeout(resolve, 10_000))
+    }
+  }
+  console.log('Published simc ' + build.version + ' (' + build.commit + '). Every SimItBoi install now offers it.')
 }
 
 const work = await mkdtemp(join(process.env['RUNNER_TEMP'] ?? tmpdir(), 'simc-update-'))
 try {
-  // --- What is newest upstream ------------------------------------------
+  // --- What is newest upstream, and what is already known ----------------
   const index = await fetch(NIGHTLY_INDEX + '?C=M;O=D')
   if (!index.ok) throw new Error('The nightly index answered ' + index.status)
   const latest = pickLatest(parseNightlyIndex(await index.text()))
   const tag = releaseTag(latest)
   console.log('Newest Windows nightly: ' + latest.file + ' (' + tag + ')')
 
-  const manifest = JSON.parse(await readFile(MANIFEST_PATH, 'utf8')) as UpdateManifest
-  const releases = gh(['release', 'list', '--repo', REPOSITORY, '--limit', '1000', '--json', 'tagName'], { allowFailure: true })
+  const manifest = await publishedManifest(work)
+  const releases = gh(['release', 'list', '--repo', REPOSITORY, '--limit', '1000', '--json', 'tagName'])
   const releaseTags = (JSON.parse(releases || '[]') as Array<{ tagName: string }>).map((r) => r.tagName)
-  const known = newestKnownVersion(releaseTags, manifest)
-  const alreadyMirrored = releaseTags.includes(tag)
-  if (!ANY_NIGHTLY && !alreadyMirrored && !isNewVersion(latest, known)) {
-    console.log('Nothing to do: simc ' + latest.version + ' is not newer than ' + known + '. Run with "any nightly" to take it anyway.')
-    await rm(work, { recursive: true, force: true })
-    process.exit(0)
-  }
-
-  const archive = join(work, latest.file)
-  await download(NIGHTLY_INDEX + latest.file, archive)
-  const archiveSha256 = await sha256File(archive)
-  console.log('Archive sha256 ' + archiveSha256 + ', ' + ((await stat(archive)).size / 1048576).toFixed(1) + ' MB')
-
-  // --- What we already know about it -------------------------------------
-  const releaseJson = gh(['release', 'view', tag, '--repo', REPOSITORY, '--json', 'body'], { allowFailure: true })
+  const releaseJson = releaseTags.includes(tag)
+    ? gh(['release', 'view', tag, '--repo', REPOSITORY, '--json', 'body'])
+    : null
   const record = releaseJson ? parseReleaseNotes((JSON.parse(releaseJson) as { body: string }).body) : null
-  const openPulls = gh(['pr', 'list', '--repo', REPOSITORY, '--head', 'simc-update/' + tag, '--state', 'open', '--json', 'number'], { allowFailure: true })
-  const pullRequestOpen = openPulls !== null && (JSON.parse(openPulls || '[]') as unknown[]).length > 0
 
-  const decision = decide({ record, archiveSha256, manifest, pullRequestOpen, now: new Date(), minAgeDays: MIN_AGE_DAYS })
+  const decision = decide({ latest, record, manifest, releaseTags, anyNightly: ANY_NIGHTLY })
   console.log('Decision: ' + JSON.stringify(decision))
 
   switch (decision.action) {
-    case 'tampered':
-      // Failing the run makes GitHub notify the maintainer. Nothing is published.
-      console.error(
-        'The bytes behind ' + latest.file + ' changed since it was mirrored.\n' +
-        '  recorded ' + decision.recorded + '\n  today    ' + decision.now + '\n' +
-        'simulationcraft.org serves these over plain HTTP. Do not approve this build until you know why.'
-      )
-      process.exitCode = 1
+    case 'done':
+      console.log('Nothing to do: ' + decision.reason + '.')
+      break
+
+    case 'publish':
+      await publish(record!, manifest, work)
       break
 
     case 'mirror': {
+      const archive = join(work, latest.file)
+      await download(NIGHTLY_INDEX + latest.file, archive)
+      const archiveSha256 = await sha256File(archive)
+      console.log('Archive sha256 ' + archiveSha256 + ', ' + ((await stat(archive)).size / 1048576).toFixed(1) + ' MB')
+
       const out = join(work, 'out')
       await mkdir(out)
       extractFiles(archive, ['simc.exe', 'COPYING'], out)
@@ -202,23 +206,9 @@ try {
         '--title', 'simc ' + latest.version + ' (' + latest.commit + ')', '--notes-file', notes], { mutates: true })
       console.log('Mirrored as pre-release ' + tag + '.')
 
-      // No waiting period: propose it in this run rather than the next.
-      if (MIN_AGE_DAYS <= 0) await propose(mirrored, work)
-      else console.log('It can be proposed in ' + MIN_AGE_DAYS + ' days if it stays the newest.')
+      await publish(mirrored, manifest, work)
       break
     }
-
-    case 'wait':
-      console.log(tag + ' is mirrored; ' + decision.daysLeft + ' more day(s) before it is proposed.')
-      break
-
-    case 'promote':
-      await propose(record!, work)
-      break
-
-    case 'done':
-      console.log('Nothing to do: ' + decision.reason + '.')
-      break
   }
 } finally {
   await rm(work, { recursive: true, force: true })

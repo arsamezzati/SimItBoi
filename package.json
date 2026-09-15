@@ -31,7 +31,6 @@
     "package": "npm run build && electron-builder --win --publish never",
     "check:release": "node scripts/check-release.ts",
     "simc-update:keygen": "node scripts/simc-update/keygen.ts",
-    "simc-update:sign": "node scripts/simc-update/sign.ts",
     "check:simc-update": "npm run build && node scripts/check-simc-update.ts"
   },
   "devDependencies": {

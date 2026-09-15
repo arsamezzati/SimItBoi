@@ -4,18 +4,17 @@
  * The chain of trust, from the only thing SimItBoi trusts outright:
  *
  * 1. A public key compiled into SimItBoi (`updateKey.ts`). Its private half is
- *    generated and kept on the maintainer's own machine; it never reaches a
- *    server or CI.
- * 2. A manifest listing approved builds, signed with that private key. A
- *    manifest whose signature does not verify is ignored entirely — so whoever
- *    controls the web host, or gets into the GitHub account, can withhold
- *    updates but cannot push one.
+ *    held by the maintainer and, as a secret, by the update workflow.
+ * 2. A manifest listing published builds, signed with that private key. A
+ *    manifest whose signature does not verify is ignored entirely, so a
+ *    download host that serves different bytes cannot push an update; only
+ *    the workflow holding the key can.
  * 3. Each build in the manifest carries the SHA-256 of its download and of the
  *    decompressed simc.exe. Both are checked before anything is installed.
  *
  * simulationcraft.org publishes Windows builds over plain HTTP with no
  * checksums, which is why the manifest exists at all: the hashes in it were
- * recorded once, by the update workflow, and signed by a person.
+ * recorded once, by the update workflow, after the build ran on Windows.
  *
  * Installing reuses the build provisioning in `provision.ts` — staged, verified,
  * activated, previous build kept — and then runs the new simulator once. If it
@@ -196,6 +195,8 @@ export interface CheckOptions {
   allowHttpHosts?: readonly string[]
   fetchImpl?: typeof fetch
   signal?: AbortSignal
+  /** Wait before re-asking after a signature mismatch; tests shorten it. */
+  retryDelayMs?: number
 }
 
 /**
@@ -208,27 +209,41 @@ export async function checkForUpdate(options: CheckOptions): Promise<UpdateCheck
   }
   const doFetch = options.fetchImpl ?? fetch
   const base = options.manifestBaseUrl.endsWith('/') ? options.manifestBaseUrl : options.manifestBaseUrl + '/'
-  let manifestBytes: Buffer
-  let signature: string
-  try {
-    const [manifestResponse, signatureResponse] = await Promise.all([
-      doFetch(base + 'simc-manifest.json', { signal: options.signal }),
-      doFetch(base + 'simc-manifest.json.sig', { signal: options.signal })
-    ])
-    if (!manifestResponse.ok || !signatureResponse.ok) {
-      return { status: 'unreachable', error: 'Update server answered ' + manifestResponse.status + '/' + signatureResponse.status }
+  // The manifest and its signature are uploaded one after the other, so a check
+  // landing between the two sees a mismatch that fixes itself. Ask once more
+  // before calling it invalid.
+  for (let attempt = 1; ; attempt++) {
+    let manifestBytes: Buffer
+    let signature: string
+    try {
+      const [manifestResponse, signatureResponse] = await Promise.all([
+        doFetch(base + 'simc-manifest.json', { signal: options.signal }),
+        doFetch(base + 'simc-manifest.json.sig', { signal: options.signal })
+      ])
+      if (!manifestResponse.ok || !signatureResponse.ok) {
+        return { status: 'unreachable', error: 'Update server answered ' + manifestResponse.status + '/' + signatureResponse.status }
+      }
+      manifestBytes = await readCapped(manifestResponse, MAX_MANIFEST_BYTES)
+      signature = (await readCapped(signatureResponse, MAX_SIGNATURE_BYTES)).toString('utf8')
+    } catch (error) {
+      return { status: 'unreachable', error: (error as Error).message }
     }
-    manifestBytes = await readCapped(manifestResponse, MAX_MANIFEST_BYTES)
-    signature = (await readCapped(signatureResponse, MAX_SIGNATURE_BYTES)).toString('utf8')
-  } catch (error) {
-    return { status: 'unreachable', error: (error as Error).message }
-  }
-  try {
-    const manifest = readSignedManifest(manifestBytes, signature, options.publicKeyPem, options.allowHttpHosts)
-    const build = await pickUpdate(options.root, manifest)
-    return build ? { status: 'available', build } : { status: 'current' }
-  } catch (error) {
-    return { status: 'invalid', error: (error as Error).message }
+    let manifest: UpdateManifest
+    try {
+      manifest = readSignedManifest(manifestBytes, signature, options.publicKeyPem, options.allowHttpHosts)
+    } catch (error) {
+      if (attempt < 2) {
+        await new Promise((resolve) => setTimeout(resolve, options.retryDelayMs ?? 5000))
+        continue
+      }
+      return { status: 'invalid', error: (error as Error).message }
+    }
+    try {
+      const build = await pickUpdate(options.root, manifest)
+      return build ? { status: 'available', build } : { status: 'current' }
+    } catch (error) {
+      return { status: 'invalid', error: (error as Error).message }
+    }
   }
 }
 

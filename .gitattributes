@@ -1,4 +1,0 @@
-# The simc update manifest is signed byte-for-byte. Git must never convert its
-# line endings: core.autocrlf would give a Windows checkout CRLF while GitHub
-# serves LF, so a locally made signature would fail for every user.
-update/** -text

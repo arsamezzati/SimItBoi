@@ -3,7 +3,8 @@
  *
  * Creates the signing key pair, stores the private key in your user profile
  * (never in the repository), and builds the public key into SimItBoi. Run it
- * once, on your own machine, then commit the change to updateKey.ts.
+ * once, on your own machine, then commit the change to updateKey.ts and add the
+ * private key to the repository as the SIMC_UPDATE_SIGNING_KEY secret.
  *
  * Optional: `npm run simc-update:keygen -- <path to private key>`.
  */
@@ -20,8 +21,8 @@ const result = await generateSigningKey({
 console.log('Private signing key written to:')
 console.log('  ' + result.privateKeyPath)
 console.log('')
-console.log('Keep it safe and back it up somewhere offline. Anyone holding it can approve a')
-console.log('simulator for every SimItBoi install, and losing it means shipping a new SimItBoi')
-console.log('release before updates work again.')
-console.log('')
-console.log('The public key is now built into src/core/simc/updateKey.ts — commit that file.')
+console.log('1. Commit src/core/simc/updateKey.ts, which now carries the public key.')
+console.log('2. On GitHub: Settings > Secrets and variables > Actions > New repository secret.')
+console.log('   Name it SIMC_UPDATE_SIGNING_KEY and paste the whole private key file as the value.')
+console.log('3. Back the file up somewhere offline. Losing it means shipping a new SimItBoi')
+console.log('   release before updates work again.')

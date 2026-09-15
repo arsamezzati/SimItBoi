@@ -125,7 +125,7 @@ export default function SimcBuilds({
             <div>
               <strong>simc {update.build.version} is available</strong>
               <small>
-                commit {update.build.commit} · approved {new Date(update.build.publishedAt).toLocaleDateString()} ·{" "}
+                commit {update.build.commit} · published {new Date(update.build.publishedAt).toLocaleDateString()} ·{" "}
                 {(update.build.gzSize / 1048576).toFixed(1)} MB download
               </small>
             </div>

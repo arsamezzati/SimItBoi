@@ -1,22 +1,23 @@
-# Mirrors SimulationCraft nightly builds as CLI-only simc updates for SimItBoi.
+# Keeps SimItBoi's simc up to date, with nobody needing to act.
 #
 # Once a week: look at the newest Windows nightly on simulationcraft.org. Only
-# if its simc version is newer than anything mirrored before (a new revision or
-# game patch, not just another day's commit), extract only simc.exe (and its GPL
-# license), prove it runs, publish it gzipped as a pre-release, and open a pull
-# request adding it to update/simc-manifest.json.
+# if its simc version is newer than anything published before (a new revision
+# or game patch, not just another day's commit), extract only simc.exe (and its
+# GPL license), prove it runs, publish it gzipped as a pre-release, add it to
+# the manifest, sign that, and upload both to the simc-channel release. Every
+# SimItBoi install then offers the update.
 #
 # Actions > simc update > Run workflow starts a check by hand. Tick "any nightly"
 # to take the newest nightly even when its version has not changed.
 #
-# Nothing here signs. SimItBoi ignores the manifest until the maintainer signs it
-# on their own machine (`npm run simc-update:sign`) and merges. A run fails, and
-# GitHub emails you, if the bytes behind a file name ever change between runs.
+# Setup, once, in the repository settings:
+#   - Secrets and variables > Actions > Secrets: SIMC_UPDATE_SIGNING_KEY holding
+#     the whole private key file made by `npm run simc-update:keygen`.
+#   - To pause updates, add the variable SIMC_UPDATES_PAUSED with value true.
 #
-# Runs only in the public repository, which owns the manifest and releases.
-#
-# Windows runner on purpose: it is the only place the Windows simc.exe can be
-# run before anyone downloads it.
+# Runs only in the public repository, which owns the releases. Windows runner on
+# purpose: it is the only place the Windows simc.exe can be run before anyone
+# downloads it.
 name: simc update
 
 on:
@@ -32,15 +33,14 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write
 
 concurrency:
   group: simc-update
   cancel-in-progress: false
 
 jobs:
-  mirror:
-    if: github.repository == 'arsamezzati/SimItBoi'
+  update:
+    if: github.repository == 'arsamezzati/SimItBoi' && vars.SIMC_UPDATES_PAUSED != 'true'
     runs-on: windows-latest
     timeout-minutes: 30
     steps:
@@ -58,11 +58,11 @@ jobs:
         env:
           ELECTRON_SKIP_BINARY_DOWNLOAD: '1'
 
-      - name: Mirror and propose simc
+      - name: Mirror, sign and publish simc
         run: node scripts/simc-update/run.ts
         env:
           GH_TOKEN: ${{ github.token }}
-          SIMC_UPDATE_MIN_AGE_DAYS: '0'
+          SIMC_UPDATE_SIGNING_KEY: ${{ secrets.SIMC_UPDATE_SIGNING_KEY }}
           SIMC_UPDATE_ANY_NIGHTLY: ${{ inputs.any_nightly && '1' || '0' }}
           # 7-Zip is preinstalled on GitHub's Windows runners.
           SEVEN_ZIP: 7z

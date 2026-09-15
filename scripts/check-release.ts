@@ -18,6 +18,9 @@ import { tmpdir } from 'node:os'
 import { join, relative, resolve, sep } from 'node:path'
 import { createRequire } from 'node:module'
 import { execFileSync } from 'node:child_process'
+import { createServer } from 'node:http'
+import type { AddressInfo } from 'node:net'
+import { SIMC_UPDATE_PUBLIC_KEY } from '../src/core/simc/updateKey.ts'
 import { _electron as electron, expect, type ElectronApplication } from '@playwright/test'
 
 const require_ = createRequire(import.meta.url)
@@ -265,6 +268,12 @@ try {
   // that the check would write into — and on cleanup could delete — a real
   // SimItBoi install belonging to whoever ran it.
   const fallbackHome = join(root, 'LocalAppData')
+  // Stands in for a malicious update server: any request reaching it means the
+  // packaged app followed the development URL override.
+  let overrideHits = 0
+  const decoy = createServer((_req, res) => { overrideHits++; res.writeHead(404).end() })
+  await new Promise<void>((done) => decoy.listen(0, '127.0.0.1', done))
+  const decoyUrl = 'http://127.0.0.1:' + (decoy.address() as AddressInfo).port + '/update/'
   const lockedApp = await electron.launch({
     executablePath: join(lockedDir, EXE), args: [],
     env: {
@@ -273,7 +282,7 @@ try {
       // Development-only update overrides. A packaged app must ignore both,
       // or a user could be talked into trusting a different signer by setting
       // an environment variable. Asserted below.
-      SIMITBOI_SIMC_UPDATE_URL: 'http://127.0.0.1:9/update/',
+      SIMITBOI_SIMC_UPDATE_URL: decoyUrl,
       SIMITBOI_SIMC_UPDATE_PUBLIC_KEY: '-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=\n-----END PUBLIC KEY-----\n'
     },
     timeout: 120_000
@@ -294,15 +303,25 @@ try {
     await lockedApp.evaluate(({ app: electronApp }) => electronApp.getPath('userData'))
     console.log('read-only : fell back to', fallback.dataDir)
 
-    // With no signing key built into this build, updates are off — and the
-    // injected test key above did not switch them on.
+    // The update check must go to the built-in channel with the built-in key,
+    // never to the injected URL or key.
     const update = await lockedPage.evaluate(() => window.simitboi.checkSimcUpdate(true))
     assert.equal(update.ok, true)
-    assert.equal((update.check as { status: string }).status, 'unconfigured',
-      'a packaged app accepted an update signing key from the environment: ' + JSON.stringify(update))
-    console.log('overrides : a packaged app ignored the development update key and URL')
+    const check = update.check as { status: string; error?: string }
+    assert.equal(overrideHits, 0, 'a packaged app fetched updates from the environment URL')
+    if (SIMC_UPDATE_PUBLIC_KEY === null) {
+      assert.equal(check.status, 'unconfigured',
+        'a packaged app accepted an update signing key from the environment: ' + JSON.stringify(update))
+    } else {
+      // Checked against the real channel with the injected all-zero key, a
+      // genuine signature would fail as invalid.
+      assert.notEqual(check.status, 'invalid',
+        'a packaged app checked the update signature with the environment key: ' + JSON.stringify(update))
+    }
+    console.log('overrides : a packaged app ignored the development update key and URL (' + check.status + ')')
   } finally {
     await lockedApp.close()
+    decoy.close()
   }
 
   assert.deepEqual(errors, [], 'the renderer raised errors')

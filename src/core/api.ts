@@ -45,6 +45,8 @@ type Response<T> = ({ ok: true } & T) | { ok: false; error: string }
 export interface ParsedProfileSummary {
   characterName: string; className: string; spec?: string; level?: number; race?: string
   header: ProfileHeader; checksum?: string; savedLoadouts: string[]; equippedCount: number
+  /** Average equipped item level as the character sheet counts it; null with no gear. */
+  itemLevel: number | null
   bagCount: number; extraLines: string[]; warnings: string[]; candidates: CandidateOption[]
   /** How well the bundled item table covers this profile. */
   coverage: TableCoverage
@@ -78,6 +80,8 @@ export interface SimItBoiApi {
   armoryStatus(): Promise<ArmoryStatus>
   /** Fetches a character from the Blizzard armory as an addon-format profile. */
   importArmory(lookup: { region: ArmoryRegion; realm: string; name: string }): Promise<Response<{ raw: string; lastLogin: number | null }>>
+  /** The character's avatar as a data URL; null when unavailable, offline, or no API client. */
+  characterPortrait(lookup: { region: string; realm: string; name: string }): Promise<Response<{ dataUrl: string | null }>>
   /** Realm names for suggestions. */
   armoryRealms(region: ArmoryRegion): Promise<Response<{ realms: Array<{ name: string; slug: string }> }>>
   /** Saves the user's own Blizzard API client after checking it works; null removes it. */

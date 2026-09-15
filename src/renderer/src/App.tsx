@@ -9,6 +9,7 @@ import { ItemPreviewProfile } from './ItemTooltip.tsx'
 import type { CandidateOption, TopGearResult } from '../../core/topgear/funnel.ts'
 import type { SimItBoiApi } from '../../core/api.ts'
 import { ArmoryImport } from './ArmoryImport.tsx'
+import { CharacterCard } from './CharacterCard.tsx'
 
 interface ParsedProfile {
   characterName: string
@@ -16,6 +17,7 @@ interface ParsedProfile {
   spec?: string
   level?: number
   race?: string
+  itemLevel: number | null
   header: { region?: string; realm?: string; addonVersion?: string; wowBuild?: string; requiresSimcBuild?: string }
   checksum?: string
   savedLoadouts: string[]
@@ -223,13 +225,7 @@ export default function App(): JSX.Element {
 
       {profile ? (
         <section className="pane">
-          <h2>
-            {profile.characterName}{' '}
-            <small>
-              {profile.race} {profile.spec} {profile.className} · level {profile.level}
-              {profile.header.realm ? ` · ${profile.header.region?.toUpperCase()}/${profile.header.realm}` : ''}
-            </small>
-          </h2>
+          <CharacterCard profile={profile} />
           <details><summary>Character details · {profile.equippedCount} equipped · {profile.bagCount} bag items</summary><div className="grid">
             <Stat label="Equipped" value={profile.equippedCount} />
             <Stat label="Bag candidates" value={profile.bagCount} />

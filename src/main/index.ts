@@ -37,7 +37,11 @@ import { requireCompatibleSimc } from '../core/simc/versionGate.ts'
 import { previewCandidate, type ItemPreviewRequest } from '../core/data/itemPreview.ts'
 import { itemStatKey } from '../core/data/itemStats.ts'
 import { resolveDataDir, type DataDirChoice } from '../core/dataDir.ts'
-import { ARMORY_REGIONS, ArmoryError, fetchArmoryProfile, fetchRealms, type ArmoryCredentials, type ArmoryRegion } from '../core/armory/blizzard.ts'
+import {
+  ARMORY_REGIONS, ArmoryError, fetchArmoryProfile, fetchCharacterPortrait, fetchRealms, realmSlug,
+  type ArmoryCredentials, type ArmoryRegion
+} from '../core/armory/blizzard.ts'
+import { averageItemLevel } from '../core/itemLevel.ts'
 import type { ArmoryStatus } from '../core/api.ts'
 
 /** Replaced at build time from .env; see electron.vite.config.ts. */
@@ -536,6 +540,7 @@ ipcMain.handle('profile:parse', (_e, raw: string) => {
         checksum: p.checksum,
         savedLoadouts: p.savedLoadouts.map((l) => l.name),
         equippedCount: p.equipped.length,
+        itemLevel: averageItemLevel(p.equipped),
         bagCount: p.bagItems.length,
         extraLines: p.extraProfileLines.map((t) => t.key),
         warnings: p.warnings,
@@ -655,6 +660,28 @@ ipcMain.handle('armory:import', async (_e, lookup: { region: unknown; realm: unk
     const message = err instanceof ArmoryError ? err.message : 'Could not reach the Blizzard armory: ' + (err as Error).message
     return { ok: false as const, error: message }
   }
+})
+
+/**
+ * Portraits for the profile card, for armory imports and pasted exports alike.
+ * Kept for the session, including misses, so re-parsing on every keystroke in
+ * the paste box asks Blizzard once per character.
+ */
+const portraitCache = new Map<string, Promise<string | null>>()
+ipcMain.handle('armory:portrait', async (_e, lookup: { region: unknown; realm: unknown; name: unknown }) => {
+  const { credentials } = armoryCredentials()
+  const region = typeof lookup?.region === 'string' ? lookup.region.toLowerCase() : ''
+  if (!credentials || !isRegion(region) || typeof lookup.realm !== 'string' || typeof lookup.name !== 'string') {
+    return { ok: true as const, dataUrl: null }
+  }
+  const key = [region, realmSlug(lookup.realm), lookup.name.trim().toLowerCase()].join('/')
+  if (!portraitCache.has(key)) {
+    const pending = fetchCharacterPortrait({ region, realm: lookup.realm, name: lookup.name, credentials })
+      // Offline or refused: no portrait, and try again next session rather than never.
+      .catch(() => { portraitCache.delete(key); return null })
+    portraitCache.set(key, pending)
+  }
+  return { ok: true as const, dataUrl: await portraitCache.get(key)! }
 })
 
 const realmCache = new Map<ArmoryRegion, Array<{ name: string; slug: string }>>()

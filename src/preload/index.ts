@@ -28,6 +28,7 @@ const api: SimItBoiApi = {
   armoryStatus: () => ipcRenderer.invoke('armory:status'),
   importArmory: (lookup) => ipcRenderer.invoke('armory:import', lookup),
   armoryRealms: (region) => ipcRenderer.invoke('armory:realms', region),
+  characterPortrait: (lookup) => ipcRenderer.invoke('armory:portrait', lookup),
   setArmoryCredentials: (credentials) => ipcRenderer.invoke('armory:setCredentials', credentials),
   runSim: (raw: string, opts?: { iterations?: number }) =>
     ipcRenderer.invoke('sim:run', raw, opts ?? {}),

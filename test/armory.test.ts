@@ -1,7 +1,8 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
-import { armoryToSimc, fetchArmoryProfile, realmSlug, simcToken, type ArmoryData } from '../src/core/armory/blizzard.ts'
+import { armoryToSimc, fetchArmoryProfile, fetchCharacterPortrait, realmSlug, simcToken, type ArmoryData } from '../src/core/armory/blizzard.ts'
+import { averageItemLevel } from '../src/core/itemLevel.ts'
 import { statDonor } from '../src/core/data/catalog.ts'
 import { parseAddonProfile } from '../src/core/parser/addonProfile.ts'
 
@@ -71,6 +72,34 @@ test('an item that was not converted gets no donor, and neither does an unknown 
   assert.equal(statDonor(271483, 'head', [{ statId: 36, amount: 133 }, { statId: 32, amount: 58 }]), undefined)
   // ...and at the Sethraliss split it is recognised as converted.
   assert.equal(statDonor(271483, 'head', [{ statId: 32, amount: 75 }, { statId: 49, amount: 116 }]), 239035)
+})
+
+test('item level is counted like the character sheet, and agrees across both imports', () => {
+  const fromArmory = averageItemLevel(parseAddonProfile(armoryToSimc(data, 'eu')).equipped)
+  const fromAddon = averageItemLevel(addon.equipped)
+  // Blizzard reports 321 for this character; the staff fills both hands.
+  assert.equal(fromAddon, fromArmory)
+  assert.equal(Math.floor(fromAddon!), 321)
+  const withoutStaffTwice = addon.equipped.reduce((sum, c) => sum + c.ilvl, 0) / 16
+  assert.ok(fromAddon! > withoutStaffTwice, 'a two-handed weapon was counted once')
+  assert.equal(averageItemLevel([]), null)
+})
+
+test('a portrait is fetched only from Blizzard\'s render host, and only as an image', async () => {
+  const lookup = { region: 'eu' as const, realm: 'Draenor', name: 'Vahshandooz' }
+  const stub = (avatar: string, contentType = 'image/jpeg'): typeof fetch => (async (input: string | URL | Request) => {
+    const url = String(input)
+    if (url.startsWith('https://oauth.battle.net/token')) return new Response(JSON.stringify({ access_token: 't', expires_in: 3600 }))
+    if (url.includes('/character-media')) return new Response(JSON.stringify({ assets: [{ key: 'avatar', value: avatar }] }))
+    return new Response(new Uint8Array([0xff, 0xd8, 0xff]), { headers: { 'content-type': contentType } })
+  }) as typeof fetch
+  const good = await fetchCharacterPortrait({ ...lookup, credentials: { clientId: 'portrait-a', clientSecret: 's' },
+    fetchImpl: stub('https://render.worldofwarcraft.com/eu/character/draenor/102/1-avatar.jpg') })
+  assert.equal(good, 'data:image/jpeg;base64,/9j/')
+  assert.equal(await fetchCharacterPortrait({ ...lookup, credentials: { clientId: 'portrait-b', clientSecret: 's' },
+    fetchImpl: stub('https://example.com/avatar.jpg') }), null)
+  assert.equal(await fetchCharacterPortrait({ ...lookup, credentials: { clientId: 'portrait-c', clientSecret: 's' },
+    fetchImpl: stub('https://render.worldofwarcraft.com/a.jpg', 'text/html') }), null)
 })
 
 /** A stand-in for Blizzard: token, then the three profile endpoints. */

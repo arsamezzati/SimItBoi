@@ -215,6 +215,38 @@ export async function fetchArmoryProfile(lookup: ArmoryLookup): Promise<{ raw: s
   }
 }
 
+/** Where Blizzard serves character renders; nothing else is downloaded as a portrait. */
+const RENDER_HOST = 'render.worldofwarcraft.com'
+const MAX_PORTRAIT_BYTES = 512 * 1024
+
+/**
+ * The character's avatar as a data URL, or null when Blizzard has none (a
+ * character not seen recently, or one on a realm the API does not list).
+ */
+export async function fetchCharacterPortrait(lookup: ArmoryLookup): Promise<string | null> {
+  if (!ARMORY_REGIONS.includes(lookup.region)) return null
+  const realm = realmSlug(lookup.realm)
+  const name = lookup.name.trim().toLowerCase()
+  if (!realm || !name) return null
+  const doFetch = lookup.fetchImpl ?? fetch
+  const token = await accessToken(lookup.region, lookup.credentials, doFetch, lookup.signal)
+  const response = await doFetch('https://' + lookup.region + '.api.blizzard.com/profile/wow/character/' +
+    encodeURIComponent(realm) + '/' + encodeURIComponent(name) + '/character-media?namespace=profile-' + lookup.region,
+  { headers: { Authorization: 'Bearer ' + token }, signal: lookup.signal })
+  if (!response.ok) return null
+  const media = await response.json() as { assets?: Array<{ key: string; value: string }> }
+  const avatar = media.assets?.find((a) => a.key === 'avatar')?.value
+  if (!avatar) return null
+  const url = new URL(avatar)
+  if (url.protocol !== 'https:' || url.hostname !== RENDER_HOST) return null
+  const image = await doFetch(url, { signal: lookup.signal })
+  const type = image.headers.get('content-type') ?? ''
+  if (!image.ok || !/^image\/(jpeg|png|webp)$/.test(type)) return null
+  const bytes = Buffer.from(await image.arrayBuffer())
+  if (bytes.length === 0 || bytes.length > MAX_PORTRAIT_BYTES) return null
+  return 'data:' + type + ';base64,' + bytes.toString('base64')
+}
+
 /** Realm names for the region, for suggestions while typing. */
 export async function fetchRealms(region: ArmoryRegion, credentials: ArmoryCredentials, fetchImpl?: typeof fetch): Promise<Array<{ name: string; slug: string }>> {
   const doFetch = fetchImpl ?? fetch

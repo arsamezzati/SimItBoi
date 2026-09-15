@@ -5,6 +5,17 @@ import type { UpdateCheck, UpdateProgress } from '../../core/simc/update.ts'
 const api = (window as unknown as { simitboi: SimItBoiApi }).simitboi
 
 /**
+ * "Offline" only when nothing answered. A server that answers 404 is reachable
+ * and simply has no update list yet, which happens before the first publish.
+ */
+function unreachableMessage(error: string): string {
+  const answered = /answered (\d+)\/(\d+)/.exec(error)
+  if (!answered) return 'Could not check for updates — you may be offline.'
+  if (answered[1] === '404') return 'No simulator updates have been published yet.'
+  return 'The update server is not responding right now (HTTP ' + answered[1] + ').'
+}
+
+/**
  * Installed simulator builds, and switching between them.
  *
  * Activation and rollback existed in the main process with nothing calling
@@ -137,7 +148,7 @@ export default function SimcBuilds({
               {checking || update === null ? 'Checking for updates…'
                 : update.status === 'current' ? 'The simulator is up to date.'
                   : update.status === 'unconfigured' ? 'Updates are not set up in this copy of SimItBoi.'
-                    : update.status === 'unreachable' ? 'Could not check for updates — you may be offline.'
+                    : update.status === 'unreachable' ? unreachableMessage(update.error)
                       : 'The update list could not be trusted, so it was ignored.'}
             </small>
             {update && update.status !== 'unconfigured' ? (

@@ -76,6 +76,7 @@ interface SeasonItem {
   uniqueEquipped?: boolean
   source?: { instanceName?: string; instanceType?: string; encounterName?: string; encounterId?: number }
   upgradeTracks: Array<{ bonusId: number; track: string; rank: number; maxRank: number; itemLevel: number }>
+  stats?: Array<{ statId: number; allocation: number }>
 }
 interface SeasonFile { version: number; generated: string; season: string; items: SeasonItem[] }
 
@@ -237,6 +238,59 @@ export function catalog(): Catalog {
  */
 export function catalogIdentity(): string {
   return combinedIdentity(['season1-gear.json', 'season2-gear.json'])
+}
+
+/** Crit, haste, versatility, mastery: the stats a catalyst conversion carries over. */
+const SECONDARY_STATS = new Set([32, 36, 40, 49])
+
+/** Each secondary's share of the item's secondary budget, keyed by stat id. */
+function secondaryShares(values: ReadonlyArray<{ statId: number; amount: number }>): Map<number, number> {
+  const secondaries = values.filter((v) => SECONDARY_STATS.has(v.statId) && v.amount > 0)
+  const total = secondaries.reduce((sum, v) => sum + v.amount, 0)
+  return new Map(secondaries.map((v) => [v.statId, total > 0 ? v.amount / total : 0]))
+}
+
+/** How far apart two splits are, or Infinity when they use different stats. */
+function shareDistance(a: Map<number, number>, b: Map<number, number>): number {
+  if (a.size === 0 || a.size !== b.size || [...a.keys()].some((id) => !b.has(id))) return Infinity
+  return Math.max(...[...a].map(([id, share]) => Math.abs(share - b.get(id)!)))
+}
+
+/**
+ * The item whose secondary stats a catalyst-converted tier piece carries.
+ *
+ * A converted piece keeps the stat split of the item it was made from, which
+ * the addon exports as `redirected_base_stats` and the Blizzard API does not.
+ * The API does report the resulting ratings, so this finds a season item for
+ * the same slot with that split. Any such item gives simc the same stats.
+ *
+ * Undefined when the piece's own split already matches (it was not converted),
+ * when the piece is not in the season data, or when nothing matches closely
+ * enough to be sure.
+ */
+export function statDonor(itemId: number, slot: string, observed: ReadonlyArray<{ statId: number; amount: number }>): number | undefined {
+  const wanted = secondaryShares(observed)
+  if (wanted.size === 0) return undefined
+  const files = [require('./season2-gear.json') as SeasonFile, require('./season1-gear.json') as SeasonFile]
+  const shares = (item: SeasonItem): Map<number, number> =>
+    secondaryShares((item.stats ?? []).map((s) => ({ statId: s.statId, amount: s.allocation })))
+  // Ratings are rounded, so a match is a split within two percentage points.
+  const TOLERANCE = 0.02
+  // Only a known season item can be told apart from its conversion; anything
+  // else is left as it is rather than matched to a stranger by coincidence.
+  const own = files.flatMap((f) => f.items).find((i) => i.id === itemId)
+  if (!own || shareDistance(wanted, shares(own)) <= TOLERANCE) return undefined
+  // simc takes every base stat from the donor, primary included, so the donor
+  // must share the piece's primary stat (Agility/Intellect, Strength/Intellect…).
+  const primary = (item: SeasonItem): string =>
+    (item.stats ?? []).map((s) => s.statId).filter((id) => !SECONDARY_STATS.has(id) && id !== 7).sort().join('/')
+  let best: { id: number; distance: number } | undefined
+  for (const item of files.flatMap((f) => f.items)) {
+    if (item.id === itemId || EMIT_SLOT[item.slot] !== slot || primary(item) !== primary(own)) continue
+    const distance = shareDistance(wanted, shares(item))
+    if (distance <= TOLERANCE && (!best || distance < best.distance)) best = { id: item.id, distance }
+  }
+  return best?.id
 }
 
 export function catalogItem(id: number): CatalogItem | undefined {

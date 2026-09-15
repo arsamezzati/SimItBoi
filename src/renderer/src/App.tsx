@@ -8,6 +8,7 @@ import Loadouts from './Loadouts.tsx'
 import { ItemPreviewProfile } from './ItemTooltip.tsx'
 import type { CandidateOption, TopGearResult } from '../../core/topgear/funnel.ts'
 import type { SimItBoiApi } from '../../core/api.ts'
+import { ArmoryImport } from './ArmoryImport.tsx'
 
 interface ParsedProfile {
   characterName: string
@@ -65,6 +66,13 @@ export default function App(): JSX.Element {
   const [historyKey, setHistoryKey] = useState(0)
   const [restoreGear, setRestoreGear] = useState<TopGearResult | null>(null)
   const [importOpen, setImportOpen] = useState(true)
+  const [importMethod, setImportMethod] = useState<'addon' | 'armory'>(() => {
+    try { return localStorage.getItem('import-method') === 'armory' ? 'armory' : 'addon' } catch { return 'addon' }
+  })
+  function chooseImport(method: 'addon' | 'armory'): void {
+    setImportMethod(method)
+    try { localStorage.setItem('import-method', method) } catch { /* only a convenience */ }
+  }
 
   const loadSavedProfile = useCallback((saved: string, scenario?: TopGearResult) => {
     setRaw(saved)
@@ -191,15 +199,25 @@ export default function App(): JSX.Element {
 
       <details className="pane import-pane" open={importOpen} onToggle={(e) => setImportOpen(e.currentTarget.open)}>
         <summary>{profile ? `${profile.characterName} imported · change profile` : 'Import your character'}</summary>
-        <label htmlFor="paste">Paste your SimC addon string</label>
-        <textarea
-          id="paste"
-          spellCheck={false}
-          placeholder="/simc in game, then paste the whole export here…"
-          value={raw}
-          disabled={running}
-          onChange={(e) => { setRestoreGear(null); void handleParse(e.target.value) }}
-        />
+        <nav className="mode-tabs import-tabs" aria-label="Import method">
+          <button type="button" aria-pressed={importMethod === 'addon'} disabled={running} onClick={() => chooseImport('addon')}>SimC addon string</button>
+          <button type="button" aria-pressed={importMethod === 'armory'} disabled={running} onClick={() => chooseImport('armory')}>Armory</button>
+        </nav>
+        {importMethod === 'armory' ? (
+          <ArmoryImport disabled={running} onImported={(text) => { setRestoreGear(null); void handleParse(text) }} />
+        ) : (
+          <>
+            <label htmlFor="paste">Paste your SimC addon string</label>
+            <textarea
+              id="paste"
+              spellCheck={false}
+              placeholder="/simc in game, then paste the whole export here…"
+              value={raw}
+              disabled={running}
+              onChange={(e) => { setRestoreGear(null); void handleParse(e.target.value) }}
+            />
+          </>
+        )}
         {parseError ? <p className="err">{parseError}</p> : null}
       </details>
 

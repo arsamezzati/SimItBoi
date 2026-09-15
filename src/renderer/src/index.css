@@ -331,6 +331,18 @@ button:focus-visible, a:focus-visible, summary:focus-visible, input:focus-visibl
 .mode-tabs button[aria-pressed="true"] { color: var(--fg); font-weight: 600;
   border-bottom-color: var(--accent); }
 
+/* Import method tabs and armory search. */
+.import-tabs { border-top: 0; margin: 0 0 14px; padding-top: 0; border-bottom: 1px solid var(--line); }
+.armory-form { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; }
+.armory-form label { margin: 0; flex: 1 1 160px; min-width: 0; }
+.armory-form select, .armory-form input { display: block; width: 100%; margin-top: 5px; background: #181d26;
+  border: 1px solid #424e61; border-radius: 6px; color: var(--fg); padding: 9px; font: inherit; }
+.armory-form button { flex: 0 0 auto; }
+.armory-key { margin-top: 14px; }
+.armory-key summary { color: var(--dim); font-size: 12px; cursor: pointer; }
+.armory-key[open] summary { margin-bottom: 4px; }
+.armory-key .armory-form { margin-top: 10px; }
+
 /* Data directory fallback notice in the header. */
 .meta .warn-inline { color: var(--warn); }
 .meta .err { color: var(--err); }

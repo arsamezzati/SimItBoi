@@ -3,8 +3,8 @@
  *
  * All sim orchestration lives here; the renderer only renders.
  */
-import { app, BrowserWindow, ipcMain } from 'electron'
-import { existsSync, renameSync, statSync } from 'node:fs'
+import { app, BrowserWindow, ipcMain, safeStorage } from 'electron'
+import { existsSync, readFileSync, renameSync, rmSync, statSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { availableParallelism } from 'node:os'
@@ -37,6 +37,12 @@ import { requireCompatibleSimc } from '../core/simc/versionGate.ts'
 import { previewCandidate, type ItemPreviewRequest } from '../core/data/itemPreview.ts'
 import { itemStatKey } from '../core/data/itemStats.ts'
 import { resolveDataDir, type DataDirChoice } from '../core/dataDir.ts'
+import { ARMORY_REGIONS, ArmoryError, fetchArmoryProfile, fetchRealms, type ArmoryCredentials, type ArmoryRegion } from '../core/armory/blizzard.ts'
+import type { ArmoryStatus } from '../core/api.ts'
+
+/** Replaced at build time from .env; see electron.vite.config.ts. */
+declare const __BLIZZARD_CLIENT_ID__: string
+declare const __BLIZZARD_CLIENT_SECRET__: string
 
 const __dirname_ = dirname(fileURLToPath(import.meta.url))
 
@@ -599,6 +605,88 @@ ipcMain.handle('items:stats', async (_e, raw: string) => {
 ipcMain.handle('items:stats:cancel', (_e, raw: string) => {
   try { itemStatJobs.cancelIf(itemStatRequestKey(raw)) } catch { /* no active matching request */ }
   return { ok: true as const }
+})
+
+/**
+ * Armory lookups. The Blizzard API client comes from the user's own saved one
+ * if any, else the one built in from .env when this copy was packaged.
+ *
+ * A saved client is encrypted with the operating system's per-user key, so the
+ * file is useless copied to another account or machine; there it reads as
+ * absent and the user enters it again.
+ */
+const ARMORY_CREDENTIALS_FILE = join(dataDir.dir, 'armory-credentials.bin')
+const BUILT_IN_ARMORY: ArmoryCredentials | null = __BLIZZARD_CLIENT_ID__ && __BLIZZARD_CLIENT_SECRET__
+  ? { clientId: __BLIZZARD_CLIENT_ID__, clientSecret: __BLIZZARD_CLIENT_SECRET__ }
+  : null
+
+function savedArmoryCredentials(): ArmoryCredentials | null {
+  try {
+    if (!safeStorage.isEncryptionAvailable() || !existsSync(ARMORY_CREDENTIALS_FILE)) return null
+    const parsed = JSON.parse(safeStorage.decryptString(readFileSync(ARMORY_CREDENTIALS_FILE))) as ArmoryCredentials
+    return parsed.clientId && parsed.clientSecret ? parsed : null
+  } catch {
+    return null
+  }
+}
+
+function armoryCredentials(): { credentials: ArmoryCredentials | null; status: ArmoryStatus } {
+  const own = savedArmoryCredentials()
+  if (own) return { credentials: own, status: { source: 'own' } }
+  if (BUILT_IN_ARMORY) return { credentials: BUILT_IN_ARMORY, status: { source: 'built-in' } }
+  return { credentials: null, status: { source: 'none' } }
+}
+
+const NO_ARMORY = 'Armory search needs a Blizzard API client in this copy of SimItBoi. Add your own below, or paste a SimC addon string instead.'
+const isRegion = (value: unknown): value is ArmoryRegion => ARMORY_REGIONS.includes(value as ArmoryRegion)
+
+ipcMain.handle('armory:status', () => armoryCredentials().status)
+
+ipcMain.handle('armory:import', async (_e, lookup: { region: unknown; realm: unknown; name: unknown }) => {
+  try {
+    const { credentials } = armoryCredentials()
+    if (!credentials) return { ok: false as const, error: NO_ARMORY }
+    if (!isRegion(lookup?.region) || typeof lookup.realm !== 'string' || typeof lookup.name !== 'string') {
+      return { ok: false as const, error: 'Invalid armory lookup' }
+    }
+    const result = await fetchArmoryProfile({ region: lookup.region, realm: lookup.realm, name: lookup.name, credentials })
+    return { ok: true as const, ...result }
+  } catch (err) {
+    const message = err instanceof ArmoryError ? err.message : 'Could not reach the Blizzard armory: ' + (err as Error).message
+    return { ok: false as const, error: message }
+  }
+})
+
+const realmCache = new Map<ArmoryRegion, Array<{ name: string; slug: string }>>()
+ipcMain.handle('armory:realms', async (_e, region: unknown) => {
+  try {
+    if (!isRegion(region)) return { ok: false as const, error: 'Unknown region' }
+    const { credentials } = armoryCredentials()
+    if (!credentials) return { ok: false as const, error: NO_ARMORY }
+    if (!realmCache.has(region)) realmCache.set(region, await fetchRealms(region, credentials))
+    return { ok: true as const, realms: realmCache.get(region)! }
+  } catch (err) {
+    return { ok: false as const, error: (err as Error).message }
+  }
+})
+
+ipcMain.handle('armory:setCredentials', async (_e, input: ArmoryCredentials | null) => {
+  try {
+    realmCache.clear()
+    if (input === null) {
+      rmSync(ARMORY_CREDENTIALS_FILE, { force: true })
+      return { ok: true as const, status: armoryCredentials().status }
+    }
+    const credentials = { clientId: String(input?.clientId ?? '').trim(), clientSecret: String(input?.clientSecret ?? '').trim() }
+    if (!credentials.clientId || !credentials.clientSecret) return { ok: false as const, error: 'Enter both the client ID and the client secret.' }
+    if (!safeStorage.isEncryptionAvailable()) return { ok: false as const, error: 'This system cannot store the secret securely, so it was not saved.' }
+    // Prove it works before saving it: a typo should fail here, not on every lookup.
+    await fetchRealms('us', credentials)
+    writeFileSync(ARMORY_CREDENTIALS_FILE, safeStorage.encryptString(JSON.stringify(credentials)))
+    return { ok: true as const, status: armoryCredentials().status }
+  } catch (err) {
+    return { ok: false as const, error: err instanceof ArmoryError ? err.message : (err as Error).message }
+  }
 })
 
 ipcMain.handle('profile:remember', (_e, raw: string) => {

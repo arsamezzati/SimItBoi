@@ -25,6 +25,10 @@ const api: SimItBoiApi = {
     return () => { ipcRenderer.off('simc:updateProgress', handler) }
   },
   parseProfile: (raw: string) => ipcRenderer.invoke('profile:parse', raw),
+  armoryStatus: () => ipcRenderer.invoke('armory:status'),
+  importArmory: (lookup) => ipcRenderer.invoke('armory:import', lookup),
+  armoryRealms: (region) => ipcRenderer.invoke('armory:realms', region),
+  setArmoryCredentials: (credentials) => ipcRenderer.invoke('armory:setCredentials', credentials),
   runSim: (raw: string, opts?: { iterations?: number }) =>
     ipcRenderer.invoke('sim:run', raw, opts ?? {}),
   cancelSim: () => ipcRenderer.invoke('sim:cancel'),

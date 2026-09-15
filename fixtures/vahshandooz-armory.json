@@ -1,0 +1,923 @@
+{
+ "summary": {
+  "name": "Vahshandooz",
+  "level": 90,
+  "race": {
+   "id": 91,
+   "name": "Haranir"
+  },
+  "character_class": {
+   "id": 7,
+   "name": "Shaman"
+  },
+  "active_spec": {
+   "id": 262,
+   "name": "Elemental"
+  },
+  "realm": {
+   "name": "Draenor",
+   "slug": "draenor"
+  },
+  "last_login_timestamp": 1789428344000
+ },
+ "equipment": {
+  "equipped_items": [
+   {
+    "slot": {
+     "type": "HEAD"
+    },
+    "item": {
+     "id": 271483
+    },
+    "name": "Serpent Crown of the Ophidian Oracle",
+    "level": {
+     "value": 321
+    },
+    "bonus_list": [
+     6652,
+     13696,
+     13440,
+     13692,
+     13698,
+     12846
+    ],
+    "enchantments": [
+     {
+      "enchantment_id": 8017,
+      "enchantment_slot": {
+       "type": "PERMANENT"
+      }
+     }
+    ],
+    "stats": [
+     {
+      "type": {
+       "type": "INTELLECT"
+      },
+      "value": 167
+     },
+     {
+      "type": {
+       "type": "AGILITY"
+      },
+      "value": 167,
+      "is_negated": true
+     },
+     {
+      "type": {
+       "type": "STAMINA"
+      },
+      "value": 3369
+     },
+     {
+      "type": {
+       "type": "CRIT_RATING"
+      },
+      "value": 75
+     },
+     {
+      "type": {
+       "type": "MASTERY_RATING"
+      },
+      "value": 116
+     }
+    ]
+   },
+   {
+    "slot": {
+     "type": "NECK"
+    },
+    "item": {
+     "id": 268251
+    },
+    "name": "Amulet of the Twin Fangs",
+    "level": {
+     "value": 334
+    },
+    "bonus_list": [
+     40,
+     13668,
+     13334,
+     13696,
+     12854
+    ],
+    "sockets": [
+     {
+      "item": {
+       "id": 240898
+      }
+     }
+    ],
+    "stats": [
+     {
+      "type": {
+       "type": "STAMINA"
+      },
+      "value": 2199
+     },
+     {
+      "type": {
+       "type": "HASTE_RATING"
+      },
+      "value": 61
+     },
+     {
+      "type": {
+       "type": "MASTERY_RATING"
+      },
+      "value": 344
+     },
+     {
+      "type": {
+       "type": "COMBAT_RATING_AVOIDANCE"
+      },
+      "value": 69
+     }
+    ]
+   },
+   {
+    "slot": {
+     "type": "SHOULDER"
+    },
+    "item": {
+     "id": 271481
+    },
+    "name": "Hissing Mantle of the Ophidian Oracle",
+    "level": {
+     "value": 321
+    },
+    "bonus_list": [
+     13334,
+     13694,
+     6652,
+     13697,
+     12846
+    ],
+    "enchantments": [
+     {
+      "enchantment_id": 8001,
+      "enchantment_slot": {
+       "type": "PERMANENT"
+      }
+     }
+    ],
+    "stats": [
+     {
+      "type": {
+       "type": "INTELLECT"
+      },
+      "value": 125
+     },
+     {
+      "type": {
+       "type": "AGILITY"
+      },
+      "value": 125,
+      "is_negated": true
+     },
+     {
+      "type": {
+       "type": "STAMINA"
+      },
+      "value": 2527
+     },
+     {
+      "type": {
+       "type": "CRIT_RATING"
+      },
+      "value": 49
+     },
+     {
+      "type": {
+       "type": "MASTERY_RATING"
+      },
+      "value": 94
+     }
+    ]
+   },
+   {
+    "slot": {
+     "type": "CHEST"
+    },
+    "item": {
+     "id": 271486
+    },
+    "name": "Fanged Raiment of the Ophidian Oracle",
+    "level": {
+     "value": 334
+    },
+    "bonus_list": [
+     6652,
+     13440,
+     13690,
+     13698,
+     12854
+    ],
+    "enchantments": [
+     {
+      "enchantment_id": 7987,
+      "enchantment_slot": {
+       "type": "PERMANENT"
+      }
+     }
+    ],
+    "stats": [
+     {
+      "type": {
+       "type": "INTELLECT"
+      },
+      "value": 189
+     },
+     {
+      "type": {
+       "type": "AGILITY"
+      },
+      "value": 189,
+      "is_negated": true
+     },
+     {
+      "type": {
+       "type": "STAMINA"
+      },
+      "value": 3910
+     },
+     {
+      "type": {
+       "type": "CRIT_RATING"
+      },
+      "value": 126
+     },
+     {
+      "type": {
+       "type": "HASTE_RATING"
+      },
+      "value": 75
+     }
+    ]
+   },
+   {
+    "slot": {
+     "type": "WAIST"
+    },
+    "item": {
+     "id": 268254
+    },
+    "name": "Serpentine Mixing Belt",
+    "level": {
+     "value": 311
+    },
+    "bonus_list": [
+     43,
+     13696,
+     13662,
+     13334,
+     12843
+    ],
+    "stats": [
+     {
+      "type": {
+       "type": "INTELLECT"
+      },
+      "value": 114
+     },
+     {
+      "type": {
+       "type": "AGILITY"
+      },
+      "value": 114,
+      "is_negated": true
+     },
+     {
+      "type": {
+       "type": "STAMINA"
+      },
+      "value": 2252
+     },
+     {
+      "type": {
+       "type": "HASTE_RATING"
+      },
+      "value": 43
+     },
+     {
+      "type": {
+       "type": "MASTERY_RATING"
+      },
+      "value": 94
+     },
+     {
+      "type": {
+       "type": "COMBAT_RATING_STURDINESS"
+      },
+      "value": 59
+     }
+    ]
+   },
+   {
+    "slot": {
+     "type": "LEGS"
+    },
+    "item": {
+     "id": 244582
+    },
+    "name": "Farstrider's Reinforced Faulds",
+    "level": {
+     "value": 331
+    },
+    "bonus_list": [
+     12214,
+     13667,
+     12497,
+     13751,
+     14001,
+     8960,
+     12384,
+     8790,
+     13836
+    ],
+    "enchantments": [
+     {
+      "enchantment_id": 7935,
+      "enchantment_slot": {
+       "type": "PERMANENT"
+      }
+     }
+    ],
+    "modified_crafting_stat": [
+     {
+      "id": 40
+     },
+     {
+      "id": 32
+     }
+    ],
+    "stats": [
+     {
+      "type": {
+       "type": "INTELLECT"
+      },
+      "value": 183
+     },
+     {
+      "type": {
+       "type": "AGILITY"
+      },
+      "value": 183,
+      "is_negated": true
+     },
+     {
+      "type": {
+       "type": "STAMINA"
+      },
+      "value": 3777
+     },
+     {
+      "type": {
+       "type": "CRIT_RATING"
+      },
+      "value": 99
+     },
+     {
+      "type": {
+       "type": "HASTE_RATING"
+      },
+      "value": 99
+     }
+    ]
+   },
+   {
+    "slot": {
+     "type": "FEET"
+    },
+    "item": {
+     "id": 271485
+    },
+    "name": "Scaled Shoes of the Ophidian Oracle",
+    "level": {
+     "value": 321
+    },
+    "bonus_list": [
+     12846,
+     13334,
+     6652,
+     1574
+    ],
+    "enchantments": [
+     {
+      "enchantment_id": 7963,
+      "enchantment_slot": {
+       "type": "PERMANENT"
+      }
+     }
+    ],
+    "stats": [
+     {
+      "type": {
+       "type": "INTELLECT"
+      },
+      "value": 125
+     },
+     {
+      "type": {
+       "type": "AGILITY"
+      },
+      "value": 125,
+      "is_negated": true
+     },
+     {
+      "type": {
+       "type": "STAMINA"
+      },
+      "value": 2527
+     },
+     {
+      "type": {
+       "type": "CRIT_RATING"
+      },
+      "value": 96
+     },
+     {
+      "type": {
+       "type": "MASTERY_RATING"
+      },
+      "value": 47
+     }
+    ]
+   },
+   {
+    "slot": {
+     "type": "WRIST"
+    },
+    "item": {
+     "id": 251200
+    },
+    "name": "Saptorbane Guards",
+    "level": {
+     "value": 311
+    },
+    "bonus_list": [
+     12843,
+     13440,
+     6652,
+     13696,
+     13662,
+     12699
+    ],
+    "stats": [
+     {
+      "type": {
+       "type": "INTELLECT"
+      },
+      "value": 86
+     },
+     {
+      "type": {
+       "type": "AGILITY"
+      },
+      "value": 86,
+      "is_negated": true
+     },
+     {
+      "type": {
+       "type": "STAMINA"
+      },
+      "value": 1689
+     },
+     {
+      "type": {
+       "type": "CRIT_RATING"
+      },
+      "value": 38
+     },
+     {
+      "type": {
+       "type": "HASTE_RATING"
+      },
+      "value": 64
+     }
+    ]
+   },
+   {
+    "slot": {
+     "type": "HANDS"
+    },
+    "item": {
+     "id": 271484
+    },
+    "name": "Hexing Grips of the Ophidian Oracle",
+    "level": {
+     "value": 315
+    },
+    "bonus_list": [
+     6652,
+     13440,
+     13691,
+     13697,
+     12844
+    ],
+    "stats": [
+     {
+      "type": {
+       "type": "INTELLECT"
+      },
+      "value": 118
+     },
+     {
+      "type": {
+       "type": "AGILITY"
+      },
+      "value": 118,
+      "is_negated": true
+     },
+     {
+      "type": {
+       "type": "STAMINA"
+      },
+      "value": 2358
+     },
+     {
+      "type": {
+       "type": "CRIT_RATING"
+      },
+      "value": 58
+     },
+     {
+      "type": {
+       "type": "MASTERY_RATING"
+      },
+      "value": 82
+     }
+    ]
+   },
+   {
+    "slot": {
+     "type": "FINGER_1"
+    },
+    "item": {
+     "id": 268252
+    },
+    "name": "Apex Brute's Claw Ring",
+    "level": {
+     "value": 318
+    },
+    "bonus_list": [
+     6652,
+     13668,
+     13334,
+     12849
+    ],
+    "enchantments": [
+     {
+      "enchantment_id": 7967,
+      "enchantment_slot": {
+       "type": "PERMANENT"
+      }
+     }
+    ],
+    "sockets": [
+     {
+      "item": {
+       "id": 240983
+      }
+     }
+    ],
+    "stats": [
+     {
+      "type": {
+       "type": "STAMINA"
+      },
+      "value": 1830
+     },
+     {
+      "type": {
+       "type": "CRIT_RATING"
+      },
+      "value": 308
+     },
+     {
+      "type": {
+       "type": "HASTE_RATING"
+      },
+      "value": 61
+     }
+    ]
+   },
+   {
+    "slot": {
+     "type": "FINGER_2"
+    },
+    "item": {
+     "id": 273792
+    },
+    "name": "Band of the Amani Warlord",
+    "level": {
+     "value": 311
+    },
+    "bonus_list": [
+     12843,
+     13440,
+     6652,
+     13668,
+     12699
+    ],
+    "enchantments": [
+     {
+      "enchantment_id": 7967,
+      "enchantment_slot": {
+       "type": "PERMANENT"
+      }
+     }
+    ],
+    "sockets": [
+     {
+      "item": {
+       "id": 240898
+      }
+     }
+    ],
+    "stats": [
+     {
+      "type": {
+       "type": "STAMINA"
+      },
+      "value": 1689
+     },
+     {
+      "type": {
+       "type": "CRIT_RATING"
+      },
+      "value": 128
+     },
+     {
+      "type": {
+       "type": "HASTE_RATING"
+      },
+      "value": 225
+     }
+    ]
+   },
+   {
+    "slot": {
+     "type": "TRINKET_1"
+    },
+    "item": {
+     "id": 250214
+    },
+    "name": "Lightspire Core",
+    "level": {
+     "value": 321
+    },
+    "bonus_list": [
+     13440,
+     6652,
+     12699,
+     12846
+    ],
+    "stats": [
+     {
+      "type": {
+       "type": "INTELLECT"
+      },
+      "value": 159
+     },
+     {
+      "type": {
+       "type": "AGILITY"
+      },
+      "value": 159,
+      "is_negated": true
+     }
+    ]
+   },
+   {
+    "slot": {
+     "type": "TRINKET_2"
+    },
+    "item": {
+     "id": 250215
+    },
+    "name": "Freightrunner's Flask",
+    "level": {
+     "value": 321
+    },
+    "bonus_list": [
+     13440,
+     6652,
+     12699,
+     12846
+    ],
+    "stats": [
+     {
+      "type": {
+       "type": "INTELLECT"
+      },
+      "value": 159
+     },
+     {
+      "type": {
+       "type": "AGILITY"
+      },
+      "value": 159,
+      "is_negated": true
+     }
+    ]
+   },
+   {
+    "slot": {
+     "type": "BACK"
+    },
+    "item": {
+     "id": 251132
+    },
+    "name": "Speakeasy Shroud",
+    "level": {
+     "value": 311
+    },
+    "bonus_list": [
+     12843,
+     13440,
+     6652,
+     13662,
+     12699
+    ],
+    "stats": [
+     {
+      "type": {
+       "type": "INTELLECT"
+      },
+      "value": 86
+     },
+     {
+      "type": {
+       "type": "AGILITY"
+      },
+      "value": 86,
+      "is_negated": true
+     },
+     {
+      "type": {
+       "type": "STRENGTH"
+      },
+      "value": 86,
+      "is_negated": true
+     },
+     {
+      "type": {
+       "type": "STAMINA"
+      },
+      "value": 1689
+     },
+     {
+      "type": {
+       "type": "CRIT_RATING"
+      },
+      "value": 60
+     },
+     {
+      "type": {
+       "type": "MASTERY_RATING"
+      },
+      "value": 42
+     }
+    ]
+   },
+   {
+    "slot": {
+     "type": "MAIN_HAND"
+    },
+    "item": {
+     "id": 245770
+    },
+    "name": "Aln'hara Cane",
+    "level": {
+     "value": 331
+    },
+    "bonus_list": [
+     12214,
+     12497,
+     13751,
+     14004,
+     13771,
+     8960,
+     8793,
+     13836
+    ],
+    "enchantments": [
+     {
+      "enchantment_id": 7983,
+      "enchantment_slot": {
+       "type": "PERMANENT"
+      }
+     }
+    ],
+    "modified_crafting_stat": [
+     {
+      "id": 49
+     },
+     {
+      "id": 32
+     }
+    ],
+    "stats": [
+     {
+      "type": {
+       "type": "INTELLECT"
+      },
+      "value": 815
+     },
+     {
+      "type": {
+       "type": "STAMINA"
+      },
+      "value": 3777
+     },
+     {
+      "type": {
+       "type": "HASTE_RATING"
+      },
+      "value": 99
+     },
+     {
+      "type": {
+       "type": "MASTERY_RATING"
+      },
+      "value": 99
+     }
+    ]
+   }
+  ]
+ },
+ "specializations": {
+  "active_specialization": {
+   "id": 262
+  },
+  "specializations": [
+   {
+    "specialization": {
+     "id": 262
+    },
+    "loadouts": [
+     {
+      "is_active": false,
+      "talent_loadout_code": "CYQALMl7AwW51MWzGneuHE3tPCAAAAzMbLzMmZmZZbZMMjZAAAAgFzsBDYAzGDwsAAWmZmxYbZGbMzswyMzMjZYWmxiZGmZBAYAgZGDDD"
+     },
+     {
+      "is_active": false,
+      "talent_loadout_code": "CYQALMl7AwW51MWzGneuHE3tPCAAAAzMbLzMmZmZZbZMMjBAAAAsYmNYADY2YAmFAYWmZmxYbxAzMLjlZmZGDLzyMWMzwMLDAYAgZGDDD"
+     },
+     {
+      "is_active": false,
+      "talent_loadout_code": "CYQALMl7AwW51MWzGneuHE3tPCAAAAzMbLzMGjZZbZMmhZAAAAgFzsBDYAzGDwsAAzyMzMzYbxYjZGjlZmZGDLWGzywYmZBAYGAMzYYYA"
+     },
+     {
+      "is_active": false,
+      "talent_loadout_code": "CYQALMl7AwW51MWzGneuHE3tPCAAAAzMbLzMmZmZZbZMMjBAAAAsYmNYADY2YAmFAYWmZmxYbxYjZmtxyMzMjhFLzYxMDzsMAgBAmZMMMA"
+     },
+     {
+      "is_active": false,
+      "talent_loadout_code": "CYQALMl7AwW51MWzGneuHE3tPCAAAAzMbLzMzYML2mhZMzAAAAAgFzYYDWgZYwYDAmlZmZM2WM2YmxYZmZmxwysYsYmZMzCAwMAzMwwwA"
+     },
+     {
+      "is_active": false,
+      "talent_loadout_code": "CYQALMl7AwW51MWzGneuHE3tPCAAAAzMbLzMGjZZZZMmhZAAAAgFzsBDYAzGDwsAAz2MzMGbLGbMzsNWmxMjhlZZmZZYMzsAAMDAmZMMMA"
+     },
+     {
+      "is_active": false,
+      "talent_loadout_code": "CYQALMl7AwW51MWzGneuHE3tPCAAAAzMbLzMGjZZZZMmhBAAAAsYmNYADY2YAmFAY2mZmxYbxYjZGjlZmZGDLWmZWmxYmZBAYYAMzYYYA"
+     },
+     {
+      "is_active": false,
+      "talent_loadout_code": "CYQALMl7AwW51MWzGneuHE3tPCAAAAzMbLzMGjZZZZMmhBAAAAsYmNYADY2YAmFAYWmZmxYbxYjZGjlZmZGDLzixyMzYmZBAYGAMzYYYA"
+     },
+     {
+      "is_active": true,
+      "talent_loadout_code": "CYQALMl7AwW51MWzGneuHE3tPCAAAAzMbLzMGjZZbZMmhZAAAAgFzsBDYAzGTIzCAMLzMzMjtFTbMzYsMzMzYYxyYWGGzMLAAzAgZGDDD"
+     },
+     {
+      "is_active": false,
+      "talent_loadout_code": "CYQALMl7AwW51MWzGneuHE3tPCAAAAzMLLzMmZmZbZZMmxMDAAAAsZmNYADY2YAmFAYWmZmxYbxAzMGLzMzMzMWsYsgxMzCAwAAzMGGGA"
+     },
+     {
+      "is_active": false,
+      "talent_loadout_code": "CYQALMl7AwW51MWzGneuHE3tPCAAAAzMbLzMmZmZZbZMMjBAAAAsYmNYADY2YAmFAY2mZmxYbxAzMGLzMzMGWsMjFzMMzyAAzwAYmxwwA"
+     },
+     {
+      "is_active": false,
+      "talent_loadout_code": "CYQALMl7AwW51MWzGneuHE3tPCAAAAzMbLzMGjZZbZMmhZAAAAgFzsBDYAzGDwsAAz2MzMGbLGYmZbmlZmZGDLWmZWGGzMLAADAMzYYYA"
+     }
+    ]
+   },
+   {
+    "specialization": {
+     "id": 263
+    },
+    "loadouts": [
+     {
+      "is_active": true,
+      "talent_loadout_code": "CcQALMl7AwW51MWzGneuHE3tPOzMDgxwgZGDAAAAAAAAAAAAAAAAYWegBGYAGsYMjBAAAgBAAAAA"
+     }
+    ]
+   }
+  ]
+ }
+}

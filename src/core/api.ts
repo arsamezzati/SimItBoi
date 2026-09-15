@@ -22,6 +22,13 @@ import type { HypotheticalInput } from './topgear/hypothetical.ts'
 import type { ItemStatState } from './data/itemStats.ts'
 import type { ItemPreviewRequest } from './data/itemPreview.ts'
 import type { InstallResult, UpdateCheck, UpdateProgress } from './simc/update.ts'
+import type { ArmoryCredentials, ArmoryRegion } from './armory/blizzard.ts'
+
+/**
+ * Armory lookups use the user's own Blizzard API client when they saved one,
+ * otherwise the one built into this copy, otherwise they are unavailable.
+ */
+export interface ArmoryStatus { source: 'own' | 'built-in' | 'none' }
 
 /** One provisioned simc build, with whatever is wrong with it. */
 export interface SimcBuildSummary {
@@ -67,6 +74,14 @@ export interface SimItBoiApi {
   installSimcUpdate(): Promise<Response<{ result: InstallResult }>>
   onSimcUpdateProgress(cb: (progress: UpdateProgress) => void): () => void
   parseProfile(raw: string): Promise<Response<{ profile: ParsedProfileSummary }>>
+  /** Whether armory lookups can run, and with whose Blizzard API client. */
+  armoryStatus(): Promise<ArmoryStatus>
+  /** Fetches a character from the Blizzard armory as an addon-format profile. */
+  importArmory(lookup: { region: ArmoryRegion; realm: string; name: string }): Promise<Response<{ raw: string; lastLogin: number | null }>>
+  /** Realm names for suggestions. */
+  armoryRealms(region: ArmoryRegion): Promise<Response<{ realms: Array<{ name: string; slug: string }> }>>
+  /** Saves the user's own Blizzard API client after checking it works; null removes it. */
+  setArmoryCredentials(credentials: ArmoryCredentials | null): Promise<Response<{ status: ArmoryStatus }>>
   runSim(raw: string, opts?: { iterations?: number }): Promise<Response<{
     report: SimReport; durationMs: number; simcVersion: string | null
     versionWarning: string | null; reportId: string

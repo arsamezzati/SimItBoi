@@ -10,7 +10,7 @@
  * stores the private key outside the repository, and writes the public key
  * here.
  */
-export const SIMC_UPDATE_PUBLIC_KEY: string | null = null
+export const SIMC_UPDATE_PUBLIC_KEY: string | null = "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAE3iWsYbGWtqFaSj/Cf+A2K5uFKPp14gnKfTYHr1u/0Q=\n-----END PUBLIC KEY-----\n"
 
 /**
  * Where approved builds are listed. Served over HTTPS from this repository

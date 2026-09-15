@@ -1,0 +1,4073 @@
+{
+  "version": 1,
+  "generated": "2026-09-13T19:37:15.995Z",
+  "verified": true,
+  "source": "SPEC_WEAPON_RULES (per-spec rules), cross-checked against DB2 class proficiency",
+  "specCount": 39,
+  "specs": [
+    {
+      "specKey": "warrior:arms",
+      "className": "warrior",
+      "classDisplayName": "Warrior",
+      "specName": "arms",
+      "specDisplayName": "Arms",
+      "role": "melee_dps",
+      "primaryStat": "strength",
+      "armorClass": "plate",
+      "allowedConfigs": [
+        "two_hand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "2H Axe",
+        "2H Mace",
+        "2H Sword",
+        "Polearm"
+      ],
+      "summary": "Two-handed heavy weapon specialist (Swords, Axes, Maces, Polearms). Off-hand remains empty.",
+      "combinations": [
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    {
+      "specKey": "warrior:fury",
+      "className": "warrior",
+      "classDisplayName": "Warrior",
+      "specName": "fury",
+      "specDisplayName": "Fury",
+      "role": "melee_dps",
+      "primaryStat": "strength",
+      "armorClass": "plate",
+      "allowedConfigs": [
+        "titans_grip",
+        "dual_wield_1h"
+      ],
+      "talentGatedConfigs": [
+        "titans_grip",
+        "dual_wield_1h"
+      ],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": true,
+      "canTwoHand": false,
+      "canTitansGrip": true,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "2H Axe",
+        "2H Mace",
+        "2H Sword",
+        "Polearm",
+        "1H Axe",
+        "1H Mace",
+        "1H Sword",
+        "Fist Weapon",
+        "Dagger",
+        "Staff"
+      ],
+      "summary": "Dual-wield specialist. Wields two Two-Handed weapons (Titan's Grip) or two One-Handed weapons (Single-Minded Fury) via talent choices.",
+      "combinations": [
+        {
+          "combinationType": "dual_wield_1h",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "One-Handed Weapon",
+          "isTalentGated": true,
+          "notes": "Dual wielding 1H weapons (talent gated)."
+        },
+        {
+          "combinationType": "titans_grip",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Two-Handed Weapon",
+          "isTalentGated": true,
+          "notes": "Titan's Grip: Dual wielding two Two-Handed weapons."
+        }
+      ]
+    },
+    {
+      "specKey": "warrior:protection",
+      "className": "warrior",
+      "classDisplayName": "Warrior",
+      "specName": "protection",
+      "specDisplayName": "Protection",
+      "role": "tank",
+      "primaryStat": "strength",
+      "armorClass": "plate",
+      "allowedConfigs": [
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "shield"
+      ],
+      "canShield": true,
+      "canHoldable": false,
+      "canDualWield": false,
+      "canTwoHand": false,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "1H Axe",
+        "1H Mace",
+        "1H Sword"
+      ],
+      "summary": "One-handed weapon with a Shield in the off-hand. Shield is required for core abilities like Shield Slam and Shield Block.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_shield",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Shield",
+          "isTalentGated": false,
+          "notes": "Standard 1H weapon paired with a Shield."
+        }
+      ]
+    },
+    {
+      "specKey": "paladin:holy",
+      "className": "paladin",
+      "classDisplayName": "Paladin",
+      "specName": "holy",
+      "specDisplayName": "Holy",
+      "role": "healer",
+      "primaryStat": "intellect",
+      "armorClass": "plate",
+      "allowedConfigs": [
+        "one_hand_offhand",
+        "two_hand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "shield"
+      ],
+      "canShield": true,
+      "canHoldable": false,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "1H Axe",
+        "1H Mace",
+        "1H Sword",
+        "2H Axe",
+        "2H Mace",
+        "2H Sword",
+        "Polearm"
+      ],
+      "summary": "Can wield One-Handed weapon with a Shield or Held-in-Off-hand item, or a Two-Handed weapon.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_shield",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Shield",
+          "isTalentGated": false,
+          "notes": "Standard 1H weapon paired with a Shield."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    {
+      "specKey": "paladin:protection",
+      "className": "paladin",
+      "classDisplayName": "Paladin",
+      "specName": "protection",
+      "specDisplayName": "Protection",
+      "role": "tank",
+      "primaryStat": "strength",
+      "armorClass": "plate",
+      "allowedConfigs": [
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "shield"
+      ],
+      "canShield": true,
+      "canHoldable": false,
+      "canDualWield": false,
+      "canTwoHand": false,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "1H Axe",
+        "1H Mace",
+        "1H Sword"
+      ],
+      "summary": "One-handed weapon with a Shield in the off-hand. Shield is mandatory for Shield of the Righteous and Avenger's Shield.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_shield",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Shield",
+          "isTalentGated": false,
+          "notes": "Standard 1H weapon paired with a Shield."
+        }
+      ]
+    },
+    {
+      "specKey": "paladin:retribution",
+      "className": "paladin",
+      "classDisplayName": "Paladin",
+      "specName": "retribution",
+      "specDisplayName": "Retribution",
+      "role": "melee_dps",
+      "primaryStat": "strength",
+      "armorClass": "plate",
+      "allowedConfigs": [
+        "two_hand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "2H Axe",
+        "2H Mace",
+        "2H Sword",
+        "Polearm"
+      ],
+      "summary": "Two-handed weapon wielder (2H Swords, Maces, Axes, Polearms). Off-hand remains empty.",
+      "combinations": [
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    {
+      "specKey": "deathknight:blood",
+      "className": "deathknight",
+      "classDisplayName": "Death Knight",
+      "specName": "blood",
+      "specDisplayName": "Blood",
+      "role": "tank",
+      "primaryStat": "strength",
+      "armorClass": "plate",
+      "allowedConfigs": [
+        "two_hand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "2H Axe",
+        "2H Mace",
+        "2H Sword",
+        "Polearm"
+      ],
+      "summary": "Two-handed weapon tank (2H Axes, Maces, Swords, Polearms). No off-hand items.",
+      "combinations": [
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    {
+      "specKey": "deathknight:frost",
+      "className": "deathknight",
+      "classDisplayName": "Death Knight",
+      "specName": "frost",
+      "specDisplayName": "Frost",
+      "role": "melee_dps",
+      "primaryStat": "strength",
+      "armorClass": "plate",
+      "allowedConfigs": [
+        "two_hand",
+        "dual_wield_1h"
+      ],
+      "talentGatedConfigs": [
+        "two_hand",
+        "dual_wield_1h"
+      ],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": true,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "2H Axe",
+        "2H Mace",
+        "2H Sword",
+        "Polearm",
+        "1H Axe",
+        "1H Mace",
+        "1H Sword"
+      ],
+      "summary": "Dual wields One-Handed weapons or wields a Two-Handed weapon, selected via talents (e.g. Breath of Sindragosa vs Obliteration).",
+      "combinations": [
+        {
+          "combinationType": "dual_wield_1h",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "One-Handed Weapon",
+          "isTalentGated": true,
+          "notes": "Dual wielding 1H weapons (talent gated)."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": true,
+          "notes": "Two-handed weapon (talent gated option)."
+        }
+      ]
+    },
+    {
+      "specKey": "deathknight:unholy",
+      "className": "deathknight",
+      "classDisplayName": "Death Knight",
+      "specName": "unholy",
+      "specDisplayName": "Unholy",
+      "role": "melee_dps",
+      "primaryStat": "strength",
+      "armorClass": "plate",
+      "allowedConfigs": [
+        "two_hand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "2H Axe",
+        "2H Mace",
+        "2H Sword",
+        "Polearm"
+      ],
+      "summary": "Two-handed weapon DPS specialist. Off-hand remains empty.",
+      "combinations": [
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    {
+      "specKey": "demonhunter:havoc",
+      "className": "demonhunter",
+      "classDisplayName": "Demon Hunter",
+      "specName": "havoc",
+      "specDisplayName": "Havoc",
+      "role": "melee_dps",
+      "primaryStat": "agility",
+      "armorClass": "leather",
+      "allowedConfigs": [
+        "dual_wield_1h"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": true,
+      "canTwoHand": false,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Warglaive",
+        "1H Sword",
+        "1H Axe",
+        "Fist Weapon"
+      ],
+      "summary": "Dual wields Warglaives or One-Handed Swords, Axes, and Fist Weapons.",
+      "combinations": [
+        {
+          "combinationType": "dual_wield_1h",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "One-Handed Weapon",
+          "isTalentGated": false,
+          "notes": "Standard dual wielding 1H weapons."
+        }
+      ]
+    },
+    {
+      "specKey": "demonhunter:vengeance",
+      "className": "demonhunter",
+      "classDisplayName": "Demon Hunter",
+      "specName": "vengeance",
+      "specDisplayName": "Vengeance",
+      "role": "tank",
+      "primaryStat": "agility",
+      "armorClass": "leather",
+      "allowedConfigs": [
+        "dual_wield_1h"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": true,
+      "canTwoHand": false,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Warglaive",
+        "1H Sword",
+        "1H Axe",
+        "Fist Weapon"
+      ],
+      "summary": "Dual wields Warglaives or One-Handed Swords, Axes, and Fist Weapons.",
+      "combinations": [
+        {
+          "combinationType": "dual_wield_1h",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "One-Handed Weapon",
+          "isTalentGated": false,
+          "notes": "Standard dual wielding 1H weapons."
+        }
+      ]
+    },
+    {
+      "specKey": "druid:balance",
+      "className": "druid",
+      "classDisplayName": "Druid",
+      "specName": "balance",
+      "specDisplayName": "Balance",
+      "role": "ranged_dps",
+      "primaryStat": "intellect",
+      "armorClass": "leather",
+      "allowedConfigs": [
+        "two_hand",
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "holdable"
+      ],
+      "canShield": false,
+      "canHoldable": true,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Dagger",
+        "1H Mace"
+      ],
+      "summary": "Wields a Two-Handed Staff/Polearm or a One-Handed weapon with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_holdable",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Held In Off-hand",
+          "isTalentGated": false,
+          "notes": "Standard 1H caster weapon paired with a Holdable item."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    {
+      "specKey": "druid:restoration",
+      "className": "druid",
+      "classDisplayName": "Druid",
+      "specName": "restoration",
+      "specDisplayName": "Restoration",
+      "role": "healer",
+      "primaryStat": "intellect",
+      "armorClass": "leather",
+      "allowedConfigs": [
+        "two_hand",
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "holdable"
+      ],
+      "canShield": false,
+      "canHoldable": true,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Dagger",
+        "1H Mace"
+      ],
+      "summary": "Wields a Two-Handed Staff or a One-Handed weapon with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_holdable",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Held In Off-hand",
+          "isTalentGated": false,
+          "notes": "Standard 1H caster weapon paired with a Holdable item."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    {
+      "specKey": "druid:feral",
+      "className": "druid",
+      "classDisplayName": "Druid",
+      "specName": "feral",
+      "specDisplayName": "Feral",
+      "role": "melee_dps",
+      "primaryStat": "agility",
+      "armorClass": "leather",
+      "allowedConfigs": [
+        "two_hand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Polearm",
+        "2H Mace"
+      ],
+      "summary": "Wields a Two-Handed Staff/Polearm or a One-Handed weapon with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    {
+      "specKey": "druid:guardian",
+      "className": "druid",
+      "classDisplayName": "Druid",
+      "specName": "guardian",
+      "specDisplayName": "Guardian",
+      "role": "tank",
+      "primaryStat": "agility",
+      "armorClass": "leather",
+      "allowedConfigs": [
+        "two_hand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Polearm",
+        "2H Mace"
+      ],
+      "summary": "Wields a Two-Handed Staff/Polearm or a One-Handed weapon with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    {
+      "specKey": "evoker:devastation",
+      "className": "evoker",
+      "classDisplayName": "Evoker",
+      "specName": "devastation",
+      "specDisplayName": "Devastation",
+      "role": "ranged_dps",
+      "primaryStat": "intellect",
+      "armorClass": "mail",
+      "allowedConfigs": [
+        "two_hand",
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "holdable"
+      ],
+      "canShield": false,
+      "canHoldable": true,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Dagger",
+        "1H Mace",
+        "1H Sword",
+        "1H Axe",
+        "Fist Weapon"
+      ],
+      "summary": "Wields a Two-Handed Staff or a One-Handed weapon paired with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_holdable",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Held In Off-hand",
+          "isTalentGated": false,
+          "notes": "Standard 1H caster weapon paired with a Holdable item."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    {
+      "specKey": "evoker:preservation",
+      "className": "evoker",
+      "classDisplayName": "Evoker",
+      "specName": "preservation",
+      "specDisplayName": "Preservation",
+      "role": "healer",
+      "primaryStat": "intellect",
+      "armorClass": "mail",
+      "allowedConfigs": [
+        "two_hand",
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "holdable"
+      ],
+      "canShield": false,
+      "canHoldable": true,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Dagger",
+        "1H Mace",
+        "1H Sword",
+        "1H Axe",
+        "Fist Weapon"
+      ],
+      "summary": "Wields a Two-Handed Staff or a One-Handed weapon paired with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_holdable",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Held In Off-hand",
+          "isTalentGated": false,
+          "notes": "Standard 1H caster weapon paired with a Holdable item."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    {
+      "specKey": "evoker:augmentation",
+      "className": "evoker",
+      "classDisplayName": "Evoker",
+      "specName": "augmentation",
+      "specDisplayName": "Augmentation",
+      "role": "ranged_dps",
+      "primaryStat": "intellect",
+      "armorClass": "mail",
+      "allowedConfigs": [
+        "two_hand",
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "holdable"
+      ],
+      "canShield": false,
+      "canHoldable": true,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Dagger",
+        "1H Mace",
+        "1H Sword",
+        "1H Axe",
+        "Fist Weapon"
+      ],
+      "summary": "Wields a Two-Handed Staff or a One-Handed weapon paired with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_holdable",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Held In Off-hand",
+          "isTalentGated": false,
+          "notes": "Standard 1H caster weapon paired with a Holdable item."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    {
+      "specKey": "hunter:beast_mastery",
+      "className": "hunter",
+      "classDisplayName": "Hunter",
+      "specName": "beast_mastery",
+      "specDisplayName": "Beast Mastery",
+      "role": "ranged_dps",
+      "primaryStat": "agility",
+      "armorClass": "mail",
+      "allowedConfigs": [
+        "ranged"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": false,
+      "canTwoHand": false,
+      "canTitansGrip": false,
+      "canRanged": true,
+      "allowedWeaponSubclasses": [
+        "Bow",
+        "Crossbow",
+        "Gun"
+      ],
+      "summary": "Ranged weapon specialist (Bows, Crossbows, Guns). Off-hand remains empty.",
+      "combinations": [
+        {
+          "combinationType": "ranged",
+          "mainHandSlot": "Ranged Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Ranged weapon (Bow, Crossbow, Gun), off-hand empty."
+        }
+      ]
+    },
+    {
+      "specKey": "hunter:marksmanship",
+      "className": "hunter",
+      "classDisplayName": "Hunter",
+      "specName": "marksmanship",
+      "specDisplayName": "Marksmanship",
+      "role": "ranged_dps",
+      "primaryStat": "agility",
+      "armorClass": "mail",
+      "allowedConfigs": [
+        "ranged"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": false,
+      "canTwoHand": false,
+      "canTitansGrip": false,
+      "canRanged": true,
+      "allowedWeaponSubclasses": [
+        "Bow",
+        "Crossbow",
+        "Gun"
+      ],
+      "summary": "Ranged weapon specialist (Bows, Crossbows, Guns). Off-hand remains empty.",
+      "combinations": [
+        {
+          "combinationType": "ranged",
+          "mainHandSlot": "Ranged Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Ranged weapon (Bow, Crossbow, Gun), off-hand empty."
+        }
+      ]
+    },
+    {
+      "specKey": "hunter:survival",
+      "className": "hunter",
+      "classDisplayName": "Hunter",
+      "specName": "survival",
+      "specDisplayName": "Survival",
+      "role": "melee_dps",
+      "primaryStat": "agility",
+      "armorClass": "mail",
+      "allowedConfigs": [
+        "two_hand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Polearm",
+        "Staff",
+        "2H Sword",
+        "2H Axe"
+      ],
+      "summary": "Melee Hunter wielding a Two-Handed Polearm, Axe, Sword, or Staff. Off-hand remains empty.",
+      "combinations": [
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    {
+      "specKey": "mage:arcane",
+      "className": "mage",
+      "classDisplayName": "Mage",
+      "specName": "arcane",
+      "specDisplayName": "Arcane",
+      "role": "ranged_dps",
+      "primaryStat": "intellect",
+      "armorClass": "cloth",
+      "allowedConfigs": [
+        "two_hand",
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "holdable"
+      ],
+      "canShield": false,
+      "canHoldable": true,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Dagger",
+        "1H Sword",
+        "Wand"
+      ],
+      "summary": "Wields a Two-Handed Staff or a One-Handed Sword/Dagger/Wand paired with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_holdable",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Held In Off-hand",
+          "isTalentGated": false,
+          "notes": "Standard 1H caster weapon paired with a Holdable item."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    {
+      "specKey": "mage:fire",
+      "className": "mage",
+      "classDisplayName": "Mage",
+      "specName": "fire",
+      "specDisplayName": "Fire",
+      "role": "ranged_dps",
+      "primaryStat": "intellect",
+      "armorClass": "cloth",
+      "allowedConfigs": [
+        "two_hand",
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "holdable"
+      ],
+      "canShield": false,
+      "canHoldable": true,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Dagger",
+        "1H Sword",
+        "Wand"
+      ],
+      "summary": "Wields a Two-Handed Staff or a One-Handed Sword/Dagger/Wand paired with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_holdable",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Held In Off-hand",
+          "isTalentGated": false,
+          "notes": "Standard 1H caster weapon paired with a Holdable item."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    {
+      "specKey": "mage:frost",
+      "className": "mage",
+      "classDisplayName": "Mage",
+      "specName": "frost",
+      "specDisplayName": "Frost",
+      "role": "ranged_dps",
+      "primaryStat": "intellect",
+      "armorClass": "cloth",
+      "allowedConfigs": [
+        "two_hand",
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "holdable"
+      ],
+      "canShield": false,
+      "canHoldable": true,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Dagger",
+        "1H Sword",
+        "Wand"
+      ],
+      "summary": "Wields a Two-Handed Staff or a One-Handed Sword/Dagger/Wand paired with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_holdable",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Held In Off-hand",
+          "isTalentGated": false,
+          "notes": "Standard 1H caster weapon paired with a Holdable item."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    {
+      "specKey": "monk:brewmaster",
+      "className": "monk",
+      "classDisplayName": "Monk",
+      "specName": "brewmaster",
+      "specDisplayName": "Brewmaster",
+      "role": "tank",
+      "primaryStat": "agility",
+      "armorClass": "leather",
+      "allowedConfigs": [
+        "two_hand",
+        "dual_wield_1h"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": true,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Polearm",
+        "Staff",
+        "Fist Weapon",
+        "1H Axe",
+        "1H Mace",
+        "1H Sword"
+      ],
+      "summary": "Wields a Two-Handed Staff/Polearm or dual wields One-Handed weapons.",
+      "combinations": [
+        {
+          "combinationType": "dual_wield_1h",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "One-Handed Weapon",
+          "isTalentGated": false,
+          "notes": "Standard dual wielding 1H weapons."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    {
+      "specKey": "monk:mistweaver",
+      "className": "monk",
+      "classDisplayName": "Monk",
+      "specName": "mistweaver",
+      "specDisplayName": "Mistweaver",
+      "role": "healer",
+      "primaryStat": "intellect",
+      "armorClass": "leather",
+      "allowedConfigs": [
+        "two_hand",
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "holdable"
+      ],
+      "canShield": false,
+      "canHoldable": true,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "1H Mace",
+        "1H Sword",
+        "1H Axe",
+        "Fist Weapon"
+      ],
+      "summary": "Wields a Two-Handed Staff or a One-Handed weapon with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_holdable",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Held In Off-hand",
+          "isTalentGated": false,
+          "notes": "Standard 1H caster weapon paired with a Holdable item."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    {
+      "specKey": "monk:windwalker",
+      "className": "monk",
+      "classDisplayName": "Monk",
+      "specName": "windwalker",
+      "specDisplayName": "Windwalker",
+      "role": "melee_dps",
+      "primaryStat": "agility",
+      "armorClass": "leather",
+      "allowedConfigs": [
+        "dual_wield_1h"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": true,
+      "canTwoHand": false,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Fist Weapon",
+        "1H Sword",
+        "1H Axe",
+        "1H Mace"
+      ],
+      "summary": "Dual wields One-Handed weapons (Fist Weapons, Swords, Axes, Maces) or wields a Two-Handed Staff/Polearm.",
+      "combinations": [
+        {
+          "combinationType": "dual_wield_1h",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "One-Handed Weapon",
+          "isTalentGated": false,
+          "notes": "Standard dual wielding 1H weapons."
+        }
+      ]
+    },
+    {
+      "specKey": "priest:discipline",
+      "className": "priest",
+      "classDisplayName": "Priest",
+      "specName": "discipline",
+      "specDisplayName": "Discipline",
+      "role": "healer",
+      "primaryStat": "intellect",
+      "armorClass": "cloth",
+      "allowedConfigs": [
+        "two_hand",
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "holdable"
+      ],
+      "canShield": false,
+      "canHoldable": true,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Dagger",
+        "1H Mace",
+        "Wand"
+      ],
+      "summary": "Wields a Two-Handed Staff or a One-Handed Mace/Dagger/Wand paired with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_holdable",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Held In Off-hand",
+          "isTalentGated": false,
+          "notes": "Standard 1H caster weapon paired with a Holdable item."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    {
+      "specKey": "priest:holy",
+      "className": "priest",
+      "classDisplayName": "Priest",
+      "specName": "holy",
+      "specDisplayName": "Holy",
+      "role": "healer",
+      "primaryStat": "intellect",
+      "armorClass": "cloth",
+      "allowedConfigs": [
+        "two_hand",
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "holdable"
+      ],
+      "canShield": false,
+      "canHoldable": true,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Dagger",
+        "1H Mace",
+        "Wand"
+      ],
+      "summary": "Wields a Two-Handed Staff or a One-Handed Mace/Dagger/Wand paired with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_holdable",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Held In Off-hand",
+          "isTalentGated": false,
+          "notes": "Standard 1H caster weapon paired with a Holdable item."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    {
+      "specKey": "priest:shadow",
+      "className": "priest",
+      "classDisplayName": "Priest",
+      "specName": "shadow",
+      "specDisplayName": "Shadow",
+      "role": "ranged_dps",
+      "primaryStat": "intellect",
+      "armorClass": "cloth",
+      "allowedConfigs": [
+        "two_hand",
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "holdable"
+      ],
+      "canShield": false,
+      "canHoldable": true,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Dagger",
+        "1H Mace",
+        "Wand"
+      ],
+      "summary": "Wields a Two-Handed Staff or a One-Handed Mace/Dagger/Wand paired with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_holdable",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Held In Off-hand",
+          "isTalentGated": false,
+          "notes": "Standard 1H caster weapon paired with a Holdable item."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    {
+      "specKey": "rogue:assassination",
+      "className": "rogue",
+      "classDisplayName": "Rogue",
+      "specName": "assassination",
+      "specDisplayName": "Assassination",
+      "role": "melee_dps",
+      "primaryStat": "agility",
+      "armorClass": "leather",
+      "allowedConfigs": [
+        "dual_wield_1h"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": true,
+      "canTwoHand": false,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Dagger"
+      ],
+      "summary": "Dual wields 1H weapons. Daggers in both hands are standard and required for Mutilate.",
+      "combinations": [
+        {
+          "combinationType": "dual_wield_1h",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "One-Handed Weapon",
+          "isTalentGated": false,
+          "notes": "Standard dual wielding 1H weapons."
+        }
+      ]
+    },
+    {
+      "specKey": "rogue:subtlety",
+      "className": "rogue",
+      "classDisplayName": "Rogue",
+      "specName": "subtlety",
+      "specDisplayName": "Subtlety",
+      "role": "melee_dps",
+      "primaryStat": "agility",
+      "armorClass": "leather",
+      "allowedConfigs": [
+        "dual_wield_1h"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": true,
+      "canTwoHand": false,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Dagger"
+      ],
+      "summary": "Dual wields 1H weapons. Main-hand requires a Dagger for Backstab and Shadowstrike.",
+      "combinations": [
+        {
+          "combinationType": "dual_wield_1h",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "One-Handed Weapon",
+          "isTalentGated": false,
+          "notes": "Standard dual wielding 1H weapons."
+        }
+      ]
+    },
+    {
+      "specKey": "rogue:outlaw",
+      "className": "rogue",
+      "classDisplayName": "Rogue",
+      "specName": "outlaw",
+      "specDisplayName": "Outlaw",
+      "role": "melee_dps",
+      "primaryStat": "agility",
+      "armorClass": "leather",
+      "allowedConfigs": [
+        "dual_wield_1h"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": true,
+      "canTwoHand": false,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "1H Sword",
+        "1H Axe",
+        "1H Mace",
+        "Fist Weapon",
+        "Dagger"
+      ],
+      "summary": "Dual wields One-Handed weapons (Swords, Axes, Maces, Fist Weapons, or Daggers).",
+      "combinations": [
+        {
+          "combinationType": "dual_wield_1h",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "One-Handed Weapon",
+          "isTalentGated": false,
+          "notes": "Standard dual wielding 1H weapons."
+        }
+      ]
+    },
+    {
+      "specKey": "shaman:elemental",
+      "className": "shaman",
+      "classDisplayName": "Shaman",
+      "specName": "elemental",
+      "specDisplayName": "Elemental",
+      "role": "ranged_dps",
+      "primaryStat": "intellect",
+      "armorClass": "mail",
+      "allowedConfigs": [
+        "one_hand_offhand",
+        "two_hand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "shield"
+      ],
+      "canShield": true,
+      "canHoldable": false,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "1H Mace",
+        "1H Axe",
+        "Dagger",
+        "Fist Weapon"
+      ],
+      "summary": "Can wield a One-Handed weapon with a Shield (preferred for armor) or Held-in-Off-hand, or a Two-Handed Staff/Mace/Axe.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_shield",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Shield",
+          "isTalentGated": false,
+          "notes": "Standard 1H weapon paired with a Shield."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    {
+      "specKey": "shaman:restoration",
+      "className": "shaman",
+      "classDisplayName": "Shaman",
+      "specName": "restoration",
+      "specDisplayName": "Restoration",
+      "role": "healer",
+      "primaryStat": "intellect",
+      "armorClass": "mail",
+      "allowedConfigs": [
+        "one_hand_offhand",
+        "two_hand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "shield"
+      ],
+      "canShield": true,
+      "canHoldable": false,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "1H Mace",
+        "1H Axe",
+        "Dagger",
+        "Fist Weapon"
+      ],
+      "summary": "Can wield a One-Handed weapon with a Shield or Held-in-Off-hand, or a Two-Handed Staff/Mace/Axe.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_shield",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Shield",
+          "isTalentGated": false,
+          "notes": "Standard 1H weapon paired with a Shield."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    {
+      "specKey": "shaman:enhancement",
+      "className": "shaman",
+      "classDisplayName": "Shaman",
+      "specName": "enhancement",
+      "specDisplayName": "Enhancement",
+      "role": "melee_dps",
+      "primaryStat": "agility",
+      "armorClass": "mail",
+      "allowedConfigs": [
+        "dual_wield_1h"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": true,
+      "canTwoHand": false,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "1H Axe",
+        "1H Mace",
+        "Fist Weapon"
+      ],
+      "summary": "Dual wields One-Handed weapons. Core strikes (Stormstrike, Lava Lash) require dual-wielding.",
+      "combinations": [
+        {
+          "combinationType": "dual_wield_1h",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "One-Handed Weapon",
+          "isTalentGated": false,
+          "notes": "Standard dual wielding 1H weapons."
+        }
+      ]
+    },
+    {
+      "specKey": "warlock:affliction",
+      "className": "warlock",
+      "classDisplayName": "Warlock",
+      "specName": "affliction",
+      "specDisplayName": "Affliction",
+      "role": "ranged_dps",
+      "primaryStat": "intellect",
+      "armorClass": "cloth",
+      "allowedConfigs": [
+        "two_hand",
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "holdable"
+      ],
+      "canShield": false,
+      "canHoldable": true,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Dagger",
+        "1H Sword",
+        "Wand"
+      ],
+      "summary": "Wields a Two-Handed Staff or a One-Handed Sword/Dagger/Wand paired with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_holdable",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Held In Off-hand",
+          "isTalentGated": false,
+          "notes": "Standard 1H caster weapon paired with a Holdable item."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    {
+      "specKey": "warlock:demonology",
+      "className": "warlock",
+      "classDisplayName": "Warlock",
+      "specName": "demonology",
+      "specDisplayName": "Demonology",
+      "role": "ranged_dps",
+      "primaryStat": "intellect",
+      "armorClass": "cloth",
+      "allowedConfigs": [
+        "two_hand",
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "holdable"
+      ],
+      "canShield": false,
+      "canHoldable": true,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Dagger",
+        "1H Sword",
+        "Wand"
+      ],
+      "summary": "Wields a Two-Handed Staff or a One-Handed Sword/Dagger/Wand paired with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_holdable",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Held In Off-hand",
+          "isTalentGated": false,
+          "notes": "Standard 1H caster weapon paired with a Holdable item."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    {
+      "specKey": "warlock:destruction",
+      "className": "warlock",
+      "classDisplayName": "Warlock",
+      "specName": "destruction",
+      "specDisplayName": "Destruction",
+      "role": "ranged_dps",
+      "primaryStat": "intellect",
+      "armorClass": "cloth",
+      "allowedConfigs": [
+        "two_hand",
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "holdable"
+      ],
+      "canShield": false,
+      "canHoldable": true,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Dagger",
+        "1H Sword",
+        "Wand"
+      ],
+      "summary": "Wields a Two-Handed Staff or a One-Handed Sword/Dagger/Wand paired with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_holdable",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Held In Off-hand",
+          "isTalentGated": false,
+          "notes": "Standard 1H caster weapon paired with a Holdable item."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    }
+  ],
+  "specsByKey": {
+    "warrior:arms": {
+      "specKey": "warrior:arms",
+      "className": "warrior",
+      "classDisplayName": "Warrior",
+      "specName": "arms",
+      "specDisplayName": "Arms",
+      "role": "melee_dps",
+      "primaryStat": "strength",
+      "armorClass": "plate",
+      "allowedConfigs": [
+        "two_hand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "2H Axe",
+        "2H Mace",
+        "2H Sword",
+        "Polearm"
+      ],
+      "summary": "Two-handed heavy weapon specialist (Swords, Axes, Maces, Polearms). Off-hand remains empty.",
+      "combinations": [
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    "warrior:fury": {
+      "specKey": "warrior:fury",
+      "className": "warrior",
+      "classDisplayName": "Warrior",
+      "specName": "fury",
+      "specDisplayName": "Fury",
+      "role": "melee_dps",
+      "primaryStat": "strength",
+      "armorClass": "plate",
+      "allowedConfigs": [
+        "titans_grip",
+        "dual_wield_1h"
+      ],
+      "talentGatedConfigs": [
+        "titans_grip",
+        "dual_wield_1h"
+      ],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": true,
+      "canTwoHand": false,
+      "canTitansGrip": true,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "2H Axe",
+        "2H Mace",
+        "2H Sword",
+        "Polearm",
+        "1H Axe",
+        "1H Mace",
+        "1H Sword",
+        "Fist Weapon",
+        "Dagger",
+        "Staff"
+      ],
+      "summary": "Dual-wield specialist. Wields two Two-Handed weapons (Titan's Grip) or two One-Handed weapons (Single-Minded Fury) via talent choices.",
+      "combinations": [
+        {
+          "combinationType": "dual_wield_1h",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "One-Handed Weapon",
+          "isTalentGated": true,
+          "notes": "Dual wielding 1H weapons (talent gated)."
+        },
+        {
+          "combinationType": "titans_grip",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Two-Handed Weapon",
+          "isTalentGated": true,
+          "notes": "Titan's Grip: Dual wielding two Two-Handed weapons."
+        }
+      ]
+    },
+    "warrior:protection": {
+      "specKey": "warrior:protection",
+      "className": "warrior",
+      "classDisplayName": "Warrior",
+      "specName": "protection",
+      "specDisplayName": "Protection",
+      "role": "tank",
+      "primaryStat": "strength",
+      "armorClass": "plate",
+      "allowedConfigs": [
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "shield"
+      ],
+      "canShield": true,
+      "canHoldable": false,
+      "canDualWield": false,
+      "canTwoHand": false,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "1H Axe",
+        "1H Mace",
+        "1H Sword"
+      ],
+      "summary": "One-handed weapon with a Shield in the off-hand. Shield is required for core abilities like Shield Slam and Shield Block.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_shield",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Shield",
+          "isTalentGated": false,
+          "notes": "Standard 1H weapon paired with a Shield."
+        }
+      ]
+    },
+    "paladin:holy": {
+      "specKey": "paladin:holy",
+      "className": "paladin",
+      "classDisplayName": "Paladin",
+      "specName": "holy",
+      "specDisplayName": "Holy",
+      "role": "healer",
+      "primaryStat": "intellect",
+      "armorClass": "plate",
+      "allowedConfigs": [
+        "one_hand_offhand",
+        "two_hand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "shield"
+      ],
+      "canShield": true,
+      "canHoldable": false,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "1H Axe",
+        "1H Mace",
+        "1H Sword",
+        "2H Axe",
+        "2H Mace",
+        "2H Sword",
+        "Polearm"
+      ],
+      "summary": "Can wield One-Handed weapon with a Shield or Held-in-Off-hand item, or a Two-Handed weapon.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_shield",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Shield",
+          "isTalentGated": false,
+          "notes": "Standard 1H weapon paired with a Shield."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    "paladin:protection": {
+      "specKey": "paladin:protection",
+      "className": "paladin",
+      "classDisplayName": "Paladin",
+      "specName": "protection",
+      "specDisplayName": "Protection",
+      "role": "tank",
+      "primaryStat": "strength",
+      "armorClass": "plate",
+      "allowedConfigs": [
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "shield"
+      ],
+      "canShield": true,
+      "canHoldable": false,
+      "canDualWield": false,
+      "canTwoHand": false,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "1H Axe",
+        "1H Mace",
+        "1H Sword"
+      ],
+      "summary": "One-handed weapon with a Shield in the off-hand. Shield is mandatory for Shield of the Righteous and Avenger's Shield.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_shield",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Shield",
+          "isTalentGated": false,
+          "notes": "Standard 1H weapon paired with a Shield."
+        }
+      ]
+    },
+    "paladin:retribution": {
+      "specKey": "paladin:retribution",
+      "className": "paladin",
+      "classDisplayName": "Paladin",
+      "specName": "retribution",
+      "specDisplayName": "Retribution",
+      "role": "melee_dps",
+      "primaryStat": "strength",
+      "armorClass": "plate",
+      "allowedConfigs": [
+        "two_hand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "2H Axe",
+        "2H Mace",
+        "2H Sword",
+        "Polearm"
+      ],
+      "summary": "Two-handed weapon wielder (2H Swords, Maces, Axes, Polearms). Off-hand remains empty.",
+      "combinations": [
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    "deathknight:blood": {
+      "specKey": "deathknight:blood",
+      "className": "deathknight",
+      "classDisplayName": "Death Knight",
+      "specName": "blood",
+      "specDisplayName": "Blood",
+      "role": "tank",
+      "primaryStat": "strength",
+      "armorClass": "plate",
+      "allowedConfigs": [
+        "two_hand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "2H Axe",
+        "2H Mace",
+        "2H Sword",
+        "Polearm"
+      ],
+      "summary": "Two-handed weapon tank (2H Axes, Maces, Swords, Polearms). No off-hand items.",
+      "combinations": [
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    "deathknight:frost": {
+      "specKey": "deathknight:frost",
+      "className": "deathknight",
+      "classDisplayName": "Death Knight",
+      "specName": "frost",
+      "specDisplayName": "Frost",
+      "role": "melee_dps",
+      "primaryStat": "strength",
+      "armorClass": "plate",
+      "allowedConfigs": [
+        "two_hand",
+        "dual_wield_1h"
+      ],
+      "talentGatedConfigs": [
+        "two_hand",
+        "dual_wield_1h"
+      ],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": true,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "2H Axe",
+        "2H Mace",
+        "2H Sword",
+        "Polearm",
+        "1H Axe",
+        "1H Mace",
+        "1H Sword"
+      ],
+      "summary": "Dual wields One-Handed weapons or wields a Two-Handed weapon, selected via talents (e.g. Breath of Sindragosa vs Obliteration).",
+      "combinations": [
+        {
+          "combinationType": "dual_wield_1h",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "One-Handed Weapon",
+          "isTalentGated": true,
+          "notes": "Dual wielding 1H weapons (talent gated)."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": true,
+          "notes": "Two-handed weapon (talent gated option)."
+        }
+      ]
+    },
+    "deathknight:unholy": {
+      "specKey": "deathknight:unholy",
+      "className": "deathknight",
+      "classDisplayName": "Death Knight",
+      "specName": "unholy",
+      "specDisplayName": "Unholy",
+      "role": "melee_dps",
+      "primaryStat": "strength",
+      "armorClass": "plate",
+      "allowedConfigs": [
+        "two_hand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "2H Axe",
+        "2H Mace",
+        "2H Sword",
+        "Polearm"
+      ],
+      "summary": "Two-handed weapon DPS specialist. Off-hand remains empty.",
+      "combinations": [
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    "demonhunter:havoc": {
+      "specKey": "demonhunter:havoc",
+      "className": "demonhunter",
+      "classDisplayName": "Demon Hunter",
+      "specName": "havoc",
+      "specDisplayName": "Havoc",
+      "role": "melee_dps",
+      "primaryStat": "agility",
+      "armorClass": "leather",
+      "allowedConfigs": [
+        "dual_wield_1h"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": true,
+      "canTwoHand": false,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Warglaive",
+        "1H Sword",
+        "1H Axe",
+        "Fist Weapon"
+      ],
+      "summary": "Dual wields Warglaives or One-Handed Swords, Axes, and Fist Weapons.",
+      "combinations": [
+        {
+          "combinationType": "dual_wield_1h",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "One-Handed Weapon",
+          "isTalentGated": false,
+          "notes": "Standard dual wielding 1H weapons."
+        }
+      ]
+    },
+    "demonhunter:vengeance": {
+      "specKey": "demonhunter:vengeance",
+      "className": "demonhunter",
+      "classDisplayName": "Demon Hunter",
+      "specName": "vengeance",
+      "specDisplayName": "Vengeance",
+      "role": "tank",
+      "primaryStat": "agility",
+      "armorClass": "leather",
+      "allowedConfigs": [
+        "dual_wield_1h"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": true,
+      "canTwoHand": false,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Warglaive",
+        "1H Sword",
+        "1H Axe",
+        "Fist Weapon"
+      ],
+      "summary": "Dual wields Warglaives or One-Handed Swords, Axes, and Fist Weapons.",
+      "combinations": [
+        {
+          "combinationType": "dual_wield_1h",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "One-Handed Weapon",
+          "isTalentGated": false,
+          "notes": "Standard dual wielding 1H weapons."
+        }
+      ]
+    },
+    "druid:balance": {
+      "specKey": "druid:balance",
+      "className": "druid",
+      "classDisplayName": "Druid",
+      "specName": "balance",
+      "specDisplayName": "Balance",
+      "role": "ranged_dps",
+      "primaryStat": "intellect",
+      "armorClass": "leather",
+      "allowedConfigs": [
+        "two_hand",
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "holdable"
+      ],
+      "canShield": false,
+      "canHoldable": true,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Dagger",
+        "1H Mace"
+      ],
+      "summary": "Wields a Two-Handed Staff/Polearm or a One-Handed weapon with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_holdable",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Held In Off-hand",
+          "isTalentGated": false,
+          "notes": "Standard 1H caster weapon paired with a Holdable item."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    "druid:restoration": {
+      "specKey": "druid:restoration",
+      "className": "druid",
+      "classDisplayName": "Druid",
+      "specName": "restoration",
+      "specDisplayName": "Restoration",
+      "role": "healer",
+      "primaryStat": "intellect",
+      "armorClass": "leather",
+      "allowedConfigs": [
+        "two_hand",
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "holdable"
+      ],
+      "canShield": false,
+      "canHoldable": true,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Dagger",
+        "1H Mace"
+      ],
+      "summary": "Wields a Two-Handed Staff or a One-Handed weapon with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_holdable",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Held In Off-hand",
+          "isTalentGated": false,
+          "notes": "Standard 1H caster weapon paired with a Holdable item."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    "druid:feral": {
+      "specKey": "druid:feral",
+      "className": "druid",
+      "classDisplayName": "Druid",
+      "specName": "feral",
+      "specDisplayName": "Feral",
+      "role": "melee_dps",
+      "primaryStat": "agility",
+      "armorClass": "leather",
+      "allowedConfigs": [
+        "two_hand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Polearm",
+        "2H Mace"
+      ],
+      "summary": "Wields a Two-Handed Staff/Polearm or a One-Handed weapon with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    "druid:guardian": {
+      "specKey": "druid:guardian",
+      "className": "druid",
+      "classDisplayName": "Druid",
+      "specName": "guardian",
+      "specDisplayName": "Guardian",
+      "role": "tank",
+      "primaryStat": "agility",
+      "armorClass": "leather",
+      "allowedConfigs": [
+        "two_hand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Polearm",
+        "2H Mace"
+      ],
+      "summary": "Wields a Two-Handed Staff/Polearm or a One-Handed weapon with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    "evoker:devastation": {
+      "specKey": "evoker:devastation",
+      "className": "evoker",
+      "classDisplayName": "Evoker",
+      "specName": "devastation",
+      "specDisplayName": "Devastation",
+      "role": "ranged_dps",
+      "primaryStat": "intellect",
+      "armorClass": "mail",
+      "allowedConfigs": [
+        "two_hand",
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "holdable"
+      ],
+      "canShield": false,
+      "canHoldable": true,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Dagger",
+        "1H Mace",
+        "1H Sword",
+        "1H Axe",
+        "Fist Weapon"
+      ],
+      "summary": "Wields a Two-Handed Staff or a One-Handed weapon paired with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_holdable",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Held In Off-hand",
+          "isTalentGated": false,
+          "notes": "Standard 1H caster weapon paired with a Holdable item."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    "evoker:preservation": {
+      "specKey": "evoker:preservation",
+      "className": "evoker",
+      "classDisplayName": "Evoker",
+      "specName": "preservation",
+      "specDisplayName": "Preservation",
+      "role": "healer",
+      "primaryStat": "intellect",
+      "armorClass": "mail",
+      "allowedConfigs": [
+        "two_hand",
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "holdable"
+      ],
+      "canShield": false,
+      "canHoldable": true,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Dagger",
+        "1H Mace",
+        "1H Sword",
+        "1H Axe",
+        "Fist Weapon"
+      ],
+      "summary": "Wields a Two-Handed Staff or a One-Handed weapon paired with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_holdable",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Held In Off-hand",
+          "isTalentGated": false,
+          "notes": "Standard 1H caster weapon paired with a Holdable item."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    "evoker:augmentation": {
+      "specKey": "evoker:augmentation",
+      "className": "evoker",
+      "classDisplayName": "Evoker",
+      "specName": "augmentation",
+      "specDisplayName": "Augmentation",
+      "role": "ranged_dps",
+      "primaryStat": "intellect",
+      "armorClass": "mail",
+      "allowedConfigs": [
+        "two_hand",
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "holdable"
+      ],
+      "canShield": false,
+      "canHoldable": true,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Dagger",
+        "1H Mace",
+        "1H Sword",
+        "1H Axe",
+        "Fist Weapon"
+      ],
+      "summary": "Wields a Two-Handed Staff or a One-Handed weapon paired with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_holdable",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Held In Off-hand",
+          "isTalentGated": false,
+          "notes": "Standard 1H caster weapon paired with a Holdable item."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    "hunter:beast_mastery": {
+      "specKey": "hunter:beast_mastery",
+      "className": "hunter",
+      "classDisplayName": "Hunter",
+      "specName": "beast_mastery",
+      "specDisplayName": "Beast Mastery",
+      "role": "ranged_dps",
+      "primaryStat": "agility",
+      "armorClass": "mail",
+      "allowedConfigs": [
+        "ranged"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": false,
+      "canTwoHand": false,
+      "canTitansGrip": false,
+      "canRanged": true,
+      "allowedWeaponSubclasses": [
+        "Bow",
+        "Crossbow",
+        "Gun"
+      ],
+      "summary": "Ranged weapon specialist (Bows, Crossbows, Guns). Off-hand remains empty.",
+      "combinations": [
+        {
+          "combinationType": "ranged",
+          "mainHandSlot": "Ranged Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Ranged weapon (Bow, Crossbow, Gun), off-hand empty."
+        }
+      ]
+    },
+    "hunter:marksmanship": {
+      "specKey": "hunter:marksmanship",
+      "className": "hunter",
+      "classDisplayName": "Hunter",
+      "specName": "marksmanship",
+      "specDisplayName": "Marksmanship",
+      "role": "ranged_dps",
+      "primaryStat": "agility",
+      "armorClass": "mail",
+      "allowedConfigs": [
+        "ranged"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": false,
+      "canTwoHand": false,
+      "canTitansGrip": false,
+      "canRanged": true,
+      "allowedWeaponSubclasses": [
+        "Bow",
+        "Crossbow",
+        "Gun"
+      ],
+      "summary": "Ranged weapon specialist (Bows, Crossbows, Guns). Off-hand remains empty.",
+      "combinations": [
+        {
+          "combinationType": "ranged",
+          "mainHandSlot": "Ranged Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Ranged weapon (Bow, Crossbow, Gun), off-hand empty."
+        }
+      ]
+    },
+    "hunter:survival": {
+      "specKey": "hunter:survival",
+      "className": "hunter",
+      "classDisplayName": "Hunter",
+      "specName": "survival",
+      "specDisplayName": "Survival",
+      "role": "melee_dps",
+      "primaryStat": "agility",
+      "armorClass": "mail",
+      "allowedConfigs": [
+        "two_hand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Polearm",
+        "Staff",
+        "2H Sword",
+        "2H Axe"
+      ],
+      "summary": "Melee Hunter wielding a Two-Handed Polearm, Axe, Sword, or Staff. Off-hand remains empty.",
+      "combinations": [
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    "mage:arcane": {
+      "specKey": "mage:arcane",
+      "className": "mage",
+      "classDisplayName": "Mage",
+      "specName": "arcane",
+      "specDisplayName": "Arcane",
+      "role": "ranged_dps",
+      "primaryStat": "intellect",
+      "armorClass": "cloth",
+      "allowedConfigs": [
+        "two_hand",
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "holdable"
+      ],
+      "canShield": false,
+      "canHoldable": true,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Dagger",
+        "1H Sword",
+        "Wand"
+      ],
+      "summary": "Wields a Two-Handed Staff or a One-Handed Sword/Dagger/Wand paired with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_holdable",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Held In Off-hand",
+          "isTalentGated": false,
+          "notes": "Standard 1H caster weapon paired with a Holdable item."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    "mage:fire": {
+      "specKey": "mage:fire",
+      "className": "mage",
+      "classDisplayName": "Mage",
+      "specName": "fire",
+      "specDisplayName": "Fire",
+      "role": "ranged_dps",
+      "primaryStat": "intellect",
+      "armorClass": "cloth",
+      "allowedConfigs": [
+        "two_hand",
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "holdable"
+      ],
+      "canShield": false,
+      "canHoldable": true,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Dagger",
+        "1H Sword",
+        "Wand"
+      ],
+      "summary": "Wields a Two-Handed Staff or a One-Handed Sword/Dagger/Wand paired with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_holdable",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Held In Off-hand",
+          "isTalentGated": false,
+          "notes": "Standard 1H caster weapon paired with a Holdable item."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    "mage:frost": {
+      "specKey": "mage:frost",
+      "className": "mage",
+      "classDisplayName": "Mage",
+      "specName": "frost",
+      "specDisplayName": "Frost",
+      "role": "ranged_dps",
+      "primaryStat": "intellect",
+      "armorClass": "cloth",
+      "allowedConfigs": [
+        "two_hand",
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "holdable"
+      ],
+      "canShield": false,
+      "canHoldable": true,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Dagger",
+        "1H Sword",
+        "Wand"
+      ],
+      "summary": "Wields a Two-Handed Staff or a One-Handed Sword/Dagger/Wand paired with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_holdable",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Held In Off-hand",
+          "isTalentGated": false,
+          "notes": "Standard 1H caster weapon paired with a Holdable item."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    "monk:brewmaster": {
+      "specKey": "monk:brewmaster",
+      "className": "monk",
+      "classDisplayName": "Monk",
+      "specName": "brewmaster",
+      "specDisplayName": "Brewmaster",
+      "role": "tank",
+      "primaryStat": "agility",
+      "armorClass": "leather",
+      "allowedConfigs": [
+        "two_hand",
+        "dual_wield_1h"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": true,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Polearm",
+        "Staff",
+        "Fist Weapon",
+        "1H Axe",
+        "1H Mace",
+        "1H Sword"
+      ],
+      "summary": "Wields a Two-Handed Staff/Polearm or dual wields One-Handed weapons.",
+      "combinations": [
+        {
+          "combinationType": "dual_wield_1h",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "One-Handed Weapon",
+          "isTalentGated": false,
+          "notes": "Standard dual wielding 1H weapons."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    "monk:mistweaver": {
+      "specKey": "monk:mistweaver",
+      "className": "monk",
+      "classDisplayName": "Monk",
+      "specName": "mistweaver",
+      "specDisplayName": "Mistweaver",
+      "role": "healer",
+      "primaryStat": "intellect",
+      "armorClass": "leather",
+      "allowedConfigs": [
+        "two_hand",
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "holdable"
+      ],
+      "canShield": false,
+      "canHoldable": true,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "1H Mace",
+        "1H Sword",
+        "1H Axe",
+        "Fist Weapon"
+      ],
+      "summary": "Wields a Two-Handed Staff or a One-Handed weapon with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_holdable",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Held In Off-hand",
+          "isTalentGated": false,
+          "notes": "Standard 1H caster weapon paired with a Holdable item."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    "monk:windwalker": {
+      "specKey": "monk:windwalker",
+      "className": "monk",
+      "classDisplayName": "Monk",
+      "specName": "windwalker",
+      "specDisplayName": "Windwalker",
+      "role": "melee_dps",
+      "primaryStat": "agility",
+      "armorClass": "leather",
+      "allowedConfigs": [
+        "dual_wield_1h"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": true,
+      "canTwoHand": false,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Fist Weapon",
+        "1H Sword",
+        "1H Axe",
+        "1H Mace"
+      ],
+      "summary": "Dual wields One-Handed weapons (Fist Weapons, Swords, Axes, Maces) or wields a Two-Handed Staff/Polearm.",
+      "combinations": [
+        {
+          "combinationType": "dual_wield_1h",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "One-Handed Weapon",
+          "isTalentGated": false,
+          "notes": "Standard dual wielding 1H weapons."
+        }
+      ]
+    },
+    "priest:discipline": {
+      "specKey": "priest:discipline",
+      "className": "priest",
+      "classDisplayName": "Priest",
+      "specName": "discipline",
+      "specDisplayName": "Discipline",
+      "role": "healer",
+      "primaryStat": "intellect",
+      "armorClass": "cloth",
+      "allowedConfigs": [
+        "two_hand",
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "holdable"
+      ],
+      "canShield": false,
+      "canHoldable": true,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Dagger",
+        "1H Mace",
+        "Wand"
+      ],
+      "summary": "Wields a Two-Handed Staff or a One-Handed Mace/Dagger/Wand paired with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_holdable",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Held In Off-hand",
+          "isTalentGated": false,
+          "notes": "Standard 1H caster weapon paired with a Holdable item."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    "priest:holy": {
+      "specKey": "priest:holy",
+      "className": "priest",
+      "classDisplayName": "Priest",
+      "specName": "holy",
+      "specDisplayName": "Holy",
+      "role": "healer",
+      "primaryStat": "intellect",
+      "armorClass": "cloth",
+      "allowedConfigs": [
+        "two_hand",
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "holdable"
+      ],
+      "canShield": false,
+      "canHoldable": true,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Dagger",
+        "1H Mace",
+        "Wand"
+      ],
+      "summary": "Wields a Two-Handed Staff or a One-Handed Mace/Dagger/Wand paired with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_holdable",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Held In Off-hand",
+          "isTalentGated": false,
+          "notes": "Standard 1H caster weapon paired with a Holdable item."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    "priest:shadow": {
+      "specKey": "priest:shadow",
+      "className": "priest",
+      "classDisplayName": "Priest",
+      "specName": "shadow",
+      "specDisplayName": "Shadow",
+      "role": "ranged_dps",
+      "primaryStat": "intellect",
+      "armorClass": "cloth",
+      "allowedConfigs": [
+        "two_hand",
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "holdable"
+      ],
+      "canShield": false,
+      "canHoldable": true,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Dagger",
+        "1H Mace",
+        "Wand"
+      ],
+      "summary": "Wields a Two-Handed Staff or a One-Handed Mace/Dagger/Wand paired with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_holdable",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Held In Off-hand",
+          "isTalentGated": false,
+          "notes": "Standard 1H caster weapon paired with a Holdable item."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    "rogue:assassination": {
+      "specKey": "rogue:assassination",
+      "className": "rogue",
+      "classDisplayName": "Rogue",
+      "specName": "assassination",
+      "specDisplayName": "Assassination",
+      "role": "melee_dps",
+      "primaryStat": "agility",
+      "armorClass": "leather",
+      "allowedConfigs": [
+        "dual_wield_1h"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": true,
+      "canTwoHand": false,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Dagger"
+      ],
+      "summary": "Dual wields 1H weapons. Daggers in both hands are standard and required for Mutilate.",
+      "combinations": [
+        {
+          "combinationType": "dual_wield_1h",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "One-Handed Weapon",
+          "isTalentGated": false,
+          "notes": "Standard dual wielding 1H weapons."
+        }
+      ]
+    },
+    "rogue:subtlety": {
+      "specKey": "rogue:subtlety",
+      "className": "rogue",
+      "classDisplayName": "Rogue",
+      "specName": "subtlety",
+      "specDisplayName": "Subtlety",
+      "role": "melee_dps",
+      "primaryStat": "agility",
+      "armorClass": "leather",
+      "allowedConfigs": [
+        "dual_wield_1h"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": true,
+      "canTwoHand": false,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Dagger"
+      ],
+      "summary": "Dual wields 1H weapons. Main-hand requires a Dagger for Backstab and Shadowstrike.",
+      "combinations": [
+        {
+          "combinationType": "dual_wield_1h",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "One-Handed Weapon",
+          "isTalentGated": false,
+          "notes": "Standard dual wielding 1H weapons."
+        }
+      ]
+    },
+    "rogue:outlaw": {
+      "specKey": "rogue:outlaw",
+      "className": "rogue",
+      "classDisplayName": "Rogue",
+      "specName": "outlaw",
+      "specDisplayName": "Outlaw",
+      "role": "melee_dps",
+      "primaryStat": "agility",
+      "armorClass": "leather",
+      "allowedConfigs": [
+        "dual_wield_1h"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": true,
+      "canTwoHand": false,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "1H Sword",
+        "1H Axe",
+        "1H Mace",
+        "Fist Weapon",
+        "Dagger"
+      ],
+      "summary": "Dual wields One-Handed weapons (Swords, Axes, Maces, Fist Weapons, or Daggers).",
+      "combinations": [
+        {
+          "combinationType": "dual_wield_1h",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "One-Handed Weapon",
+          "isTalentGated": false,
+          "notes": "Standard dual wielding 1H weapons."
+        }
+      ]
+    },
+    "shaman:elemental": {
+      "specKey": "shaman:elemental",
+      "className": "shaman",
+      "classDisplayName": "Shaman",
+      "specName": "elemental",
+      "specDisplayName": "Elemental",
+      "role": "ranged_dps",
+      "primaryStat": "intellect",
+      "armorClass": "mail",
+      "allowedConfigs": [
+        "one_hand_offhand",
+        "two_hand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "shield"
+      ],
+      "canShield": true,
+      "canHoldable": false,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "1H Mace",
+        "1H Axe",
+        "Dagger",
+        "Fist Weapon"
+      ],
+      "summary": "Can wield a One-Handed weapon with a Shield (preferred for armor) or Held-in-Off-hand, or a Two-Handed Staff/Mace/Axe.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_shield",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Shield",
+          "isTalentGated": false,
+          "notes": "Standard 1H weapon paired with a Shield."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    "shaman:restoration": {
+      "specKey": "shaman:restoration",
+      "className": "shaman",
+      "classDisplayName": "Shaman",
+      "specName": "restoration",
+      "specDisplayName": "Restoration",
+      "role": "healer",
+      "primaryStat": "intellect",
+      "armorClass": "mail",
+      "allowedConfigs": [
+        "one_hand_offhand",
+        "two_hand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "shield"
+      ],
+      "canShield": true,
+      "canHoldable": false,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "1H Mace",
+        "1H Axe",
+        "Dagger",
+        "Fist Weapon"
+      ],
+      "summary": "Can wield a One-Handed weapon with a Shield or Held-in-Off-hand, or a Two-Handed Staff/Mace/Axe.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_shield",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Shield",
+          "isTalentGated": false,
+          "notes": "Standard 1H weapon paired with a Shield."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    "shaman:enhancement": {
+      "specKey": "shaman:enhancement",
+      "className": "shaman",
+      "classDisplayName": "Shaman",
+      "specName": "enhancement",
+      "specDisplayName": "Enhancement",
+      "role": "melee_dps",
+      "primaryStat": "agility",
+      "armorClass": "mail",
+      "allowedConfigs": [
+        "dual_wield_1h"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [],
+      "canShield": false,
+      "canHoldable": false,
+      "canDualWield": true,
+      "canTwoHand": false,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "1H Axe",
+        "1H Mace",
+        "Fist Weapon"
+      ],
+      "summary": "Dual wields One-Handed weapons. Core strikes (Stormstrike, Lava Lash) require dual-wielding.",
+      "combinations": [
+        {
+          "combinationType": "dual_wield_1h",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "One-Handed Weapon",
+          "isTalentGated": false,
+          "notes": "Standard dual wielding 1H weapons."
+        }
+      ]
+    },
+    "warlock:affliction": {
+      "specKey": "warlock:affliction",
+      "className": "warlock",
+      "classDisplayName": "Warlock",
+      "specName": "affliction",
+      "specDisplayName": "Affliction",
+      "role": "ranged_dps",
+      "primaryStat": "intellect",
+      "armorClass": "cloth",
+      "allowedConfigs": [
+        "two_hand",
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "holdable"
+      ],
+      "canShield": false,
+      "canHoldable": true,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Dagger",
+        "1H Sword",
+        "Wand"
+      ],
+      "summary": "Wields a Two-Handed Staff or a One-Handed Sword/Dagger/Wand paired with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_holdable",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Held In Off-hand",
+          "isTalentGated": false,
+          "notes": "Standard 1H caster weapon paired with a Holdable item."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    "warlock:demonology": {
+      "specKey": "warlock:demonology",
+      "className": "warlock",
+      "classDisplayName": "Warlock",
+      "specName": "demonology",
+      "specDisplayName": "Demonology",
+      "role": "ranged_dps",
+      "primaryStat": "intellect",
+      "armorClass": "cloth",
+      "allowedConfigs": [
+        "two_hand",
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "holdable"
+      ],
+      "canShield": false,
+      "canHoldable": true,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Dagger",
+        "1H Sword",
+        "Wand"
+      ],
+      "summary": "Wields a Two-Handed Staff or a One-Handed Sword/Dagger/Wand paired with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_holdable",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Held In Off-hand",
+          "isTalentGated": false,
+          "notes": "Standard 1H caster weapon paired with a Holdable item."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    },
+    "warlock:destruction": {
+      "specKey": "warlock:destruction",
+      "className": "warlock",
+      "classDisplayName": "Warlock",
+      "specName": "destruction",
+      "specDisplayName": "Destruction",
+      "role": "ranged_dps",
+      "primaryStat": "intellect",
+      "armorClass": "cloth",
+      "allowedConfigs": [
+        "two_hand",
+        "one_hand_offhand"
+      ],
+      "talentGatedConfigs": [],
+      "offHand": [
+        "holdable"
+      ],
+      "canShield": false,
+      "canHoldable": true,
+      "canDualWield": false,
+      "canTwoHand": true,
+      "canTitansGrip": false,
+      "canRanged": false,
+      "allowedWeaponSubclasses": [
+        "Staff",
+        "Dagger",
+        "1H Sword",
+        "Wand"
+      ],
+      "summary": "Wields a Two-Handed Staff or a One-Handed Sword/Dagger/Wand paired with a Held-in-Off-hand item.",
+      "combinations": [
+        {
+          "combinationType": "one_hand_holdable",
+          "mainHandSlot": "One-Handed Weapon",
+          "offHandSlot": "Held In Off-hand",
+          "isTalentGated": false,
+          "notes": "Standard 1H caster weapon paired with a Holdable item."
+        },
+        {
+          "combinationType": "two_hand",
+          "mainHandSlot": "Two-Handed Weapon",
+          "offHandSlot": "Empty",
+          "isTalentGated": false,
+          "notes": "Two-handed weapon, off-hand empty."
+        }
+      ]
+    }
+  },
+  "combinations": {
+    "one_hand_shield": {
+      "combinationType": "one_hand_shield",
+      "description": "One-handed weapon equipped with a Shield in the off-hand.",
+      "specs": [
+        {
+          "specKey": "warrior:protection",
+          "classDisplayName": "Warrior",
+          "specDisplayName": "Protection",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "paladin:holy",
+          "classDisplayName": "Paladin",
+          "specDisplayName": "Holy",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "paladin:protection",
+          "classDisplayName": "Paladin",
+          "specDisplayName": "Protection",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "shaman:elemental",
+          "classDisplayName": "Shaman",
+          "specDisplayName": "Elemental",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "shaman:restoration",
+          "classDisplayName": "Shaman",
+          "specDisplayName": "Restoration",
+          "isTalentGated": false
+        }
+      ]
+    },
+    "one_hand_holdable": {
+      "combinationType": "one_hand_holdable",
+      "description": "One-handed weapon equipped with a Held In Off-Hand item (caster tome, orb, frill).",
+      "specs": [
+        {
+          "specKey": "druid:balance",
+          "classDisplayName": "Druid",
+          "specDisplayName": "Balance",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "druid:restoration",
+          "classDisplayName": "Druid",
+          "specDisplayName": "Restoration",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "evoker:devastation",
+          "classDisplayName": "Evoker",
+          "specDisplayName": "Devastation",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "evoker:preservation",
+          "classDisplayName": "Evoker",
+          "specDisplayName": "Preservation",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "evoker:augmentation",
+          "classDisplayName": "Evoker",
+          "specDisplayName": "Augmentation",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "mage:arcane",
+          "classDisplayName": "Mage",
+          "specDisplayName": "Arcane",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "mage:fire",
+          "classDisplayName": "Mage",
+          "specDisplayName": "Fire",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "mage:frost",
+          "classDisplayName": "Mage",
+          "specDisplayName": "Frost",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "monk:mistweaver",
+          "classDisplayName": "Monk",
+          "specDisplayName": "Mistweaver",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "priest:discipline",
+          "classDisplayName": "Priest",
+          "specDisplayName": "Discipline",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "priest:holy",
+          "classDisplayName": "Priest",
+          "specDisplayName": "Holy",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "priest:shadow",
+          "classDisplayName": "Priest",
+          "specDisplayName": "Shadow",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "warlock:affliction",
+          "classDisplayName": "Warlock",
+          "specDisplayName": "Affliction",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "warlock:demonology",
+          "classDisplayName": "Warlock",
+          "specDisplayName": "Demonology",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "warlock:destruction",
+          "classDisplayName": "Warlock",
+          "specDisplayName": "Destruction",
+          "isTalentGated": false
+        }
+      ]
+    },
+    "dual_wield_1h": {
+      "combinationType": "dual_wield_1h",
+      "description": "Dual wielding two One-Handed weapons.",
+      "specs": [
+        {
+          "specKey": "warrior:fury",
+          "classDisplayName": "Warrior",
+          "specDisplayName": "Fury",
+          "isTalentGated": true
+        },
+        {
+          "specKey": "deathknight:frost",
+          "classDisplayName": "Death Knight",
+          "specDisplayName": "Frost",
+          "isTalentGated": true
+        },
+        {
+          "specKey": "demonhunter:havoc",
+          "classDisplayName": "Demon Hunter",
+          "specDisplayName": "Havoc",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "demonhunter:vengeance",
+          "classDisplayName": "Demon Hunter",
+          "specDisplayName": "Vengeance",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "monk:brewmaster",
+          "classDisplayName": "Monk",
+          "specDisplayName": "Brewmaster",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "monk:windwalker",
+          "classDisplayName": "Monk",
+          "specDisplayName": "Windwalker",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "rogue:assassination",
+          "classDisplayName": "Rogue",
+          "specDisplayName": "Assassination",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "rogue:subtlety",
+          "classDisplayName": "Rogue",
+          "specDisplayName": "Subtlety",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "rogue:outlaw",
+          "classDisplayName": "Rogue",
+          "specDisplayName": "Outlaw",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "shaman:enhancement",
+          "classDisplayName": "Shaman",
+          "specDisplayName": "Enhancement",
+          "isTalentGated": false
+        }
+      ]
+    },
+    "titans_grip": {
+      "combinationType": "titans_grip",
+      "description": "Dual wielding two Two-Handed weapons (Fury Warrior talent).",
+      "specs": [
+        {
+          "specKey": "warrior:fury",
+          "classDisplayName": "Warrior",
+          "specDisplayName": "Fury",
+          "isTalentGated": true
+        }
+      ]
+    },
+    "two_hand": {
+      "combinationType": "two_hand",
+      "description": "Single Two-Handed weapon with an empty off-hand.",
+      "specs": [
+        {
+          "specKey": "warrior:arms",
+          "classDisplayName": "Warrior",
+          "specDisplayName": "Arms",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "paladin:holy",
+          "classDisplayName": "Paladin",
+          "specDisplayName": "Holy",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "paladin:retribution",
+          "classDisplayName": "Paladin",
+          "specDisplayName": "Retribution",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "deathknight:blood",
+          "classDisplayName": "Death Knight",
+          "specDisplayName": "Blood",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "deathknight:frost",
+          "classDisplayName": "Death Knight",
+          "specDisplayName": "Frost",
+          "isTalentGated": true
+        },
+        {
+          "specKey": "deathknight:unholy",
+          "classDisplayName": "Death Knight",
+          "specDisplayName": "Unholy",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "druid:balance",
+          "classDisplayName": "Druid",
+          "specDisplayName": "Balance",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "druid:restoration",
+          "classDisplayName": "Druid",
+          "specDisplayName": "Restoration",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "druid:feral",
+          "classDisplayName": "Druid",
+          "specDisplayName": "Feral",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "druid:guardian",
+          "classDisplayName": "Druid",
+          "specDisplayName": "Guardian",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "evoker:devastation",
+          "classDisplayName": "Evoker",
+          "specDisplayName": "Devastation",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "evoker:preservation",
+          "classDisplayName": "Evoker",
+          "specDisplayName": "Preservation",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "evoker:augmentation",
+          "classDisplayName": "Evoker",
+          "specDisplayName": "Augmentation",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "hunter:survival",
+          "classDisplayName": "Hunter",
+          "specDisplayName": "Survival",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "mage:arcane",
+          "classDisplayName": "Mage",
+          "specDisplayName": "Arcane",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "mage:fire",
+          "classDisplayName": "Mage",
+          "specDisplayName": "Fire",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "mage:frost",
+          "classDisplayName": "Mage",
+          "specDisplayName": "Frost",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "monk:brewmaster",
+          "classDisplayName": "Monk",
+          "specDisplayName": "Brewmaster",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "monk:mistweaver",
+          "classDisplayName": "Monk",
+          "specDisplayName": "Mistweaver",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "priest:discipline",
+          "classDisplayName": "Priest",
+          "specDisplayName": "Discipline",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "priest:holy",
+          "classDisplayName": "Priest",
+          "specDisplayName": "Holy",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "priest:shadow",
+          "classDisplayName": "Priest",
+          "specDisplayName": "Shadow",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "shaman:elemental",
+          "classDisplayName": "Shaman",
+          "specDisplayName": "Elemental",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "shaman:restoration",
+          "classDisplayName": "Shaman",
+          "specDisplayName": "Restoration",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "warlock:affliction",
+          "classDisplayName": "Warlock",
+          "specDisplayName": "Affliction",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "warlock:demonology",
+          "classDisplayName": "Warlock",
+          "specDisplayName": "Demonology",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "warlock:destruction",
+          "classDisplayName": "Warlock",
+          "specDisplayName": "Destruction",
+          "isTalentGated": false
+        }
+      ]
+    },
+    "ranged": {
+      "combinationType": "ranged",
+      "description": "Ranged weapon (Bow, Crossbow, Gun) equipped in main hand with empty off-hand.",
+      "specs": [
+        {
+          "specKey": "hunter:beast_mastery",
+          "classDisplayName": "Hunter",
+          "specDisplayName": "Beast Mastery",
+          "isTalentGated": false
+        },
+        {
+          "specKey": "hunter:marksmanship",
+          "classDisplayName": "Hunter",
+          "specDisplayName": "Marksmanship",
+          "isTalentGated": false
+        }
+      ]
+    }
+  },
+  "offHands": {
+    "shield": {
+      "offHandType": "shield",
+      "description": "Shields equipped in the off-hand slot for defense and block rating.",
+      "specs": [
+        {
+          "specKey": "warrior:protection",
+          "classDisplayName": "Warrior",
+          "specDisplayName": "Protection"
+        },
+        {
+          "specKey": "paladin:holy",
+          "classDisplayName": "Paladin",
+          "specDisplayName": "Holy"
+        },
+        {
+          "specKey": "paladin:protection",
+          "classDisplayName": "Paladin",
+          "specDisplayName": "Protection"
+        },
+        {
+          "specKey": "shaman:elemental",
+          "classDisplayName": "Shaman",
+          "specDisplayName": "Elemental"
+        },
+        {
+          "specKey": "shaman:restoration",
+          "classDisplayName": "Shaman",
+          "specDisplayName": "Restoration"
+        }
+      ]
+    },
+    "holdable": {
+      "offHandType": "holdable",
+      "description": "Held In Off-hand items (caster tomes, relics, orbs, and frills).",
+      "specs": [
+        {
+          "specKey": "druid:balance",
+          "classDisplayName": "Druid",
+          "specDisplayName": "Balance"
+        },
+        {
+          "specKey": "druid:restoration",
+          "classDisplayName": "Druid",
+          "specDisplayName": "Restoration"
+        },
+        {
+          "specKey": "evoker:devastation",
+          "classDisplayName": "Evoker",
+          "specDisplayName": "Devastation"
+        },
+        {
+          "specKey": "evoker:preservation",
+          "classDisplayName": "Evoker",
+          "specDisplayName": "Preservation"
+        },
+        {
+          "specKey": "evoker:augmentation",
+          "classDisplayName": "Evoker",
+          "specDisplayName": "Augmentation"
+        },
+        {
+          "specKey": "mage:arcane",
+          "classDisplayName": "Mage",
+          "specDisplayName": "Arcane"
+        },
+        {
+          "specKey": "mage:fire",
+          "classDisplayName": "Mage",
+          "specDisplayName": "Fire"
+        },
+        {
+          "specKey": "mage:frost",
+          "classDisplayName": "Mage",
+          "specDisplayName": "Frost"
+        },
+        {
+          "specKey": "monk:mistweaver",
+          "classDisplayName": "Monk",
+          "specDisplayName": "Mistweaver"
+        },
+        {
+          "specKey": "priest:discipline",
+          "classDisplayName": "Priest",
+          "specDisplayName": "Discipline"
+        },
+        {
+          "specKey": "priest:holy",
+          "classDisplayName": "Priest",
+          "specDisplayName": "Holy"
+        },
+        {
+          "specKey": "priest:shadow",
+          "classDisplayName": "Priest",
+          "specDisplayName": "Shadow"
+        },
+        {
+          "specKey": "warlock:affliction",
+          "classDisplayName": "Warlock",
+          "specDisplayName": "Affliction"
+        },
+        {
+          "specKey": "warlock:demonology",
+          "classDisplayName": "Warlock",
+          "specDisplayName": "Demonology"
+        },
+        {
+          "specKey": "warlock:destruction",
+          "classDisplayName": "Warlock",
+          "specDisplayName": "Destruction"
+        }
+      ]
+    },
+    "weapon_1h": {
+      "offHandType": "weapon_1h",
+      "description": "A second One-Handed weapon equipped in the off-hand slot (Dual Wield).",
+      "specs": [
+        {
+          "specKey": "warrior:fury",
+          "classDisplayName": "Warrior",
+          "specDisplayName": "Fury"
+        },
+        {
+          "specKey": "deathknight:frost",
+          "classDisplayName": "Death Knight",
+          "specDisplayName": "Frost"
+        },
+        {
+          "specKey": "demonhunter:havoc",
+          "classDisplayName": "Demon Hunter",
+          "specDisplayName": "Havoc"
+        },
+        {
+          "specKey": "demonhunter:vengeance",
+          "classDisplayName": "Demon Hunter",
+          "specDisplayName": "Vengeance"
+        },
+        {
+          "specKey": "monk:brewmaster",
+          "classDisplayName": "Monk",
+          "specDisplayName": "Brewmaster"
+        },
+        {
+          "specKey": "monk:windwalker",
+          "classDisplayName": "Monk",
+          "specDisplayName": "Windwalker"
+        },
+        {
+          "specKey": "rogue:assassination",
+          "classDisplayName": "Rogue",
+          "specDisplayName": "Assassination"
+        },
+        {
+          "specKey": "rogue:subtlety",
+          "classDisplayName": "Rogue",
+          "specDisplayName": "Subtlety"
+        },
+        {
+          "specKey": "rogue:outlaw",
+          "classDisplayName": "Rogue",
+          "specDisplayName": "Outlaw"
+        },
+        {
+          "specKey": "shaman:enhancement",
+          "classDisplayName": "Shaman",
+          "specDisplayName": "Enhancement"
+        }
+      ]
+    },
+    "weapon_2h": {
+      "offHandType": "weapon_2h",
+      "description": "A second Two-Handed weapon equipped in the off-hand slot (Titan's Grip).",
+      "specs": [
+        {
+          "specKey": "warrior:fury",
+          "classDisplayName": "Warrior",
+          "specDisplayName": "Fury"
+        }
+      ]
+    },
+    "none": {
+      "offHandType": "none",
+      "description": "Off-hand slot must remain empty (Two-Handed and Ranged weapons).",
+      "specs": [
+        {
+          "specKey": "warrior:arms",
+          "classDisplayName": "Warrior",
+          "specDisplayName": "Arms"
+        },
+        {
+          "specKey": "paladin:holy",
+          "classDisplayName": "Paladin",
+          "specDisplayName": "Holy"
+        },
+        {
+          "specKey": "paladin:retribution",
+          "classDisplayName": "Paladin",
+          "specDisplayName": "Retribution"
+        },
+        {
+          "specKey": "deathknight:blood",
+          "classDisplayName": "Death Knight",
+          "specDisplayName": "Blood"
+        },
+        {
+          "specKey": "deathknight:frost",
+          "classDisplayName": "Death Knight",
+          "specDisplayName": "Frost"
+        },
+        {
+          "specKey": "deathknight:unholy",
+          "classDisplayName": "Death Knight",
+          "specDisplayName": "Unholy"
+        },
+        {
+          "specKey": "druid:balance",
+          "classDisplayName": "Druid",
+          "specDisplayName": "Balance"
+        },
+        {
+          "specKey": "druid:restoration",
+          "classDisplayName": "Druid",
+          "specDisplayName": "Restoration"
+        },
+        {
+          "specKey": "druid:feral",
+          "classDisplayName": "Druid",
+          "specDisplayName": "Feral"
+        },
+        {
+          "specKey": "druid:guardian",
+          "classDisplayName": "Druid",
+          "specDisplayName": "Guardian"
+        },
+        {
+          "specKey": "evoker:devastation",
+          "classDisplayName": "Evoker",
+          "specDisplayName": "Devastation"
+        },
+        {
+          "specKey": "evoker:preservation",
+          "classDisplayName": "Evoker",
+          "specDisplayName": "Preservation"
+        },
+        {
+          "specKey": "evoker:augmentation",
+          "classDisplayName": "Evoker",
+          "specDisplayName": "Augmentation"
+        },
+        {
+          "specKey": "hunter:beast_mastery",
+          "classDisplayName": "Hunter",
+          "specDisplayName": "Beast Mastery"
+        },
+        {
+          "specKey": "hunter:marksmanship",
+          "classDisplayName": "Hunter",
+          "specDisplayName": "Marksmanship"
+        },
+        {
+          "specKey": "hunter:survival",
+          "classDisplayName": "Hunter",
+          "specDisplayName": "Survival"
+        },
+        {
+          "specKey": "mage:arcane",
+          "classDisplayName": "Mage",
+          "specDisplayName": "Arcane"
+        },
+        {
+          "specKey": "mage:fire",
+          "classDisplayName": "Mage",
+          "specDisplayName": "Fire"
+        },
+        {
+          "specKey": "mage:frost",
+          "classDisplayName": "Mage",
+          "specDisplayName": "Frost"
+        },
+        {
+          "specKey": "monk:brewmaster",
+          "classDisplayName": "Monk",
+          "specDisplayName": "Brewmaster"
+        },
+        {
+          "specKey": "monk:mistweaver",
+          "classDisplayName": "Monk",
+          "specDisplayName": "Mistweaver"
+        },
+        {
+          "specKey": "priest:discipline",
+          "classDisplayName": "Priest",
+          "specDisplayName": "Discipline"
+        },
+        {
+          "specKey": "priest:holy",
+          "classDisplayName": "Priest",
+          "specDisplayName": "Holy"
+        },
+        {
+          "specKey": "priest:shadow",
+          "classDisplayName": "Priest",
+          "specDisplayName": "Shadow"
+        },
+        {
+          "specKey": "shaman:elemental",
+          "classDisplayName": "Shaman",
+          "specDisplayName": "Elemental"
+        },
+        {
+          "specKey": "shaman:restoration",
+          "classDisplayName": "Shaman",
+          "specDisplayName": "Restoration"
+        },
+        {
+          "specKey": "warlock:affliction",
+          "classDisplayName": "Warlock",
+          "specDisplayName": "Affliction"
+        },
+        {
+          "specKey": "warlock:demonology",
+          "classDisplayName": "Warlock",
+          "specDisplayName": "Demonology"
+        },
+        {
+          "specKey": "warlock:destruction",
+          "classDisplayName": "Warlock",
+          "specDisplayName": "Destruction"
+        }
+      ]
+    }
+  }
+}

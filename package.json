@@ -1,0 +1,83 @@
+{
+  "name": "simitboi",
+  "version": "0.1.0",
+  "description": "Local, portable WoW simulation app built on SimulationCraft",
+  "main": "./out/main/index.js",
+  "author": "",
+  "license": "MIT",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json && electron-vite build",
+    "start": "electron-vite preview",
+    "test": "node --test test/**/*.test.ts",
+    "typecheck": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json",
+    "check:blizzard": "node --env-file=.env scripts/check-blizzard-auth.ts",
+    "probe:items": "node --env-file=.env scripts/probe-items.ts",
+    "build:items": "node --env-file=.env scripts/build-item-table.ts",
+    "check:m6": "node scripts/check-m6.ts",
+    "check:m7": "node scripts/check-m7.ts",
+    "check:ui": "npm run build && node scripts/check-ui.ts",
+    "db:inspect": "node scripts/inspect-db.ts",
+    "check:loadouts": "node scripts/check-loadouts.ts",
+    "probe:unique": "node --env-file=.env scripts/probe-unique.ts",
+    "check:m8": "node scripts/check-m8.ts",
+    "check:catalog": "node scripts/check-catalog.ts",
+    "build:db2": "node scripts/build-db2.ts",
+    "build:weapons": "node scripts/build-spec-weapons.ts",
+    "check:gear": "node scripts/check-gear.ts",
+    "check:item-preview": "npm run build && node scripts/check-item-preview.ts",
+    "build:crafted-icons": "node --env-file=.env scripts/build-crafted-icons.mjs",
+    "check:simc": "node scripts/check-simc-provision.ts",
+    "package": "npm run build && electron-builder --win --publish never",
+    "check:release": "node scripts/check-release.ts",
+    "simc-update:keygen": "node scripts/simc-update/keygen.ts",
+    "simc-update:sign": "node scripts/simc-update/sign.ts",
+    "check:simc-update": "npm run build && node scripts/check-simc-update.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^22.10.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "electron": "^44.3.0",
+    "electron-builder": "^25.1.8",
+    "electron-vite": "^2.3.0",
+    "rcedit": "^5.0.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "^5.7.2",
+    "vite": "^5.4.11"
+  },
+  "type": "module",
+  "build": {
+    "appId": "dev.simitboi.app",
+    "productName": "SimItBoi",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "win": {
+      "target": [
+        "dir",
+        "zip"
+      ],
+      "artifactName": "${productName}-${version}-win-x64.${ext}",
+      "signAndEditExecutable": false
+    },
+    "files": [
+      "out/**/*",
+      "!**/*.map",
+      "!**/*.ts"
+    ],
+    "extraResources": [
+      {
+        "from": "vendor/simc/simc.exe",
+        "to": "simc/simc.exe"
+      }
+    ],
+    "forceCodeSigning": false,
+    "npmRebuild": false,
+    "afterPack": "scripts/after-pack.mjs"
+  }
+}

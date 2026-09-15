@@ -1,0 +1,58 @@
+# Repeatable checks for SimItBoi.
+#
+# Windows only, deliberately: the app is a portable Windows build, the
+# simc binary is a Windows executable, and packaging targets Windows. Testing elsewhere would check a platform nobody ships.
+#
+# This runs everything that does NOT need the simulator. `vendor/simc/` is
+# gitignored, so a clean checkout has no binary and the integration checks below
+# cannot run here — they are listed rather than silently skipped, so nobody reads
+# a green tick as "the real simulations passed".
+name: CI
+
+on:
+  push:
+    branches: [main, stable]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  checks:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Unit tests
+        run: npm test
+
+      # Builds both TypeScript projects and every Electron/Vite bundle, and
+      # emits the generated data declared in the manifest. This is what caught
+      # nothing when dawncrest-crafts.json went missing, so the manifest test in
+      # the unit suite is the actual guard; this proves the bundle still builds.
+      - name: Build
+        run: npm run build
+
+      - name: Integration checks not run here
+        shell: bash
+        run: |
+          echo "These need vendor/simc/simc.exe, which is not in the repository:"
+          echo "  npm run check:catalog  — every upgrade rung against the real binary"
+          echo "  npm run check:gear     — gems, enchants, embellishments, crafted items"
+          echo "  npm run check:m8       — the hypothetical-item funnel end to end"
+          echo "  npm run check:m6/m7    — solver and full funnel"
+          echo "  npm run check:loadouts — talent loadout comparison"
+          echo "  npm run check:ui       — the real Electron UI"
+          echo "  npm run check:simc     — build provisioning, activation and rollback"
+          echo "  npm run check:release  — the packaged app from a spaces/non-ASCII path"
+          echo "  npm run check:simc-update — update offer, install and rollback in the real app"
+          echo "Run them locally with a provisioned simc build."

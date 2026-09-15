@@ -1,0 +1,68 @@
+# Mirrors SimulationCraft nightly builds as CLI-only simc updates for SimItBoi.
+#
+# Once a week: look at the newest Windows nightly on simulationcraft.org. Only
+# if its simc version is newer than anything mirrored before (a new revision or
+# game patch, not just another day's commit), extract only simc.exe (and its GPL
+# license), prove it runs, publish it gzipped as a pre-release, and open a pull
+# request adding it to update/simc-manifest.json.
+#
+# Actions > simc update > Run workflow starts a check by hand. Tick "any nightly"
+# to take the newest nightly even when its version has not changed.
+#
+# Nothing here signs. SimItBoi ignores the manifest until the maintainer signs it
+# on their own machine (`npm run simc-update:sign`) and merges. A run fails, and
+# GitHub emails you, if the bytes behind a file name ever change between runs.
+#
+# Runs only in the public repository, which owns the manifest and releases.
+#
+# Windows runner on purpose: it is the only place the Windows simc.exe can be
+# run before anyone downloads it.
+name: simc update
+
+on:
+  schedule:
+    # Mondays.
+    - cron: '17 6 * * 1'
+  workflow_dispatch:
+    inputs:
+      any_nightly:
+        description: Take the newest nightly even if its simc version has not changed
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: simc-update
+  cancel-in-progress: false
+
+jobs:
+  mirror:
+    if: github.repository == 'arsamezzati/SimItBoi'
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+
+      # Electron itself is not needed to mirror simc; skipping its download
+      # keeps the install fast.
+      - name: Install
+        run: npm ci
+        env:
+          ELECTRON_SKIP_BINARY_DOWNLOAD: '1'
+
+      - name: Mirror and propose simc
+        run: node scripts/simc-update/run.ts
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SIMC_UPDATE_MIN_AGE_DAYS: '0'
+          SIMC_UPDATE_ANY_NIGHTLY: ${{ inputs.any_nightly && '1' || '0' }}
+          # 7-Zip is preinstalled on GitHub's Windows runners.
+          SEVEN_ZIP: 7z

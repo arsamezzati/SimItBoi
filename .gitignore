@@ -1,0 +1,21 @@
+node_modules/
+out/
+dist/
+release/
+.generation/
+/data/
+vendor/simc/
+*.log
+
+# credentials (build-time only)
+.env
+.env.local
+
+# TypeScript incremental build info
+*.tsbuildinfo
+
+# DB2 dump cache (build-time only, re-downloadable)
+.cache/
+
+# simc update signing key — must never be committed (see scripts/lib/signing.ts)
+*simc-update-signing*.pem

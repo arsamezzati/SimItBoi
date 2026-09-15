@@ -1,0 +1,385 @@
+# Vahshandooz - Elemental - 2026-09-10 20:00 - EU/Draenor
+# SimC Addon 12.1.0-03
+# WoW 12.1.0.69587, TOC 120100
+# Requires SimulationCraft 1000-01 or newer
+
+shaman="Vahshandooz"
+level=90
+race=harronir
+region=eu
+server=draenor
+role=spell
+
+spec=elemental
+# loot_spec=elemental
+
+talents=CYQALMl7AwW51MWzGneuHE3tPCAAAAzMbLzMGjZZZZMmhZAAAAgFzsBDYAzGTIzCAMbzMzYstYajZmtxyMmZMsMLzMLDjZmFAgZAwMjhhB
+
+# Saved Loadout: st
+# talents=CYQALMl7AwW51MWzGneuHE3tPCAAAAzMbLzMmZmZZbZMMjZAAAAgFzsBDYAzGDwsAAWmZmxYbZGbMzswyMzMjZYWmxiZGmZBAYAgZGDDD
+# Saved Loadout: coiled
+# talents=CYQALMl7AwW51MWzGneuHE3tPCAAAAzMbLzMmZmZZbZMMjBAAAAsYmNYADY2YAmFAYWmZmxYbxAzMLjlZmZGDLzyMWMzwMLDAYAgZGDDD
+# Saved Loadout: ula
+# talents=CYQALMl7AwW51MWzGneuHE3tPCAAAAzMbLzMGjZZbZMmhZAAAAgFzsBDYAzGDwsAAzyMzMzYbxYjZGjlZmZGDLWGzywYmZBAYGAMzYYYA
+# Saved Loadout: nekzal
+# talents=CYQALMl7AwW51MWzGneuHE3tPCAAAAzMbLzMmZmZZbZMMjBAAAAsYmNYADY2YAmFAYWmZmxYbxYjZmtxyMzMjhFLzYxMDzsMAgBAmZMMMA
+# Saved Loadout: senti
+# talents=CYQALMl7AwW51MWzGneuHE3tPCAAAAzMbLzMmZmZZbZMMjBAAAAsYmNYADY2YAmFAYWmZmxYbxAzMLjlZmZGDLzyMWMzwMLDAYAgZGDDD
+# Saved Loadout: m+
+# talents=CYQALMl7AwW51MWzGneuHE3tPCAAAAzMbLzMzYML2mhZMzAAAAAgFzYYDWgZYwYDAmlZmZM2WM2YmxYZmZmxwysYsYmZMzCAwMAzMwwwA
+# Saved Loadout: farseer m+
+# talents=CYQALMl7AwW51MWzGneuHE3tPCAAAAzMbLzMGjZZZZMmhZAAAAgFzsBDYAzGDwsAAz2MzMGbLGbMzsNWmxMjhlZZmZZYMzsAAMDAmZMMMA
+# Saved Loadout: twin
+# talents=CYQALMl7AwW51MWzGneuHE3tPCAAAAzMbLzMGjZZZZMmhBAAAAsYmNYADY2YAmFAY2mZmxYbxYjZGjlZmZGDLWmZWmxYmZBAYYAMzYYYA
+# Saved Loadout: ssz
+# talents=CYQALMl7AwW51MWzGneuHE3tPCAAAAzMbLzMmZmZZbZMMjBAAAAsYmNYADY2YAmFAYWmZmxYbxAzMLjlZmZGDLzyMWMzwMLDAYAgZGDDD
+# Saved Loadout: turtle
+# talents=CYQALMl7AwW51MWzGneuHE3tPCAAAAzMbLzMGjZZZZMmhBAAAAsYmNYADY2YAmFAYWmZmxYbxYjZGjlZmZGDLzixyMzYmZBAYGAMzYYYA
+# Saved Loadout: vash
+# talents=CYQALMl7AwW51MWzGneuHE3tPCAAAAzMbLzMmZmZZbZMMjBAAAAsYmNYADY2YAmFAYWmZmxYbxAzMLjlZmZGDLzyMWMzwMLDAYAgZGDDD
+# Saved Loadout: delve
+# talents=CYQALMl7AwW51MWzGneuHE3tPCAAAAzMLLzMmZmZbZZMmxMDAAAAsZmNYADY2YAmFAYWmZmxYbxAzMGLzMzMzMWsYsgxMzCAwAAzMGGGA
+# Saved Loadout: u la tek u la tek
+# talents=CYQALMl7AwW51MWzGneuHE3tPCAAAAzMbLzMmZmZZbZMMjBAAAAsYmNYADY2YAmFAY2mZmxYbxAzMGLzMzMGWsMjFzMMzyAAzwAYmxwwA
+# Saved Loadout: boss ajib
+# talents=CYQALMl7AwW51MWzGneuHE3tPCAAAAzMbLzMGjZZbZMmhZAAAAgFzsBDYAzGDwsAAz2MzMGbLGYmZbmlZmZGDLWmZWGGzMLAADAMzYYYA
+
+omnium_talents=136814:1/136818:1/136817:1/136816:1/136822:1
+
+# Serpent Crown of the Ophidian Oracle (321)
+head=,id=271483,enchant_id=8017,bonus_id=6652/13696/13440/13692/13698/12846,redirected_base_stats=239035
+# Amulet of the Twin Fangs (334)
+neck=,id=268251,gem_id=240898,bonus_id=40/13668/13334/13696/12854
+# Hissing Mantle of the Ophidian Oracle (321)
+shoulder=,id=271481,enchant_id=8001,bonus_id=13334/13694/6652/13697/12846,content_tuning=1040
+# Speakeasy Shroud (311)
+back=,id=251132,bonus_id=12843/13440/6652/13662/12699,content_tuning=1279
+# Fanged Raiment of the Ophidian Oracle (334)
+chest=,id=271486,enchant_id=7987,bonus_id=6652/13440/13690/13698/12854,redirected_base_stats=251233
+# Saptorbane Guards (311)
+wrist=,id=251200,bonus_id=12843/13440/6652/13696/13662/12699,content_tuning=1279
+# Hexing Grips of the Ophidian Oracle (315)
+hands=,id=271484,bonus_id=6652/13440/13691/13697/12844,redirected_base_stats=193752
+# Serpentine Mixing Belt (311)
+waist=,id=268254,bonus_id=43/13696/13662/13334/12843
+# Farstrider's Reinforced Faulds (331)
+legs=,id=244582,enchant_id=7935,bonus_id=12214/13667/12497/13751/14001/8960/12384/8790/13836,content_tuning=3615,crafted_stats=40/32,crafting_quality=5
+# Scaled Shoes of the Ophidian Oracle (321)
+feet=,id=271485,enchant_id=7963,bonus_id=12846/13334/6652/1574,redirected_base_stats=268258
+# Apex Brute's Claw Ring (318)
+finger1=,id=268252,enchant_id=7967,gem_id=240983,bonus_id=6652/13668/13334/12849
+# Band of the Amani Warlord (311)
+finger2=,id=273792,enchant_id=7967,gem_id=240898,bonus_id=12843/13440/6652/13668/12699,content_tuning=1279
+# Lightspire Core (321)
+trinket1=,id=250214,bonus_id=13440/6652/12699/12846,content_tuning=1279
+# Freightrunner's Flask (321)
+trinket2=,id=250215,bonus_id=13440/6652/12699/12846,content_tuning=1279
+# Aln'hara Cane (331)
+main_hand=,id=245770,enchant_id=7983,bonus_id=12214/12497/13751/14004/13771/8960/8793/13836,content_tuning=3615,crafted_stats=49/32,crafting_quality=5
+
+### Gear from Bags
+#
+# Headpiece of Celestial Harmony (50)
+# head=,id=99332,bonus_id=9073,content_tuning=2012
+#
+# Confidant's Favored Cap (71)
+# head=,id=183021,bonus_id=9117/6652/7194,content_tuning=753
+#
+# Miststalker's Cowl (276)
+# head=,id=272242,bonus_id=12820/40/13696/11215/13663,content_tuning=6011
+#
+# Custodian's Medallion of Delusion (189)
+# neck=,id=193647,bonus_id=6652/8811/13668/13609/7756,drop_level=88,content_tuning=6053
+#
+# Yoke of the Charging Bear (311)
+# neck=,id=251173,bonus_id=12843/13440/6652/13668/12699,content_tuning=1279
+#
+# Pendant of Malefic Fury (292)
+# neck=,id=251142,bonus_id=12833/13439/6652/13668/12699,content_tuning=3025
+#
+# Pendant of Malefic Fury (321)
+# neck=,id=251142,gem_id=240898,bonus_id=13440/6652/13668/12699/12846,content_tuning=1279
+#
+# Jangling Felpaulets (311)
+# shoulder=,id=251131,bonus_id=12843/13440/6652/13662/12699,content_tuning=1279
+#
+# Jangling Felpaulets (311)
+# shoulder=,id=251131,bonus_id=12843/13440/6652/13662/12699,content_tuning=1279
+#
+# Scaldrons of Molten Might (73)
+# shoulder=,id=195477,bonus_id=7981/6652/8823/8817/1498/8767,content_tuning=2160
+#
+# Jangling Felpaulets (292)
+# shoulder=,id=251131,enchant_id=8001,bonus_id=12833/13439/40/13662/12699,content_tuning=3025
+#
+# Shoulderwraps of Celestial Harmony (50)
+# shoulder=,id=99334,bonus_id=9073,content_tuning=2012
+#
+# Reanimator's Weight (180)
+# shoulder=,id=251176,bonus_id=13441/13436/13578,drop_level=87,content_tuning=3022
+#
+# Decorated Commander's Cindercloak (73)
+# back=,id=195482,bonus_id=7981/6652/8823/8819/1498/8767,content_tuning=2160
+#
+# Cloak of the Restless Tribes (292)
+# back=,id=159288,bonus_id=12833/13439/6652/13662/12699,content_tuning=3595
+#
+# Crest of the Legionnaire General (71)
+# back=,id=183032,bonus_id=9117/6652,content_tuning=753
+#
+# Cloak of the Restless Tribes (311)
+# back=,id=159288,bonus_id=12843/13440/6652/13662/12699,content_tuning=1279
+#
+# Deepvine Shroud (269)
+# back=,id=257022,bonus_id=12818/40/13663,content_tuning=3321
+#
+# Cowled Batwing Cloak (71)
+# back=,id=183034,bonus_id=9117/6652,content_tuning=753
+#
+# Preyhunter's Rugged Stole (292)
+# back=,id=275524,bonus_id=12833/6652/13662,content_tuning=5236
+#
+# Fanged Raiment of the Ophidian Oracle (308)
+# chest=,id=271486,enchant_id=7987,bonus_id=13690/6652/13698/12838
+#
+# Venom-Cursed Eagle's Crest (292)
+# chest=,id=277779,enchant_id=7987,bonus_id=12833/40/13662
+#
+# Breastplate of Cautious Calculation (71)
+# chest=,id=182987,bonus_id=9117/6652,content_tuning=753
+#
+# Hauberk of Frozen Fervor (76)
+# chest=,id=193734,bonus_id=6652/13609/7756,drop_level=73,content_tuning=6053
+#
+# Valdrakken Protector's Turncoat (73)
+# chest=,id=195478,bonus_id=7981/6652/8823/8820/1498/8767,content_tuning=2160
+#
+# Chestguard of Corroded Scales (321)
+# chest=,id=273789,bonus_id=13440/6652/13662/12699/12846,content_tuning=1279
+#
+# Shock Pulse Robes (50)
+# chest=,id=112746,bonus_id=9073,content_tuning=2012
+#
+# Chestguard of Corroded Scales (311)
+# chest=,id=273789,bonus_id=12843/13440/6652/13662/12699,content_tuning=1279
+#
+# Tabard of the Haranir (1)
+# tabard=,id=246795,content_tuning=863
+#
+# Hydra Scale Wristguards (311)
+# wrist=,id=273775,bonus_id=12843/13440/6652/13696/13662/12699,content_tuning=1279
+#
+# Fallen Paragon's Armguards (42)
+# wrist=,id=180114,bonus_id=6652/8811/13609/7756,drop_level=39,content_tuning=5383
+#
+# Laser Burn Bracers (50)
+# wrist=,id=112739,bonus_id=9073,content_tuning=2012
+#
+# Galerider's Mesh Wraps (276)
+# wrist=,id=272254,bonus_id=12820/6652/13696/11215/13663,content_tuning=6011
+#
+# Arc-Glass Bindings (292)
+# wrist=,id=159380,bonus_id=12833/13439/6652/13696/13662/12699,content_tuning=3025
+#
+# Shredclaw Handler's Grips (256)
+# hands=,id=275226,bonus_id=13577/12788/8902,content_tuning=3321
+#
+# Gloves of Phantom Shadows (71)
+# hands=,id=183026,bonus_id=9117/6652,content_tuning=753
+#
+# Rootspeaker's Branches (295)
+# hands=,id=256978,bonus_id=40/13662/12830,content_tuning=7443
+#
+# Pulverizing Pads (311)
+# hands=,id=251165,bonus_id=12843/13440/6652/13662/12699,content_tuning=1279
+#
+# Belt of the Consecrated Tomb (311)
+# waist=,id=159369,bonus_id=12843/13440/6652/13696/13662/12699,content_tuning=1279
+#
+# Shikaar Scout Buckle (23)
+# waist=,id=197659,bonus_id=13642,drop_level=23,content_tuning=2437
+#
+# Belt of the Consecrated Tomb (305)
+# waist=,id=159369,bonus_id=12841/13440/6652/13696/13662/12699,content_tuning=1279
+#
+# Venom-Cursed Eagle's Waistguard (285)
+# waist=,id=277773,bonus_id=12827/6652/13696/13662,content_tuning=5381
+#
+# Stoic Guardsman's Belt (71)
+# waist=,id=183025,bonus_id=9117/6652/7194,content_tuning=753
+#
+# Heedless Pugilist's Harness (71)
+# waist=,id=183005,bonus_id=9117/6652/7193,content_tuning=753
+#
+# Chiropteran Leggings (71)
+# legs=,id=182993,bonus_id=9117/6652,content_tuning=753
+#
+# Memento-Laden Cuisses (71)
+# legs=,id=182985,bonus_id=9117/6652,content_tuning=753
+#
+# Tassets of Densified Ooze (55)
+# legs=,id=193662,bonus_id=6652/13609/7756,drop_level=52,content_tuning=2587
+#
+# Cuisses of the Uncoiled Union (289)
+# legs=,id=268237,bonus_id=6652/13662/13332/12828/11215,content_tuning=7359
+#
+# Venom Warden's Greaves (295)
+# legs=,id=268224,bonus_id=6652/13662/13333/12834/11215,content_tuning=7363
+#
+# Egg Tender's Leggings (292)
+# legs=,id=193759,enchant_id=7935,bonus_id=12833/13439/6652/13662/12699,content_tuning=3025
+#
+# Egg Tender's Leggings (311)
+# legs=,id=193759,enchant_id=7935,bonus_id=12843/13440/6652/13662/12699,content_tuning=1279
+#
+# Lithiel's Linked Leggings (305)
+# legs=,id=251141,bonus_id=12841/13440/6652/13662/12699,content_tuning=1279
+#
+# Stoneclas Stompers (71)
+# feet=,id=183006,bonus_id=9117/6652,content_tuning=753
+#
+# Errant Crusader's Greaves (71)
+# feet=,id=183027,bonus_id=9117/6652,content_tuning=753
+#
+# Stoneguard Attendant's Boots (71)
+# feet=,id=182983,bonus_id=9117/6652,content_tuning=753
+#
+# Felsoaked Soles (311)
+# feet=,id=251125,enchant_id=7963,bonus_id=12843/13440/6652/13662/12699,content_tuning=1279
+#
+# Swoglet Stompers (220)
+# feet=,id=193770,bonus_id=6652/12769/7756,content_tuning=6053
+#
+# Slippers of the Forgotten Heretic (71)
+# feet=,id=182979,bonus_id=9117/6652,content_tuning=753
+#
+# Band of the Amani Warlord (292)
+# finger1=,id=273792,enchant_id=7967,gem_id=240898,bonus_id=12833/13439/6652/13668/12699,content_tuning=3022
+#
+# Signet of Snarling Servitude (311)
+# finger1=,id=251136,enchant_id=7967,gem_id=240983,bonus_id=12843/13440/6652/13668/12699,content_tuning=1279
+#
+# Charged Sandstone Band (311)
+# finger1=,id=158366,bonus_id=12843/13440/6652/13668/12699,content_tuning=1279
+#
+# Jade Ophidian Band (311)
+# finger1=,id=162544,bonus_id=12843/13440/6652/13668/12699,content_tuning=1279
+#
+# Unstable Arcane Loop (189)
+# finger1=,id=193633,bonus_id=6652/8812/13668/13609/7756,drop_level=88,content_tuning=6053
+#
+# Omission of Light (243)
+# finger1=,id=251093,bonus_id=12780/13438/6652/13668/12699
+#
+# Lightwarden's Bind (292)
+# finger1=,id=251194,enchant_id=7967,gem_id=240983,bonus_id=12833/13439/6652/13668/12699,content_tuning=3025
+#
+# Platinum Star Band (220)
+# finger1=,id=193708,bonus_id=6652/13668/12769/7756,content_tuning=2587
+#
+# Entangling Brood Ring (276)
+# finger1=,id=276034,enchant_id=7967,bonus_id=12820/6652/13668,content_tuning=5381
+#
+# Lost Idol of the Hash'ey (272)
+# trinket1=,id=251783,bonus_id=12819/6652,content_tuning=6011
+#
+# Void-Reaper's Libram (311)
+# trinket1=,id=251785,bonus_id=6652/12843,content_tuning=6011
+#
+# Ruby Whelp Shell (311)
+# trinket1=,id=193757,bonus_id=12843/13440/6652/12699,content_tuning=1279
+#
+# Knot of Writhing Serpents (311)
+# trinket1=,id=273794,bonus_id=12843/13440/6652/12699,content_tuning=1279
+#
+# Ultradon Cuirass (276)
+# trinket1=,id=264694,bonus_id=12820/6652/11215,content_tuning=6011
+#
+# Irideus Fragment (189)
+# trinket1=,id=193743,bonus_id=6652/13609/7756,drop_level=88,content_tuning=6053
+#
+# Forgotten Farstrider's Insignia (253)
+# trinket1=,id=250462,bonus_id=6652/13333/12787,content_tuning=4907,crafted_stats=49
+#
+# Ever-Collapsing Void Fissure (266)
+# trinket1=,id=251786,bonus_id=12817/42/11215,content_tuning=6019
+#
+# Resonant Bellowstone (298)
+# trinket1=,id=250228,bonus_id=12835/6652/12699/11215,content_tuning=1279
+#
+# Mindpiercer's Sigil (308)
+# trinket1=,id=250224,bonus_id=13439/6652/12699/12838,content_tuning=3025
+#
+# Tangle of Vibrant Vines (198)
+# trinket1=,id=252957,bonus_id=13613,drop_level=90,content_tuning=6998
+#
+# Ever-Collapsing Void Fissure (282)
+# trinket1=,id=251786,bonus_id=12826/6652/11215,content_tuning=6014
+#
+# Gaze of Arrogance (50)
+# main_hand=,id=112951,bonus_id=9073,content_tuning=1036
+#
+# Victor's Flashfrozen Blade (298)
+# main_hand=,id=251149,bonus_id=12835/6652/12701/11215,content_tuning=1279
+#
+# Chillworn's Infusion Staff (311)
+# main_hand=,id=193761,bonus_id=12843/13440/6652/12701,content_tuning=1279
+#
+# Lumenbloom Scepter (285)
+# main_hand=,id=257014,bonus_id=12827/6652,content_tuning=7443
+#
+# Kardris' Scepter (50)
+# main_hand=,id=112769,bonus_id=9073,content_tuning=2012
+#
+# Nibbles' Training Rod (305)
+# main_hand=,id=251123,enchant_id=7983,bonus_id=12841/13440/6652/12701,content_tuning=1279
+#
+# Awakened Planar Pillar (73)
+# main_hand=,id=195504,bonus_id=7981/6652/1498/8767,content_tuning=2160
+#
+# Bonedust Pestle (276)
+# main_hand=,id=272270,enchant_id=7983,bonus_id=12820/6652/11215,content_tuning=6011
+#
+# Beast Collector's Cudgel (259)
+# main_hand=,id=275221,bonus_id=6652/13334/12793,content_tuning=3321
+#
+# Fang of Contagion (292)
+# main_hand=,id=251225,enchant_id=7983,bonus_id=12833/13439/6652/12701,content_tuning=3025
+#
+# Polished Lightwood Channeler (311)
+# main_hand=,id=273778,bonus_id=12843/13440/42/12701,content_tuning=1279
+#
+# Quake-Detecting Seismostaff (73)
+# main_hand=,id=195497,bonus_id=7981/6652/1498/8767,content_tuning=2160
+#
+# Crystalized Bulwark (198)
+# off_hand=,id=193645,bonus_id=6652/13609/7756,drop_level=89,content_tuning=6053
+#
+# Bulwark of Brimming Potential (311)
+# off_hand=,id=159664,bonus_id=12843/13440/6652/12699,content_tuning=1279
+#
+# Drake Rider's Stecktarge (292)
+# off_hand=,id=193754,bonus_id=12833/13439/6652/12699,content_tuning=3025
+#
+# Wailing Bulwark (266)
+# off_hand=,id=272276,bonus_id=12817/6652/11215,content_tuning=6019
+#
+# Teldrassil's Sacrifice (311)
+# off_hand=,id=251196,bonus_id=12843/13440/6652/12699,content_tuning=1279
+#
+# Northern Barrier (305)
+# off_hand=,id=156172,bonus_id=8902/12841/7756/12699,content_tuning=440
+
+### Additional Character Info
+#
+# catalyst_currencies=2813:8/3269:8/3116:8/3378:8/3465:6
+#
+# upgrade_currencies=c:3442:266/c:3445:20/c:3443:340/c:3444:344/c:3446:32/i:232875:6
+#
+# slot_high_watermarks=0:321:321/1:334:334/2:321:321/3:334:334/4:311:311/5:331:331/6:321:321/7:311:311/8:315:315/9:311:311/10:321:321/11:311:311/12:331:331/13:311:311/14:279:279/15:42:160/16:311:311
+#
+# upgrade_achievements=19577/19578/40107/40115/40942/40943/40944/41886/41887/41888/42767/42768/42769/42770/61809/62410/62411/62412
+#
+# bonus_roll_currencies=3418:0/3511:0
+
+# Checksum: c2e3c9ee

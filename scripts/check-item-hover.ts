@@ -1,0 +1,71 @@
+import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
+import { createRequire } from 'node:module'
+import { resolve } from 'node:path'
+import { _electron as electron, expect } from '@playwright/test'
+const require = createRequire(import.meta.url)
+const env = Object.fromEntries(Object.entries(process.env).filter(([k,v]) => k !== 'ELECTRON_RUN_AS_NODE' && v !== undefined)) as Record<string,string>
+env.SIMITBOI_DEV_DATA_DIR = resolve('data/ui-hover-test')
+delete env.ELECTRON_RENDERER_URL
+const app = await electron.launch({ executablePath: require('electron'), args: ['out/main/index.js'], env })
+try {
+  const page = await app.firstWindow()
+  page.setDefaultTimeout(10000)
+  await app.evaluate(({ BrowserWindow }) => { for (const win of BrowserWindow.getAllWindows()) win.hide() })
+  await page.getByLabel('Paste your SimC addon string').fill(readFileSync('fixtures/vahshandooz-elemental.simc','utf8'))
+  await page.getByRole('button', { name: 'Top Gear', exact: true }).click()
+  const item = page.locator('.candidate').filter({hasText: 'Fanged Raiment'}).last()
+  await item.locator('strong').hover()
+  await expect(page.getByRole('tooltip')).toBeVisible()
+  await item.locator('.item-cell').focus()
+  await page.locator('.candidate').filter({hasText:'Fanged Raiment'}).first().locator('strong').hover()
+  await expect(page.getByRole('tooltip')).toHaveCount(1)
+  await page.keyboard.press('Escape')
+  await page.getByLabel('Search items', {exact:true}).fill('Lightspire Core')
+  await page.getByRole('button', {name:/Lightspire Core.*250214/}).locator('strong').hover()
+  const tip = page.getByRole('tooltip')
+  await expect(tip).toBeVisible()
+  const visible = await tip.evaluate(el => {
+    const r = el.getBoundingClientRect()
+    return { x:r.x, y:r.y, right:r.right, bottom:r.bottom, width:innerWidth, height:innerHeight,
+      hit: el.contains(document.elementFromPoint(r.x+r.width/2, r.y+Math.min(30,r.height/2))) }
+  })
+  assert(visible.x >= 0 && visible.y >= 0 && visible.right <= visible.width && visible.bottom <= visible.height && visible.hit, JSON.stringify(visible))
+  await page.screenshot({path:'data/ui-hover-search.png'})
+  // The disabled search button used to be a second unreliable hover surface.
+  await page.mouse.move(5,5)
+  await expect(tip).toHaveCount(0)
+  const searchItem = page.getByRole('button', {name:/Lightspire Core.*250214/})
+  await searchItem.evaluate((el: HTMLButtonElement) => { el.disabled = true })
+  await searchItem.locator('strong').hover()
+  await expect(tip).toBeVisible()
+  await page.keyboard.press('Escape')
+  await page.getByLabel('Search items', {exact:true}).fill('251233')
+  await page.getByRole('button', {name:/Manipulator.*251233/}).click()
+  await expect(tip).toHaveCount(0)
+  await page.getByLabel('Upgrade track').selectOption('Myth')
+  await page.getByLabel('Item level', {exact:true}).selectOption('334')
+  await page.getByRole('button', {name:'Convert to tier set',exact:true}).click()
+  await expect(page.locator('.item-preview')).toContainText('Fanged Raiment')
+  await page.getByRole('button', {name:'Add item to gear',exact:true}).click()
+  const added = page.locator('.hypothetical-list li').last()
+  await expect(added).toContainText('redirected_base_stats=251233')
+  await expect(added).toContainText('id=271486')
+  await added.getByRole('button', {name:'Edit',exact:true}).click()
+  await expect(page.getByRole('button', {name:'Undo tier conversion',exact:true})).toHaveAttribute('aria-pressed','true')
+  await expect(page.getByLabel('Item level', {exact:true})).toHaveValue('334')
+  await page.getByRole('button', {name:'Undo tier conversion',exact:true}).click()
+  await page.getByRole('button', {name:'Save item changes',exact:true}).click()
+  await expect(added).not.toContainText('redirected_base_stats')
+  await expect(added).toContainText('id=251233')
+  await page.getByRole('button', {name:'Convert to tier set',exact:true}).click()
+  await page.locator('.item-preview strong').hover()
+  await expect(tip).toContainText('stats from Manipulator')
+  await app.evaluate(({ BrowserWindow }) => { BrowserWindow.getAllWindows()[0].setSize(640,720) })
+  await expect(tip).toBeVisible()
+  const narrow = await tip.boundingBox()
+  assert(narrow && narrow.x >= 0 && narrow.x + narrow.width <= 640)
+  await page.screenshot({path:'data/ui-catalyst.png'})
+  console.log('Pointer hover: bag name and search name; tooltip bounds and actual paint visibility passed')
+  console.log('Catalyst UI: convert, add, edit restoration, undo and narrow tooltip passed')
+} catch (error) { const page=await app.firstWindow(); await page.screenshot({path:'data/hover-failure.png'}); console.log(await page.locator('.variant-config').innerText()); throw error } finally { await app.close() }

@@ -44,7 +44,8 @@ export function catalystTwin(profile: Profile, owned: CandidateItem): Hypothetic
   ]
   return {
     itemString: emitItemString({ ...owned.item, tokens: [] }, owned.item.emittedSlot).split('=,')[0] + '=,' + parts.join(','),
-    label: tier.name + ' · Catalyst from ' + (owned.name || 'item ' + owned.item.id)
+    label: tier.name + ' · Catalyst from ' + (owned.name || 'item ' + owned.item.id) +
+      (owned.ilvl > 0 ? ' (' + owned.ilvl + ')' : '')
   }
 }
 

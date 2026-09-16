@@ -127,6 +127,27 @@ export default function ItemPicker({ raw, disabled, onAdd, editItem, onCancelEdi
     return () => { current = false }
   }, [editItem, raw])
 
+  /**
+   * A tier piece can be a raid-token drop, with the stats shown in the list, or
+   * one the catalyst made from a piece the character owns, which keeps that
+   * piece's stats and item level instead. Both are the same item id, so the
+   * choice belongs here rather than in a second search.
+   */
+  const [conversions, setConversions] = useState<HypotheticalInput[]>([])
+  const [statsFrom, setStatsFrom] = useState('')
+  const isTier = Boolean(selected?.source?.startsWith('Tier set'))
+  useEffect(() => { setStatsFrom('') }, [selected?.id])
+  useEffect(() => {
+    if (!isTier || conversions.length > 0) return
+    let current = true
+    void api.catalystOptions(raw).then((r) => { if (current && r.ok) setConversions(r.options) })
+    return () => { current = false }
+  }, [isTier, raw])
+  const slotConversions = selected
+    ? conversions.filter((c) => c.itemString.startsWith(selected.slot + '=,') && c.itemString.includes('id=' + selected.id + ','))
+    : []
+  const chosenConversion = slotConversions.find((c) => c.itemString === statsFrom)
+
   const levels = selected?.variants.filter((v) => v.track === track) ?? []
   const sockets = selected?.sockets ?? 0
   const slotEnchants = selected ? enchants.filter((e) => e.slot === enchantSlot(selected.slot)) : []
@@ -144,6 +165,12 @@ export default function ItemPicker({ raw, disabled, onAdd, editItem, onCancelEdi
     if (!selected) return
     setAdding(true); setError('')
     try {
+      // A conversion is a finished item line; track and level came with it.
+      if (chosenConversion) {
+        onAdd(chosenConversion)
+        setMessage('Added ' + (chosenConversion.label ?? 'the converted piece') + '.')
+        return
+      }
       const response = await api.configureItem(raw, {
         itemId: selected.id, track, ilvl,
         ...(config.catalyst ? { catalyst: true } : {}),
@@ -186,6 +213,19 @@ export default function ItemPicker({ raw, disabled, onAdd, editItem, onCancelEdi
               onClick={() => patch({ catalyst: !config.catalyst })}>{config.catalyst ? 'Undo tier conversion' : 'Convert to tier set'}</button>
             <p className="note">{config.catalyst ? `Tier bonus from ${selected.catalystTarget.name}. Stats retained from ${selected.name}.` : 'Season 2 Catalyst · keeps the original item’s stats, item level, gems and enchant.'}</p>
           </div> : null}
+          {isTier && slotConversions.length > 0 ? <label>Stats from
+            <select value={statsFrom} onChange={(e) => setStatsFrom(e.target.value)}>
+              <option value="">Raid token{selected.stats ? ' · ' + selected.stats : ''}</option>
+              {slotConversions.map((c) => (
+                <option key={c.itemString} value={c.itemString}>
+                  Catalyst from {(c.label ?? '').split(' · Catalyst from ')[1] ?? c.label}
+                </option>
+              ))}
+            </select>
+          </label> : null}
+          {chosenConversion ? <p className="note">
+            A converted piece keeps the item level, stats, gems and enchant of the piece it was made from, so the track and level below do not apply.
+          </p> : null}
           {selected.reason ? <p className="note">{selected.reason}</p> : <>
             <label>Upgrade track<select value={track} onChange={(e) => { setTrack(e.target.value); setIlvl(selected.variants.find((v) => v.track === e.target.value)!.ilvl) }}>{[...new Set(selected.variants.map((v) => v.track))].map((t) => <option key={t}>{t}</option>)}</select></label>
             <label>Item level<select aria-label="Item level" value={ilvl} onChange={(e) => setIlvl(Number(e.target.value))}>{levels.map((v) => <option key={v.ilvl} value={v.ilvl}>{v.ilvl} · {v.label ?? `${v.rank}/${v.max}`}</option>)}</select></label>

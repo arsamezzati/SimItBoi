@@ -33,6 +33,34 @@ export default function TopGear({ raw, candidates, running, setRunning, logicalT
   const [selected, setSelected] = useState<Set<number>>(new Set())
   /** Gear the player does not own but wants to evaluate. */
   const [hypothetical, setHypothetical] = useState<HypotheticalInput[]>([])
+  const [catalystNote, setCatalystNote] = useState<string | null>(null)
+  const [loadingCatalyst, setLoadingCatalyst] = useState(false)
+
+  /**
+   * Season 2 conversions keep the item level and stats of the piece they were
+   * made from, so every owned piece is a different tier stat split. Adding them
+   * as candidates is what lets the search weigh set bonuses against stats.
+   */
+  async function addCatalystOptions(): Promise<void> {
+    setLoadingCatalyst(true)
+    setCatalystNote(null)
+    try {
+      const r = await api.catalystOptions(raw)
+      if (!r.ok) { setCatalystNote(r.error); return }
+      let added = 0
+      setHypothetical((previous) => {
+        const known = new Set(previous.map((h) => h.itemString))
+        const fresh = r.options.filter((o) => !known.has(o.itemString))
+        added = fresh.length
+        return [...previous, ...fresh]
+      })
+      setCatalystNote(r.options.length === 0
+        ? "Nothing you own can be converted into this season's tier set."
+        : added === 0 ? 'Every conversion is already in the list.' : 'Added ' + added + ' conversion' + (added === 1 ? '' : 's') + '.')
+    } finally {
+      setLoadingCatalyst(false)
+    }
+  }
   const [editing, setEditing] = useState<number | null>(null)
   /** Drops and crafts are configured differently, so they get separate pickers. */
   const [pickerMode, setPickerMode] = useState<'drop' | 'crafted'>('drop')
@@ -150,7 +178,11 @@ export default function TopGear({ raw, candidates, running, setRunning, logicalT
             onClick={() => { setPickerMode('drop'); setEditing(null) }}>Drops</button>
           <button type="button" className={pickerMode === 'crafted' ? 'active' : 'ghost'} disabled={running}
             onClick={() => { setPickerMode('crafted'); setEditing(null) }}>Crafted</button>
+          <button type="button" className="ghost" disabled={running || loadingCatalyst}
+            title="Adds each of your pieces as its tier version, which keeps that piece&apos;s item level and stats"
+            onClick={() => void addCatalystOptions()}>{loadingCatalyst ? 'Reading your gear…' : 'Add catalyst versions'}</button>
         </div>
+        {catalystNote ? <p className="note">{catalystNote}</p> : null}
         {pickerMode === 'crafted'
           ? <CraftedPicker raw={raw} disabled={running} editItem={editing === null ? undefined : hypothetical[editing]} onCancelEdit={() => setEditing(null)} onAdd={(item) => { setHypothetical((previous) => editing === null ? [...previous, item] : previous.map((h, i) => i === editing ? item : h)); setEditing(null) }} />
           : <ItemPicker raw={raw} disabled={running} editItem={editing === null ? undefined : hypothetical[editing]} onCancelEdit={() => setEditing(null)} onAdd={(item) => { setHypothetical((previous) => editing === null ? [...previous, item] : previous.map((h, i) => i === editing ? item : h)); setEditing(null) }} />}

@@ -44,6 +44,7 @@ const api: SimItBoiApi = {
   rememberProfile: (raw: string) => ipcRenderer.invoke('profile:remember', raw),
   itemStats: (raw: string) => ipcRenderer.invoke('items:stats', raw),
   cancelItemStats: (raw: string) => ipcRenderer.invoke('items:stats:cancel', raw),
+  catalystOptions: (raw: string) => ipcRenderer.invoke('topgear:catalystOptions', raw),
   runTopGear: (raw: string, opts: TopGearOptions) => ipcRenderer.invoke('topgear:run', raw, opts),
   onTopGearProgress: (cb: (p: TopGearProgress) => void) => {
     const handler = (_e: unknown, p: TopGearProgress): void => cb(p)

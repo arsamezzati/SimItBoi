@@ -171,7 +171,7 @@ export default function ItemPicker({ raw, disabled, onAdd, editItem, onCancelEdi
         {!loading && !items.length ? <p>No items match. Try another name or slot.</p> : null}
         {items.map((item) => <button type="button" key={item.id} className={`search-item ${selected?.id === item.id ? 'active' : ''}`} disabled={disabled || adding || loading} aria-pressed={selected?.id === item.id}
           onClick={() => { setSelected(item); setTrack(item.variants[0]?.track ?? ''); setIlvl(item.variants[0]?.ilvl ?? 0); setConfig(EMPTY_CONFIG); setMessage('') }}>
-          <ItemIcon id={item.id} /><span><strong>{item.name}</strong><small>#{item.id} · {item.source ?? 'Advanced import only'}</small></span>
+          <ItemIcon id={item.id} /><span><strong>{item.name}</strong><small>#{item.id} · {item.source ?? 'Advanced import only'}{item.stats ? ' · ' + item.stats : ''}</small></span>
         </button>)}
       </div>
       <fieldset disabled={disabled || adding} className="variant-config">

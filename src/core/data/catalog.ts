@@ -27,6 +27,8 @@ export interface CatalogVariant {
 export interface CatalogItem {
   id: number; name: string; icon: string; classes?: number[]; bonusIds: number[]
   variants: CatalogVariant[]; source?: string
+  /** The item's own secondary stats, biggest first; a converted piece keeps its source's instead. */
+  stats?: string
   /** The slot a simc item line is emitted under, e.g. `finger1`. */
   slot: string
   season?: number
@@ -94,8 +96,22 @@ const EMIT_SLOT: Record<string, string> = {
 function describeSource(item: SeasonItem): string | undefined {
   const source = item.source
   if (!source) return undefined
-  if (source.encounterName && source.instanceName) return `${source.instanceName} · ${source.encounterName}`
+  // Tier pieces are listed under the catalyst, but they also drop from raid
+  // tokens. A token piece carries the stats below; a converted one keeps the
+  // stats of whatever it was made from, so saying only "Catalyst" misleads.
+  if (source.instanceType === 'catalyst') return 'Tier set · raid token or catalyst'
+  if (source.encounterName && source.instanceName) return source.instanceName + ' · ' + source.encounterName
   return source.instanceName
+}
+
+/** The item's own secondaries, biggest first, e.g. "Haste / Crit". */
+const SECONDARY_NAMES: Record<number, string> = { 32: 'Crit', 36: 'Haste', 40: 'Versatility', 49: 'Mastery' }
+function describeStats(item: SeasonItem): string | undefined {
+  const split = (item.stats ?? [])
+    .filter((s) => SECONDARY_NAMES[s.statId] && s.allocation > 0)
+    .sort((a, b) => b.allocation - a.allocation)
+    .map((s) => SECONDARY_NAMES[s.statId])
+  return split.length ? split.join(' / ') : undefined
 }
 
 interface Catalog { version: number; generated: string; season: string; items: CatalogItem[] }
@@ -218,7 +234,8 @@ export function catalog(): Catalog {
               }]
             : [])
         ],
-        ...(describeSource(item) ? { source: describeSource(item) } : {})
+        ...(describeSource(item) ? { source: describeSource(item) } : {}),
+        ...(describeStats(item) ? { stats: describeStats(item) } : {})
       })
     }
   }

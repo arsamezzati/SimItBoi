@@ -23,6 +23,8 @@ import { embellishments, gems, enchants, embellishmentLimit, embellishmentSlots,
 import { assertUsableSnapshot, dataIdentities, snapshotProblems } from '../core/data/manifest.ts'
 import { probeItemStats, type ItemStatState } from '../core/data/itemStats.ts'
 import { filterCandidates } from '../core/topgear/prepass.ts'
+import { catalystOptions } from '../core/topgear/catalyst.ts'
+import { parseHypotheticals } from '../core/topgear/hypothetical.ts'
 import { createHash, randomUUID } from 'node:crypto'
 import { BackgroundScheduler } from '../core/data/backgroundScheduler.ts'
 import { createRunEnvelope } from '../core/runEnvelope.ts'
@@ -713,6 +715,24 @@ ipcMain.handle('armory:setCredentials', async (_e, input: ArmoryCredentials | nu
     return { ok: true as const, status: armoryCredentials().status }
   } catch (err) {
     return { ok: false as const, error: err instanceof ArmoryError ? err.message : (err as Error).message }
+  }
+})
+
+/**
+ * Catalyst conversions of gear the character owns, offered as Top Gear
+ * candidates. Resolved here so the renderer never names an item id, and put
+ * through the same validation as any other hypothetical.
+ */
+ipcMain.handle('topgear:catalystOptions', (_e, raw: string) => {
+  try {
+    const profile = parseAddonProfile(raw)
+    const options = catalystOptions(profile)
+    // Whatever the character cannot actually wear is dropped here rather
+    // than offered and rejected later.
+    const refused = new Set(parseHypotheticals(profile, options).rejected.map((r) => r.itemString))
+    return { ok: true as const, options: options.filter((o) => !refused.has(o.itemString)) }
+  } catch (err) {
+    return { ok: false as const, error: (err as Error).message }
   }
 })
 

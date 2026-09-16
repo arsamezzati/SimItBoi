@@ -90,6 +90,8 @@ export interface SimItBoiApi {
     report: SimReport; durationMs: number; simcVersion: string | null
     versionWarning: string | null; reportId: string
   }>>
+  /** Catalyst conversions of the character's own gear, as Top Gear candidates. */
+  catalystOptions(raw: string): Promise<Response<{ options: HypotheticalInput[] }>>
   runTopGear(raw: string, opts: TopGearOptions): Promise<Response<{ result: TopGearResult; reportId: string }>>
   /** Compares every distinct saved talent loadout in one profileset batch. */
   runLoadouts(raw: string, opts?: { threads?: number; fightSeconds?: number }):
